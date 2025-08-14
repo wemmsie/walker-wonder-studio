@@ -1,0 +1,4 @@
+{
+  "intelephense.files.associations": ["*.php", "*.phtml", "*.module", "*.inc"],
+  "intelephense.diagnostics.undefinedFunctions": false
+}

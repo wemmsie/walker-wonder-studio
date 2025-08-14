@@ -1,0 +1,12 @@
+.valid {
+    color: green;
+}
+
+.invalid {
+    color: red;
+}
+
+.status {
+    margin-left: 10px;
+    font-weight: bold;
+}
