@@ -1,0 +1,150 @@
+.sparkle {
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+  
+    // Use Font Awesome icon for sparkles
+    .star {
+      pointer-events: none;
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      top: 50%;
+      left: 50%;
+      transform-origin: center;  // Ensures the origin is from the center
+      transform: translate(-50%, -50%);  // Centers the stars in the middle of the sparkle
+  
+      // The Font Awesome star icon
+      i {
+        font-size: 12px; // Adjust as needed
+        color: red; // Customize color
+        opacity: 0;
+        transform: scale(0);
+        transition:
+          transform 0.2s ease-out,
+          opacity 0.2s ease-out;
+      }
+  
+      // Add exploding dots inside each star
+      &::before,
+      &::after {
+        content: '';
+        position: absolute;
+        background-color: blue;
+        width: 3px;
+        height: 3px;
+        border-radius: 50%;
+        opacity: 0;
+      }
+  
+      // First dot inside the star
+      &::before {
+        top: -3px;
+        left: -3px;
+      }
+  
+      // Second dot inside the star
+      &::after {
+        bottom: -3px;
+        right: -3px;
+      }
+    }
+  
+    &:hover {
+      .star i {
+        transform: scale(1);
+        animation: sparkle 0.8s ease-out forwards;
+      }
+  
+      // Handle the dots' hover animation
+      .star::before {
+        transform: scale(1);
+        animation: dot-expand-1 0.5s forwards, dot-explode 0.5s forwards;
+        animation-delay: 0.5s;
+      }
+  
+      .star::after {
+        transform: scale(1);
+        animation: dot-expand-2 0.5s forwards, dot-explode 0.5s forwards;
+        animation-delay: 0.7s;
+      }
+    }
+  
+    .star:nth-child(1) {
+      transform: translate(-50%, -50%) rotate(15deg);
+      i {
+        animation-delay: 0s;
+      }
+    }
+  
+    .star:nth-child(2) {
+      transform: translate(-50%, -50%) rotate(180deg);
+      i {
+        animation-delay: 0.2s;
+      }
+    }
+  
+    .star:nth-child(3) {
+      transform: translate(-50%, -50%) rotate(-100deg);
+      i {
+        animation-delay: 0.4s;
+      }
+    }
+  }
+  
+  // Animation for the sparkle effect
+  @keyframes sparkle {
+    0% {
+      opacity: 0;
+      transform: scale(0) rotate(0deg);
+    }
+    15% {
+      opacity: 1;
+      transform: scale(0.7) translate(10px, 10px);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1) rotate(10deg) translate(15px, 10px);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1.2) rotate(20deg) translate(15px, 10px);
+    }
+  }
+  
+  // Animation for dot appearance and explosion
+  @keyframes dot-expand-1 {
+    0% {
+      opacity: 0;
+      transform: scale(0);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) translate(-5px, -5px);
+    }
+  }
+  
+  @keyframes dot-expand-2 {
+    0% {
+      opacity: 0;
+      transform: scale(0);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) translate(5px, 5px);
+    }
+  }
+  
+  @keyframes dot-explode {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  

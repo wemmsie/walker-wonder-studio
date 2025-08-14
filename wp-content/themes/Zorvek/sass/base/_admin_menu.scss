@@ -1,0 +1,24 @@
+$colors: (
+    'pages': #eb816c,
+    'resources': #ebc16c,
+    'posts': #b0eb6c,
+    'media': #6ce3eb
+);
+
+.wp-menu-separator {
+    height: 10px !important;
+}
+
+@each $menu-item, $color in $colors {
+    #menu-#{$menu-item} a:hover,
+    #menu-#{$menu-item}.opensub.menu-top > a,
+    #menu-#{$menu-item}.opensub a .dashicons-before:before,
+    #menu-#{$menu-item} a:hover .dashicons-before:before,
+    #menu-#{$menu-item}.wp-has-current-submenu .dashicons-before:before {
+        color: $color !important;
+    }
+}
+
+.wp-has-current-submenu {
+    background-color: #000000 !important;
+}

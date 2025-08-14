@@ -1,0 +1,73 @@
+$ant-size: 20px; // Default size for the animation
+$ant-width: 2px; // Width of the dashed border
+$speed: 1s; // Duration of the animation
+$color1: transparent; // Color of the dashed line
+$color2: #444; // Color of the background
+
+// _mixins.scss
+
+@mixin marching-ants($ant-size, $ant-width, $speed, $color1, $color2, $color1-width: 30%) {
+  position: relative; // Ensure proper positioning for pseudo-elements
+  padding: 0.2em 2px + $ant-width;
+  margin: -0.33em -2px;
+  border-radius: 4px; // Optional, for rounded corners
+  overflow: hidden; // Ensure border stays within the link
+  line-height: 1;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size:
+      $ant-size $ant-width,
+      $ant-size $ant-width,
+      $ant-width $ant-size,
+      $ant-width $ant-size;
+    background-position:
+      0 0,
+      0 100%,
+      0 0,
+      100% 0;
+    background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+    background-image: linear-gradient(to right, $color1, $color1 $color1-width, $color2 $color1-width, $color2),
+      linear-gradient(to right, $color1, $color1 $color1-width, $color2 $color1-width, $color2),
+      linear-gradient(to bottom, $color1, $color1 $color1-width, $color2 $color1-width, $color2),
+      linear-gradient(to bottom, $color1, $color1 $color1-width, $color2 $color1-width, $color2);
+
+    animation: marching-ants $speed linear infinite paused;
+    opacity: 0; // Start as invisible
+    transition: opacity 0.2s ease-in-out; // Smooth fade-in effect
+    z-index: -1; // Ensure border stays behind text
+  }
+
+  &:hover::before,
+  &.marching::before {
+    animation-play-state: running;
+    opacity: 1; // Fade in the marching ants on hover
+  }
+}
+
+@keyframes marching-ants {
+  0% {
+    background-position:
+      0 0,
+      0 100%,
+      0 0,
+      100% 0;
+  }
+  100% {
+    background-position:
+      calc(2 * #{$ant-size}) 0,
+      calc(-2 * #{$ant-size}) 100%,
+      0 calc(-2 * #{$ant-size}),
+      100% calc(2 * #{$ant-size});
+  }
+}
+
+// Apply mixin to the class
+.marching-ants {
+  @include marching-ants(10px, 2px, 2s, transparent, green);
+}

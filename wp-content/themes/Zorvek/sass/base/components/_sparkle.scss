@@ -1,0 +1,157 @@
+@mixin sparkle($duration, $blue, $pink, $yellow) {
+  display: inline-block;
+  position: relative;
+  text-decoration: none;
+  color: $blue !important;
+  transition: all 0.2s ease;
+  opacity: 0.6;
+
+  .star {
+    pointer-events: none;
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    right: -18px;
+    top: -2px;
+    opacity: 0;
+    transform-origin: 0% 140%;
+
+    i {
+      font-size: 12px;
+      color: $pink;
+    }
+
+    // Add exploding dots inside each star
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      background-color: $pink;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      opacity: 0;
+    }
+
+    // First dot inside the star
+    &::before {
+      top: -0px;
+      left: -0px;
+    }
+
+    // Second dot inside the star
+    &::after {
+      bottom: -4px;
+      right: -4px;
+    }
+  }
+
+  &:hover {
+    transform: rotate(-10deg) scale(1.2) translatex(1px);
+    // color: $pink !important;
+    opacity: 1;
+    .star {
+      opacity: 1;
+      animation: smooth-arc $duration ease-out forwards; // Smooth arc with a bounce at the end
+    }
+
+    .star i {
+      animation: fade-icon calc($duration * 0.6) linear forwards;
+      animation-delay: calc($duration * 0.7); // Delay the fade-out so the rotation happens first
+    }
+
+    // Handle the dots' hover animation
+    .star::before,
+    .star::after {
+      transform: translate(0);
+    }
+
+    .star::before {
+      transform: scale(1);
+      animation:
+        dot-expand-1 $duration forwards,
+        dot-explode $duration forwards;
+      animation-delay: calc($duration * 0.6); // Delay so that dots expand after rotation
+    }
+
+    .star::after {
+      transform: scale(1);
+      animation:
+        dot-expand-2 $duration forwards,
+        dot-explode $duration forwards;
+      animation-delay: calc($duration * 0.6); // Sync the dots to appear after rotation ends
+    }
+  }
+
+  // Customize each sparkle using nth-child
+  .star:nth-child(1) {
+    transform: rotate(-60deg); // Start at initial position
+  }
+}
+
+// Keyframe for smooth arc with a bounce at the end
+@keyframes smooth-arc {
+  0% {
+    opacity: 0; // Start at initial position
+  }
+  5% {
+    opacity: 1;
+    transform: rotate(-60deg); // Start at initial position
+  }
+  70% {
+    transform: rotate(20deg) scale(1); // Smooth arc up to 60 degrees
+  }
+  100% {
+    transform: rotate(20deg) translateY(-5px) scale(1.2); // Bounce back down to the original position
+  }
+}
+
+// Keyframe for fading out the icon
+@keyframes fade-icon {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+// Animation for dot appearance and explosion
+@keyframes dot-expand-1 {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translate(-5px, -5px);
+  }
+}
+
+@keyframes dot-expand-2 {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translate(5px, 5px);
+  }
+}
+
+@keyframes dot-explode {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+// Apply mixin to the class
+.sparkle {
+  @include sparkle(0.4s, rgba(0, 160, 255, 1), rgba(255, 0, 140, 1), rgba(255, 213, 5, 1));
+}

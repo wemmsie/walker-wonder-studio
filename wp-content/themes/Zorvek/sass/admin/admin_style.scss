@@ -1,0 +1,53 @@
+// Main Admin Menu
+$colors: (
+    'pages': #ed8296,
+    'posts-resource': #ebc16c,
+    'posts': #b0eb6c,
+    'media': #6ce3eb,
+    'comments': #a282ed,
+);
+
+.wp-menu-separator {
+    height: 10px !important;
+}
+
+@each $menu-item, $color in $colors {
+    #adminmenu li a:hover,
+    #adminmenu li.opensub.menu-top > a,
+    #adminmenu li.opensub a .dashicons-before:before,
+    #adminmenu li a:hover .dashicons-before:before,
+    #adminmenu li.wp-has-current-submenu .dashicons-before:before,
+    #adminmenu li.current .dashicons-before:before {
+        color: #fff;
+    }
+
+    #menu-#{$menu-item} a:hover,
+    #menu-#{$menu-item}.opensub.menu-top > a,
+    #menu-#{$menu-item}.opensub a .dashicons-before:before,
+    #menu-#{$menu-item} a:hover .dashicons-before:before,
+    #menu-#{$menu-item}.wp-has-current-submenu .dashicons-before:before,
+    #menu-#{$menu-item}.current .dashicons-before:before {
+        color: $color !important;
+    }
+}
+
+.nfd-wba-cta-edit-screen {
+    display: none;
+}
+
+.wp-has-current-submenu {
+    background-color: #000000 !important;
+}
+
+// ACF Blocks
+.acf-field {
+    .shortstack, .medstack {
+        @apply min-h-0;
+    }
+    .shortstack iframe {
+        @apply max-h-[60px] !min-h-1;
+    }
+    .medstack iframe {
+        @apply max-h-[100px] min-h-1;
+    }
+}

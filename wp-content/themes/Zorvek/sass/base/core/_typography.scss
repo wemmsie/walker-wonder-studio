@@ -1,0 +1,117 @@
+/* TYPOGRAPHY */
+
+.typo-h1, h1 {
+  @apply font-korolev font-bold;
+}
+.typo-h3, h3,
+.typo-h4, h4,
+.typo-p,
+.pill,
+.menu {
+  @apply font-poppins;
+}
+
+.typo-h1, h1 {
+  @apply text-20 md:text-30 leading-[1.2] text-balance;
+}
+.typo-h2, h2 {
+  @apply text-9 sm:text-10 md:text-14 leading-[1.5] text-balance font-medium;
+}
+.typo-h3, h3 {
+  @apply text-10 md:text-12 font-medium;
+}
+.pill {
+  @apply text-10;
+}
+
+#hero .typo-h1 {
+  @apply text-25 md:text-[5vw] italic lowercase xl:text-[70px];
+  strong {
+    @apply inline-block highlighter;
+  }
+}
+
+.typo-p, p {
+  @apply my-3 text-black text-9 md:text-10;
+}
+
+.resource-section ul {
+  @apply ml-6 my-8 text-black text-opacity-80;
+  li {
+    @apply relative my-3 py-0;
+    &:before {
+      @apply -left-4 top-0 text-12 absolute text-blue -translate-x-1/2;
+      content: '\2192';
+    }
+  }
+}
+.resource-section p, .resource-section li {
+  @apply text-[16px] md:text-[18px];
+}
+.resource-section {
+  h1:not(:nth-child(1)), h2:not(:nth-child(1)), h3:not(:nth-child(1)) {
+    @apply mt-10;
+  }
+}
+
+code {
+  @apply bg-background p-1 rounded-lg text-red;
+}
+
+.pill {
+  @apply rounded-full transition-all border-2 py-2 px-4 md:py-3 md:px-6 cursor-pointer inline-block sm:text-9 text-8;
+  &.pill-blue {
+    @apply bg-blue border-blue text-white;
+    &:hover {
+      @apply bg-transparent text-blue;
+    }
+  }
+  &.pill-white {
+    @apply bg-white border-white text-blue;
+    &:hover {
+      @apply bg-transparent;
+    }
+  }
+  &.pill-sm {
+    @apply py-2 px-4 sm:py-[5px] sm:px-10 sm:text-9 text-8;
+  }
+}
+
+.tiny-pill {
+  @apply rounded-full py-1 px-3 inline-block mr-auto text-8 bg-gray-1 uppercase;
+}
+
+/* LOGO */
+#dap-logo {
+  .cls-1 {
+    @apply fill-yellow;
+    //test
+  }
+  .cls-2 {
+    @apply fill-red;
+  }
+  .cls-3 {
+    @apply fill-blue;
+  }
+  .cls-4 {
+    @apply fill-blue;
+  }
+  .cls-5 {
+    @apply fill-black;
+  }
+}
+
+main p a {
+  @apply marching-ants marching bg-green bg-opacity-50 transition-all inline-block;
+  &:hover {
+    @apply bg-transparent;
+  }
+}
+
+.highlighter {
+  @apply relative;
+  &::before {
+    @apply absolute w-[110%] bottom-[0%] left-1/2 -translate-x-1/2 h-[0.8vw] bg-green transition-all -z-[1];
+    content: '';
+  }
+}

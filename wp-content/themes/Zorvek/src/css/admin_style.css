@@ -1,0 +1,113 @@
+.wp-menu-separator {
+  height: 10px !important;
+}
+
+#adminmenu li a:hover,
+#adminmenu li.opensub.menu-top > a,
+#adminmenu li.opensub a .dashicons-before:before,
+#adminmenu li a:hover .dashicons-before:before,
+#adminmenu li.wp-has-current-submenu .dashicons-before:before,
+#adminmenu li.current .dashicons-before:before {
+  color: #fff;
+}
+
+#menu-pages a:hover,
+#menu-pages.opensub.menu-top > a,
+#menu-pages.opensub a .dashicons-before:before,
+#menu-pages a:hover .dashicons-before:before,
+#menu-pages.wp-has-current-submenu .dashicons-before:before,
+#menu-pages.current .dashicons-before:before {
+  color: #ed8296 !important;
+}
+
+#adminmenu li a:hover,
+#adminmenu li.opensub.menu-top > a,
+#adminmenu li.opensub a .dashicons-before:before,
+#adminmenu li a:hover .dashicons-before:before,
+#adminmenu li.wp-has-current-submenu .dashicons-before:before,
+#adminmenu li.current .dashicons-before:before {
+  color: #fff;
+}
+
+#menu-posts-resource a:hover,
+#menu-posts-resource.opensub.menu-top > a,
+#menu-posts-resource.opensub a .dashicons-before:before,
+#menu-posts-resource a:hover .dashicons-before:before,
+#menu-posts-resource.wp-has-current-submenu .dashicons-before:before,
+#menu-posts-resource.current .dashicons-before:before {
+  color: #ebc16c !important;
+}
+
+#adminmenu li a:hover,
+#adminmenu li.opensub.menu-top > a,
+#adminmenu li.opensub a .dashicons-before:before,
+#adminmenu li a:hover .dashicons-before:before,
+#adminmenu li.wp-has-current-submenu .dashicons-before:before,
+#adminmenu li.current .dashicons-before:before {
+  color: #fff;
+}
+
+#menu-posts a:hover,
+#menu-posts.opensub.menu-top > a,
+#menu-posts.opensub a .dashicons-before:before,
+#menu-posts a:hover .dashicons-before:before,
+#menu-posts.wp-has-current-submenu .dashicons-before:before,
+#menu-posts.current .dashicons-before:before {
+  color: #b0eb6c !important;
+}
+
+#adminmenu li a:hover,
+#adminmenu li.opensub.menu-top > a,
+#adminmenu li.opensub a .dashicons-before:before,
+#adminmenu li a:hover .dashicons-before:before,
+#adminmenu li.wp-has-current-submenu .dashicons-before:before,
+#adminmenu li.current .dashicons-before:before {
+  color: #fff;
+}
+
+#menu-media a:hover,
+#menu-media.opensub.menu-top > a,
+#menu-media.opensub a .dashicons-before:before,
+#menu-media a:hover .dashicons-before:before,
+#menu-media.wp-has-current-submenu .dashicons-before:before,
+#menu-media.current .dashicons-before:before {
+  color: #6ce3eb !important;
+}
+
+#adminmenu li a:hover,
+#adminmenu li.opensub.menu-top > a,
+#adminmenu li.opensub a .dashicons-before:before,
+#adminmenu li a:hover .dashicons-before:before,
+#adminmenu li.wp-has-current-submenu .dashicons-before:before,
+#adminmenu li.current .dashicons-before:before {
+  color: #fff;
+}
+
+#menu-comments a:hover,
+#menu-comments.opensub.menu-top > a,
+#menu-comments.opensub a .dashicons-before:before,
+#menu-comments a:hover .dashicons-before:before,
+#menu-comments.wp-has-current-submenu .dashicons-before:before,
+#menu-comments.current .dashicons-before:before {
+  color: #a282ed !important;
+}
+
+.nfd-wba-cta-edit-screen {
+  display: none;
+}
+
+.wp-has-current-submenu {
+  background-color: #000000 !important;
+}
+
+.acf-field .shortstack, .acf-field .medstack {
+  min-height: 0px;
+}
+.acf-field .shortstack iframe {
+  max-height: 60px;
+  min-height: 0.25rem !important;
+}
+.acf-field .medstack iframe {
+  max-height: 100px;
+  min-height: 0.25rem;
+}

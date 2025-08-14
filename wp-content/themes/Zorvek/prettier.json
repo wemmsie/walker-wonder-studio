@@ -1,0 +1,14 @@
+{
+  "name": "zorvek",
+  "version": "1.0.0",
+  "prettier": {
+    "printWidth": 80,
+    "tabWidth": 4,
+    "useTabs": true,
+    "singleQuote": true,
+    "trailingComma": "none",
+    "bracketSpacing": true,
+    "pluginSearchDirs": ["./node_modules"],
+    "plugins": ["@prettier/plugin-php"]
+  }
+}

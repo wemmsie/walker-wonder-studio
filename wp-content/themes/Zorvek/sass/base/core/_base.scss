@@ -1,0 +1,94 @@
+/* ---- BASE STYLING ---- */
+
+body {
+  @apply max-w-full overflow-x-hidden;
+}
+
+#page {
+  @apply flex flex-col h-[100vh] max-h-full;
+}
+
+main {
+  @apply flex-grow z-0 relative w-full;
+}
+svg {
+  @apply w-full h-full;
+}
+
+/* ---- IMAGES ---- */
+img {
+  @apply w-full;
+}
+
+/* ---- GUTTER ---- */
+.gutter {
+  @apply max-w-screen m-auto
+  py-16 md:py-32 px-10;
+  > div {
+    @apply z-10;
+  }
+}
+// .site-content {
+//   .gutter:first-of-type {
+//     @apply py-32;
+//   }
+// }
+
+/* ---- FLEXBOX ---- */
+.vertical {
+  @apply flex flex-col;
+}
+.horizontal {
+  @apply flex;
+}
+
+footer {
+  @apply bg-background mt-24;
+  .container {
+    @apply flex flex-col gap-5 pb-3;
+    .bulk {
+      @apply items-center justify-between flex gap-20 md:flex-nowrap flex-wrap;
+    }
+    .info {
+      @apply flex flex-wrap gap-x-24 gap-y-5;
+      span {
+        @apply text-10 font-semibold;
+      }
+    }
+    .credit {
+      @apply flex justify-center pt-8;
+      p {
+        @apply text-gray-300;
+        a {
+          @apply font-medium text-blue;
+        }
+      }
+    }
+  }
+}
+
+/* Search */
+.search-container {
+  @apply relative z-30 w-full flex max-w-80;
+
+  #searchform {
+    @apply mb-0 w-full;
+  }
+
+  .search {
+    @apply pill top-0 border-white outline-none bg-white transition-all pl-5 py-[5px] mb-0 w-full;
+
+    &:focus,
+    &:focus-visible {
+      @apply border-blue;
+    }
+  }
+
+  .icon {
+    @apply absolute right-4 top-1/2 -translate-y-1/2 text-blue transition-all;
+
+    &:hover {
+      @apply cursor-pointer;
+    }
+  }
+}

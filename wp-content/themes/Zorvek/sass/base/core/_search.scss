@@ -1,0 +1,25 @@
+.search-results-preview {
+    background: #fff;
+    border: 1px solid #ddd;
+    max-height: 200px;
+    overflow-y: auto;
+    position: absolute;
+    width: 100%;
+    z-index: 999;
+}
+
+.search-results-preview ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.search-results-preview li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.search-results-preview li a {
+    text-decoration: none;
+    color: #333;
+}

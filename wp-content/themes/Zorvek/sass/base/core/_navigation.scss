@@ -1,0 +1,205 @@
+/* ---- NAVIGATION ---- */
+
+header {
+  @apply w-full bg-background bg-opacity-80 fixed top-0 left-0 z-50 transition-all duration-300 backdrop-blur-md;
+  &.scrolled {
+    @apply shadow-1;
+  }
+
+  /* Drawer Menu */
+  .drawer {
+    @apply w-full max-w-screen overflow-hidden max-h-0 opacity-0 justify-between m-auto gap-8 duration-500 flex flex-wrap transition-all;
+
+    .sub-drawer {
+      @apply flex m-auto w-full justify-between max-w-subscreen relative;
+    }
+
+    .divider {
+      @apply h-[1px] bg-blue w-full opacity-50 max-w-screen;
+    }
+  }
+
+  &.toggled {
+    @apply shadow-1;
+    .drawer {
+      @apply max-h-60 opacity-100 duration-500;
+
+      ul {
+        @apply relative;
+      }
+    }
+  }
+
+  .nav-container {
+    @apply py-0 transition-all duration-200;
+
+    /* Main Navigation */
+    .main-nav {
+      @apply relative my-5 w-full flex flex-wrap max-w-subscreen m-auto;
+
+      /* Branding or Additional Links */
+      .werk {
+        @apply absolute bottom-0 flex left-1/2 -translate-x-1/2 justify-end z-20 -mr-20 max-w-subscreen w-full m-auto;
+
+        .spacer {
+          @apply w-14 transition-all duration-300;
+        }
+      }
+    }
+
+    /* Logo */
+    .logo {
+      @apply transition-all duration-200 grow max-w-200 mr-auto z-30;
+    }
+
+    /* Social Icons */
+    .socials {
+      @apply flex gap-3;
+
+      .social {
+        @apply bg-green border-2 border-green rounded-full p-[10px] h-10 w-10 inline-block transition-all;
+
+        img {
+          @apply transition-all;
+        }
+
+        &:hover {
+          @apply bg-transparent;
+
+          // Uncomment this if you want inverted social media icons on hover
+          // img {
+          //   @apply invert;
+          // }
+        }
+      }
+    }
+  }
+
+  /* Main Menu */
+  .menu-main-menu-container {
+    @apply w-1/2 min-w-[400px];
+  }
+
+  /* Menu Items */
+  .menu {
+    @apply flex justify-between w-full pb-0;
+
+    .top-menu-item {
+      @apply text-black;
+
+      ul {
+        @apply flex flex-col gap-1 mt-5;
+      }
+    }
+
+    .sub-menu-item {
+      @apply text-grey text-8 mb-1 transition-all;
+
+      a:hover {
+        @apply text-blue;
+      }
+    }
+  }
+
+  /* Hamburger Menu */
+  .burger {
+    @apply w-full h-[3px] transition-all duration-300 block absolute rounded-full;
+
+    &:nth-child(1),
+    &:nth-child(2),
+    &:nth-child(3) {
+      @apply bg-black;
+    }
+
+    &:nth-child(2) {
+      @apply -translate-y-3/1;
+    }
+
+    &:nth-child(3) {
+      @apply translate-y-3/1;
+    }
+  }
+
+  /* Menu Toggle */
+  .menu-toggle {
+    @apply cursor-pointer relative w-7 h-7 z-30;
+
+    &.open {
+      .burger {
+        &:nth-child(1) {
+          @apply bg-transparent;
+        }
+
+        &:nth-child(2) {
+          @apply rotate-[225deg] translate-y-0;
+        }
+
+        &:nth-child(3) {
+          @apply -rotate-[225deg] translate-y-0;
+        }
+      }
+    }
+  }
+}
+
+/* ---- MOBILE STYLING ---- */
+@media (max-width: 768px) {
+  header {
+    /* Full-Screen Mobile Drawer */
+    .drawer {
+      @apply w-full flex items-center max-h-0 order-4;
+      ul {
+        @apply flex flex-col w-full items-center text-right mt-1;
+      }
+    }
+    &.toggled {
+      .drawer {
+        @apply max-h-[100vh];
+      }
+    }
+    .nav-container {
+      .main-nav {
+        @apply bg-background z-50 flex justify-between items-center w-full flex-row;
+
+        .menu-main-menu-container {
+          @apply pt-10 min-w-0 w-full;
+        }
+
+        /* Menu Items */
+        .menu {
+          @apply flex flex-col gap-3;
+          .top-menu-item {
+            @apply text-10 w-full font-medium;
+          }
+          .sub-menu-item {
+            @apply text-9 w-full font-normal;
+          }
+        }
+
+        .site-info {
+          @apply hidden;
+        }
+
+        .werk {
+          @apply relative translate-x-0 left-0 mr-5 w-auto xs:order-2 opacity-0 hidden xs:block invisible ss:visible ss:opacity-100 transition-all;
+          button {
+            @apply w-full my-5 xs:my-0;
+          }
+          // .spacer {
+          //   @apply hidden;
+          // }
+        }
+      }
+
+      /* Adjust Logo for Mobile */
+      .logo {
+        @apply max-w-100 order-1;
+      }
+    }
+
+    /* Hamburger adjustments for mobile */
+    .menu-toggle {
+      @apply relative order-3;
+    }
+  }
+}

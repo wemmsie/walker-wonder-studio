@@ -1,0 +1,132 @@
+/* RESOURCES */
+
+#resource > .gutter {
+  @apply md:pb-24 md:pt-40 py-24 px-10;
+}
+
+.featured-resource {
+  @apply w-full lg:w-2/3 flex justify-between;
+  .typo-h3 {
+    @apply text-14 font-bold;
+  }
+  .resource--data {
+    @apply -mt-3;
+  }
+  .divider {
+    @apply lg:block hidden;
+  }
+}
+.small-resource {
+  .resource,
+  .post {
+    @apply relative marching-ants rounded-lg !p-4 transition-all;
+    // &:hover {
+    //   .resource--title, .post--title {
+    //     @apply text-green;
+    //   }
+    // }
+    .sub {
+      @apply flex align-middle gap-post flex-row-reverse;
+    }
+    // &:not(:last-of-type):after {
+    //   @apply relative bottom-0 left-0 w-full h-[2px] bg-grey opacity-20 my-auto;
+    //   content: '';
+    // }
+    &--excerpt {
+      @apply hidden;
+    }
+    &--title {
+      @apply font-bold transition-all;
+    }
+  }
+}
+
+.resource,
+.post {
+  @apply flex gap-post flex-col;
+
+  &--thumbnail {
+    @apply overflow-hidden rounded-lg;
+    img {
+      @apply object-cover object-center h-full;
+    }
+  }
+}
+
+.vertical .resource,
+.vertical .post {
+  &--thumbnail img {
+    @apply max-h-[400px];
+  }
+}
+
+.horizontal .resource,
+.horizontal .post {
+  &--data {
+    @apply w-2/3;
+  }
+  &--thumbnail {
+    @apply aspect-square w-1/3;
+  }
+}
+
+/* RESOURCE SINGLE */
+#resource {
+  .hero {
+    @apply flex md:flex-nowrap flex-wrap;
+    & > div {
+      @apply md:w-auto w-full;
+    }
+    .image {
+      @apply max-h-300 w-full;
+      img {
+        @apply object-cover object-center w-full h-full;
+      }
+    }
+  }
+}
+.resource-container {
+  @apply md:flex-nowrap flex-wrap flex items-stretch gap-8 px-10 max-w-screen m-auto;
+
+  .gutter {
+    @apply px-0 pt-0 pb-10;
+  }
+  .resource-section {
+    @apply max-w-resource m-auto order-1 md:order-2;
+  }
+  .share {
+    @apply order-2 md:order-1 relative w-full md:w-auto;
+    p {
+      @apply uppercase font-bold tracking-wider mt-0;
+    }
+    ul {
+      @apply sticky top-24 flex gap-2 flex-col;
+      li i {
+        @apply w-8;
+      }
+      a {
+        @apply transition-all;
+        &:hover {
+          @apply text-blue;
+        }
+      }
+    }
+  }
+}
+
+.tooltip {
+  @apply bg-grey text-white text-center rounded-md p-1 px-3 absolute z-10 transition-all opacity-0 text-8 font-bold
+
+  -bottom-[150%] left-0;
+
+  &:before {
+    @apply absolute -top-2 left-1/2 -translate-x-1/2
+    border-l-tip border-r-tip border-b-tip border-transparent border-b-grey;
+
+    content: '';
+  }
+}
+
+.copy-link:hover + .tooltip {
+  @apply visible opacity-100;
+}
