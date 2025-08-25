@@ -1,0 +1,225 @@
+{
+    "translation-revision-date": "2024-03-19 12:00+0100",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/hosting\/hosting.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "nl_NL",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Hosting": [
+                "Hosting"
+            ],
+            "Action executed successfully": [
+                "Actie succesvol uitgevoerd"
+            ],
+            "CDN": [
+                "CDN"
+            ],
+            "CDN is enabled": [
+                "CDN is ingeschakeld"
+            ],
+            "CDN is NOT enabled": [
+                "CDN is NIET ingeschakeld"
+            ],
+            "Your site's static content is being cached.": [
+                "De statische inhoud van uw site wordt gecached."
+            ],
+            "Your site's static content is NOT being cached.": [
+                "De statische inhoud van uw site wordt NIET gecached."
+            ],
+            "Clear Cache": [
+                "Cache wissen"
+            ],
+            "Disable Cache": [
+                "Cache uitschakelen"
+            ],
+            "Enable CDN": [
+                "CDN inschakelen"
+            ],
+            "CDN Cache Cleared": [
+                "CDN-cache gewist"
+            ],
+            "Static content cache has been successfully cleared.": [
+                "Cache van statische inhoud is succesvol gewist."
+            ],
+            "CDN Purge Failed": [
+                "CDN wissen mislukt"
+            ],
+            "We were unable to clear the CDN cache. Please try again.": [
+                "We konden de CDN-cache niet wissen. Probeer het opnieuw."
+            ],
+            "just now": [
+                "zojuist"
+            ],
+            "%d minute(s) ago": [
+                "%d minu(u)t(en) geleden"
+            ],
+            "%d hour(s) ago": [
+                "%d u(u)r geleden"
+            ],
+            "%d day(s) ago": [
+                "%d dag(en) geleden"
+            ],
+            "Last updated: %s": [
+                "Laatst bijgewerkt: %s"
+            ],
+            "Refresh": [
+                "Vernieuwen"
+            ],
+            "Copied!": [
+                "Gekopieerd!"
+            ],
+            "Malware Check": [
+                "Malwarecontrole"
+            ],
+            "Partial Scan Completed": [
+                "Gedeeltelijke scan voltooid"
+            ],
+            "Scan Status Unknown": [
+                "Scanstatus onbekend"
+            ],
+            "Possible malware detected. Contact support for help resolving potential issues.": [
+                "Mogelijke malware gedetecteerd. Neem contact op met support voor hulp bij het oplossen van mogelijke problemen."
+            ],
+            "The current malware scan status could not be determined.": [
+                "De huidige malwarescanstatus kon niet worden bepaald."
+            ],
+            "Run a Full Scan": [
+                "Volledige scan uitvoeren"
+            ],
+            "see details": [
+                "details bekijken"
+            ],
+            "Scanning for malware\u2026": [
+                "Scannen op malware\u2026"
+            ],
+            "Contact Support": [
+                "Contact opnemen met support"
+            ],
+            "Could not determine scan status. Please try again.": [
+                "Kon scanstatus niet bepalen. Probeer het opnieuw."
+            ],
+            "Scan status API failed": [
+                "Scanstatus API mislukt"
+            ],
+            "Nameservers": [
+                "Nameservers"
+            ],
+            "No name servers found": [
+                "Geen nameservers gevonden"
+            ],
+            "COPY": [
+                "KOPI\u00cbREN"
+            ],
+            "Name servers work as a directory that translates domain names into IP addresses. Helps you to connect your website to different services.": [
+                "Nameservers werken als een directory die domeinnamen vertaalt naar IP-adressen. Helpt u om uw website te verbinden met verschillende diensten."
+            ],
+            "Object Caching": [
+                "Objectcaching"
+            ],
+            "Object Caching is enabled": [
+                "Objectcaching is ingeschakeld"
+            ],
+            "Object Caching is NOT enabled": [
+                "Objectcaching is NIET ingeschakeld"
+            ],
+            "Object Caching is NOT setup": [
+                "Objectcaching is NIET ingesteld"
+            ],
+            "Your site's data is being cached for better performance.": [
+                "De gegevens van uw site worden gecached voor betere prestaties."
+            ],
+            "Your site's data is not being cached, which may slow things down.": [
+                "De gegevens van uw site worden niet gecached, wat de snelheid kan verminderen."
+            ],
+            "Object Caching is not set up on your site. Learn more about enabling it.": [
+                "Objectcaching is niet ingesteld op uw site. Lees meer over het inschakelen ervan."
+            ],
+            "Clear Object Cache": [
+                "Objectcache wissen"
+            ],
+            "Enable Object Caching": [
+                "Objectcaching inschakelen"
+            ],
+            "Disable Object Cache": [
+                "Objectcache uitschakelen"
+            ],
+            "Learn more": [
+                "Meer informatie"
+            ],
+            "Object Caching Update Failed": [
+                "Bijwerken objectcaching mislukt"
+            ],
+            "There was an error updating the object caching settings. Please try again.": [
+                "Er is een fout opgetreden bij het bijwerken van de objectcaching-instellingen. Probeer het opnieuw."
+            ],
+            "Object Cache Cleared": [
+                "Objectcache gewist"
+            ],
+            "The object cache was successfully cleared.": [
+                "De objectcache is succesvol gewist."
+            ],
+            "Hang tight, we're gathering the latest info\u2026": [
+                "Even geduld, we verzamelen de laatste informatie\u2026"
+            ],
+            "Error:": [
+                "Fout:"
+            ],
+            "A general overview of your %s hosting plan and your site's performance.": [
+                "Een algemeen overzicht van uw %s hostingplan en de prestaties van uw site."
+            ],
+            "A general overview of your hosting and your site's performance.": [
+                "Een algemeen overzicht van uw hosting en de prestaties van uw site."
+            ],
+            "PLAN_NAME": [
+                "PLAN_NAAM"
+            ],
+            "Manage Hosting": [
+                "Hosting beheren"
+            ],
+            "PHP Version": [
+                "PHP-versie"
+            ],
+            "Could not determine the PHP version": [
+                "Kon de PHP-versie niet bepalen"
+            ],
+            "%1$s (%2$s Recommended)": [
+                "%1$s (%2$s Aanbevolen)"
+            ],
+            "SSH Login Info": [
+                "SSH-inloginformatie"
+            ],
+            "SSH Keys": [
+                "SSH-sleutels"
+            ],
+            "SSH provides a secure way to access the web server over CLI to run server commands through a terminal.": [
+                "SSH biedt een veilige manier om via CLI toegang te krijgen tot de webserver om serveropdrachten uit te voeren via een terminal."
+            ],
+            "SSH Login:": [
+                "SSH-inloggen:"
+            ],
+            "SSH info unavailable": [
+                "SSH-informatie niet beschikbaar"
+            ],
+            "Your site's safe from malware!": [
+                "Uw site is veilig voor malware!"
+            ],
+            "Update": [
+                "Bijwerken"
+            ],
+            "Manage": [
+                "Beheren"
+            ],
+            "Manage keys": [
+                "Sleutels beheren"
+            ],
+            "Copy": [
+                "Kopi\u00ebren"
+            ]
+        }
+    }
+}

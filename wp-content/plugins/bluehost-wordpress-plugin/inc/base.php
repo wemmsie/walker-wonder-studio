@@ -80,10 +80,59 @@ add_action( 'admin_init', __NAMESPACE__ . '\\bluehost_setup' );
 /**
  * Filter the date used in data module
  *
- * @param string $install_date value from hook
  * @return int
  */
-function bluehost_install_date_filter( $install_date ) {
+function bluehost_install_date_filter() {
 	return bluehost_get_plugin_install_date();
 }
 add_filter( 'nfd_install_date_filter', __NAMESPACE__ . '\\bluehost_install_date_filter' );
+
+/**
+ * SVG allowed tags for kses
+ *
+ * Exampl use: wp_kses( $svg, KSES_ALLOWED_SVG_TAGS );
+ */
+const KSES_ALLOWED_SVG_TAGS = array(
+	'svg'  => array(
+		'class'        => true,
+		'fill'         => true,
+		'height'       => true,
+		'stroke'       => true,
+		'stroke-width' => true,
+		'viewbox'      => true,
+		'width'        => true,
+		'xmlns'        => true,
+	),
+	'g'    => array(
+		'fill'              => true,
+		'stroke'            => true,
+		'stroke-miterlimit' => true,
+		'stroke-width'      => true,
+	),
+	'rect' => array(
+		'fill'      => true,
+		'height'    => true,
+		'rx'        => true,
+		'transform' => true,
+		'width'     => true,
+		'x'         => true,
+		'y'         => true,
+	),
+	'text' => array(
+		'fill'        => true,
+		'font-family' => true,
+		'font-size'   => true,
+		'font-weight' => true,
+		'title'       => true,
+		'transform'   => true,
+	),
+	'path' => array(
+		'd'               => true,
+		'fill'            => true,
+		'opacity'         => true,
+		'stroke-linecap'  => true,
+		'stroke-linejoin' => true,
+		'transform'       => true,
+
+	),
+);

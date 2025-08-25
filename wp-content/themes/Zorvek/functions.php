@@ -9,9 +9,81 @@ require_once get_template_directory() . '/assets/functions/acf_post_selector.php
 require_once get_template_directory() . '/assets/functions/color_picker.php';
 require_once get_template_directory() . '/assets/functions/handle_contact_form.php';
 
+
 // require_once get_template_directory() . '/assets/functions/acf_cms.php';
 
 // --- Enqueue theme styles and scripts ---
+
+// functions.php
+
+// Renders modals from ACF Options repeater, late in the footer.
+function zorvek_render_booking_modals()
+{
+    $is_admin_user = current_user_can('manage_options');
+
+    // LOUD (admin-only) diagnostics so you see *why* nothing renders.
+    if (! function_exists('have_rows')) {
+        if ($is_admin_user) {
+            echo '<div style="position:fixed;z-index:999999;bottom:10px;right:10px;background:#222;color:#fff;padding:10px 14px;border-radius:6px;">
+        <strong>Modals not rendered:</strong> ACF functions not available. Is Advanced Custom Fields active?
+      </div>';
+        }
+        return;
+    }
+
+    // Use have_rows on the Options page
+    if (! have_rows('embed_codes', 'option')) {
+        if ($is_admin_user) {
+            $rows = get_field('embed_codes', 'option');
+            $count = is_array($rows) ? count($rows) : 0;
+            echo '<div style="position:fixed;z-index:999999;bottom:10px;right:10px;background:#222;color:#fff;padding:10px 14px;border-radius:6px;">
+        <strong>Modals not rendered:</strong> No rows found in <code>embed_codes</code> on Options. (count=' . $count . ')
+      </div>';
+        }
+        return;
+    }
+
+    // We have rows: output ALL modals
+    while (have_rows('embed_codes', 'option')) : the_row();
+        $raw_id   = (string) get_sub_field('id');
+        $modal_id = sanitize_title($raw_id);            // normalized id ("Booking Link" -> "booking-link")
+        $code     = (string) get_sub_field('embed_code'); // Calendly embed
+
+        // Keep Calendly <script> tags (trusted admin-entered HTML).
+        // If you prefer kses, allow <script> (see note below).
+?>
+        <div id="<?php echo esc_attr($modal_id); ?>" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+            <div class="modal-overlay modal-toggle"></div>
+            <div class="modal-wrapper modal-transition" role="document">
+                <button class="modal-close modal-toggle" aria-label="Close modal">
+                    <div class='modal-inner'>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                    </div>
+                </button>
+                <div class="modal-body">
+                    <div class="modal-content">
+                        <?php echo $code; // raw echo so Calendly loads 
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+<?php
+    endwhile;
+}
+
+// Render in footer so ACF is definitely loaded.
+add_action('wp_footer', 'zorvek_render_booking_modals', 99);
+
+// OPTIONAL: also expose a shortcode so you can render modals anywhere.
+add_shortcode('booking_modals', function () {
+    ob_start();
+    zorvek_render_booking_modals();
+    return ob_get_clean();
+});
+
+
 function zorvek_enqueue_scripts()
 {
     // Enqueue the default theme stylesheet
@@ -25,7 +97,7 @@ function zorvek_enqueue_scripts()
     wp_enqueue_script('jquery');
 
     wp_enqueue_script('gsap-js', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js', false);
-	wp_enqueue_script( 'gsap-st', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js', false, true );
+    wp_enqueue_script('gsap-st', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js', false, true);
 
     // Enqueue main JavaScript file as a module, with jQuery as a dependency
     wp_enqueue_script('zorvek-main-script', get_template_directory_uri() . '/src/script/main.min.js', array(), '1.0', false);
@@ -60,7 +132,8 @@ function enqueue_custom_admin_styles()
 }
 add_action('admin_enqueue_scripts', 'enqueue_custom_admin_styles');
 
-function load_custom_admin_script() {
+function load_custom_admin_script()
+{
     wp_enqueue_script('zorvek-main-admin-script', get_template_directory_uri() . '/src/script/admin.min.js', array('jquery', 'acf-input'), '1.0', true);
 }
 add_action('acf/input/admin_enqueue_scripts', 'load_custom_admin_script');
@@ -68,10 +141,11 @@ add_action('acf/input/admin_enqueue_scripts', 'load_custom_admin_script');
 
 
 // Function to add prism.css and prism.js to the site
-function add_prism() {
+function add_prism()
+{
 
-    if ( is_single() && ( 'post' === get_post_type() || 'resource' === get_post_type() ) ) {
-        
+    if (is_single() && ('post' === get_post_type() || 'resource' === get_post_type())) {
+
         // Register prism.css file
         wp_register_style(
             'prismCSS', // handle name for the style 
@@ -87,7 +161,6 @@ function add_prism() {
         // Enqueue the registered style and script files
         wp_enqueue_style('prismCSS');
         wp_enqueue_script('prismJS');
-
     }
 }
 add_action('wp_enqueue_scripts', 'add_prism');
@@ -181,28 +254,32 @@ function disable_block_editor_for_page_post_type($use_block_editor, $post_type)
     return $use_block_editor;
 }
 
-function theme_register_menus() {
+function theme_register_menus()
+{
     register_nav_menus(
         array(
-            'primary' => __( 'Primary Menu', 'theme-text-domain' ),
-            'footer' => __( 'Footer Menu', 'theme-text-domain' ),
+            'primary' => __('Primary Menu', 'theme-text-domain'),
+            'footer' => __('Footer Menu', 'theme-text-domain'),
         )
     );
 }
-add_action( 'after_setup_theme', 'theme_register_menus' );
+add_action('after_setup_theme', 'theme_register_menus');
 
-class Zorvek_Walker extends Walker_Nav_Menu {
+class Zorvek_Walker extends Walker_Nav_Menu
+{
 
     // Start Level - this controls the submenu <ul> element
-    function start_lvl( &$output, $depth = 0, $args = null ) {
+    function start_lvl(&$output, $depth = 0, $args = null)
+    {
         $indent = str_repeat("\t", $depth);
         $submenu_class = ($depth == 0) ? 'first-submenu' : 'sub-submenu';
         $output .= "\n$indent<ul class=\"$submenu_class\">\n";
     }
 
     // Start Element - this controls each menu item <li> and <a> tag
-    function start_el( &$output, $item, $depth = 0, $args = null, $id = 0 ) {
-        $indent = ( $depth ) ? str_repeat("\t", $depth) : '';
+    function start_el(&$output, $item, $depth = 0, $args = null, $id = 0)
+    {
+        $indent = ($depth) ? str_repeat("\t", $depth) : '';
         $class_names = $depth === 0 ? 'top-menu-item' : 'sub-menu-item';
         $classes = implode(' ', $item->classes); // All classes of the current menu item
 
@@ -210,34 +287,36 @@ class Zorvek_Walker extends Walker_Nav_Menu {
         $output .= '<a href="' . $item->url . '">' . $item->title . '</a>';
 
         // If the item has the "about" class, append the custom data
-        if (in_array('about', $item->classes)) {
+        if (in_array('contact', $item->classes)) {
             // Append the additional data as list items within this menu item
             $output .= '<ul class="sub-submenu">';
             $output .= '<li class="sub-menu-item custom-appended">';
-            $output .= esc_html( get_field( 'location', 'options' ) );
+            $output .= esc_html(get_field('location', 'options'));
             $output .= '</li>';
             $output .= '<li class="sub-menu-item custom-appended">';
-            $output .= '<a href="mailto:' . esc_html( get_field( 'email', 'options' ) ) . '">' . esc_html( get_field( 'email', 'options' ) ) . '</a>';
+            $output .= '<a href="mailto:' . esc_html(get_field('email', 'options')) . '">' . esc_html(get_field('email', 'options')) . '</a>';
             $output .= '</li>';
             $output .= '<li class="sub-menu-item custom-appended">';
-            $output .= '<a href="tel:' . esc_html( get_field( 'phone_number', 'options' ) ) . '">' . esc_html( get_field( 'phone_number', 'options' ) ) . '</a>';
+            $output .= '<a href="tel:' . esc_html(get_field('phone_number', 'options')) . '">' . esc_html(get_field('phone_number', 'options')) . '</a>';
             $output .= '</li>';
             $output .= '</ul>';
         }
     }
 
     // End Element - controls closing </li>
-    function end_el( &$output, $item, $depth = 0, $args = null ) {
+    function end_el(&$output, $item, $depth = 0, $args = null)
+    {
         $output .= "</li>\n";
     }
 }
 
-function zorvek_enqueue_relevanssi_live_search() {
-    if ( is_search() ) {
+function zorvek_enqueue_relevanssi_live_search()
+{
+    if (is_search()) {
         // This script is built into the Relevanssi Live Ajax plugin, no need to specify a JS file.
     }
 }
-add_action( 'wp_enqueue_scripts', 'zorvek_enqueue_relevanssi_live_search' );
+add_action('wp_enqueue_scripts', 'zorvek_enqueue_relevanssi_live_search');
 
 
 // function zorvek_enqueue_relevanssi_live_search_js() {

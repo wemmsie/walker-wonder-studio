@@ -2,16 +2,21 @@
 $ns = get_sub_field('halfsies');
 $flip = get_sub_field('flip_direction');
 $copy = get_sub_field('wysiwyg');
+$name = get_sub_field('block_name');
+
+$slug = mb_strtolower($name, 'UTF-8');
+$slug = preg_replace('/[^a-z0-9]+/', '-', $slug);
+$slug = trim($slug, '-');
 ?>
 
 <?php if ($ns) : ?>
     <div id='halfsies' class='block'>
-        <div class='container gutter <?php echo $flip ?>'>
+        <div id="<?php echo esc_attr($slug); ?>" class='container gutter <?php echo $flip ?>'>
             <div class='half copy'>
                 <?php echo $copy ?>
                 <?php $cta = get_sub_field('cta'); ?>
                 <?php if ($cta) : ?>
-                    <a class='pill pill-blue mr-auto' href="<?php echo esc_url($cta['url']); ?>" target="<?php echo esc_attr($cta['target']); ?>"><?php echo esc_html($cta['title']); ?></a>
+                    <a class='pill pill-blue mr-auto' href=" <?php echo esc_url($cta['url']); ?>" target="<?php echo esc_attr($cta['target']); ?>"><?php echo esc_html($cta['title']); ?></a>
                 <?php endif; ?>
             </div>
 

@@ -28,7 +28,9 @@ class CreativeMail extends Partner {
 	 * @return void
 	 */
 	private function disable_redirect() {
-		update_option( 'ce4wp_activation_redirect', false );
+		if ( get_option( 'ce4wp_activation_redirect' ) !== false ) {
+			update_option( 'ce4wp_activation_redirect', false );
+		}
 	}
 
 	/**

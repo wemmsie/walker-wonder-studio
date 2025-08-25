@@ -123,14 +123,22 @@ class PluginsController {
 				'type'    => 'integer',
 				'default' => 0,
 			),
+			'premium'  => array(
+				'type'    => 'boolean',
+				'default' => false,
+			),
+			'provider' => array(
+				'type'    => 'string',
+				'default' => '',
+			),
 		);
 	}
 
-			/**
-			 * Get args for the uninstall route.
-			 *
-			 * @return array
-			 */
+	/**
+	 * Get args for the uninstall route.
+	 *
+	 * @return array
+	 */
 	public function get_uninstall_plugin_args() {
 		return array(
 			'plugin'   => array(
@@ -175,12 +183,61 @@ class PluginsController {
 	 */
 	public function install( \WP_REST_Request $request ) {
 		$plugin   = $request->get_param( 'plugin' );
-		$activate = $request->get_param( 'activate' );
 		$queue    = $request->get_param( 'queue' );
 		$priority = $request->get_param( 'priority' );
+		$provider = $request->get_param( 'provider' );
+		$premium  =
+			$request->get_param( 'premium' )
+			? $request->get_param( 'premium' )
+			: false; // defaults to false
+		$basename =
+			$request->get_param( 'basename' )
+			? $request->get_param( 'basename' )
+			: false; // defaults to false
+
+		// default to true
+		$shoud_activate =
+			$request->get_param( 'activate' )
+			? $request->get_param( 'activate' )
+			: true; // default
+
+		// If basename is provided, check if installed or active already.
+		if ( $basename && PluginInstaller::is_plugin_installed( $basename ) ) {
+			// If already installed, check if already active
+			if ( \is_plugin_active( $basename ) ) {
+				// If already active, nothing to do, return 200
+				return new \WP_REST_Response(
+					array(),
+					200
+				);
+			}
+			// If not active, check if should activate
+			if ( $shoud_activate ) {
+				// If should activate, activate the plugin
+				$status = \activate_plugin( $basename );
+				if ( \is_wp_error( $status ) ) {
+					$status->add_data( array( 'status' => 500 ) );
+					return $status;
+				}
+				return new \WP_REST_Response(
+					array(),
+					200
+				);
+			}
+		}
+
+		// If the plugin is premium use the corresponding function.
+		if ( true === $premium ) {
+			return PluginInstaller::install_premium_plugin( $plugin, $provider, $shoud_activate, $basename );
+		}
+
+		// If the plugin is free and not queued use the corresponding function.
+		if ( false === $premium && false === $queue ) {
+			return PluginInstaller::install( $plugin, $shoud_activate );
+		}
 
 		// Checks if a plugin with the given slug and activation criteria already exists.
-		if ( PluginInstaller::exists( $plugin, $activate ) ) {
+		if ( PluginInstaller::exists( $plugin, $shoud_activate ) ) {
 			return new \WP_REST_Response(
 				array(),
 				200
@@ -193,7 +250,7 @@ class PluginsController {
 			PluginInstallTaskManager::add_to_queue(
 				new PluginInstallTask(
 					$plugin,
-					$activate,
+					$shoud_activate,
 					$priority
 				)
 			);
@@ -204,9 +261,10 @@ class PluginsController {
 			);
 		}
 
-		// Execute the task if it need not be queued.
-		$plugin_install_task = new PluginInstallTask( $plugin, $activate );
+		// Set up the task if it need not be queued.
+		$plugin_install_task = new PluginInstallTask( $plugin, $shoud_activate );
 
+		// Return the queued task.
 		return $plugin_install_task->execute();
 	}
 
@@ -269,13 +327,13 @@ class PluginsController {
 	 * @return \WP_REST_Response
 	 */
 	public function get_status( \WP_REST_Request $request ) {
-		$plugin    = $request->get_param( 'plugin' );
-		$activated = $request->get_param( 'activated' );
+		$plugin       = $request->get_param( 'plugin' );
+		$is_activated = $request->get_param( 'activated' );
 
-		if ( PluginInstaller::exists( $plugin, $activated ) ) {
+		if ( PluginInstaller::exists( $plugin, $is_activated ) ) {
 			return new \WP_REST_Response(
 				array(
-					'status' => $activated ? 'activated' : 'installed',
+					'status' => $is_activated ? 'activated' : 'installed',
 				),
 				200
 			);
@@ -310,7 +368,5 @@ class PluginsController {
 			),
 			200
 		);
-
 	}
 }
-

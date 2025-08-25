@@ -29,8 +29,11 @@ if (function_exists('add_action')) {
 							define('MONTH_IN_SECONDS', '60 * 60 * 24 * 30');
 						}
 						if ( ! defined( 'NFD_FACEBOOK_VERSION' ) ) {
-							define( 'NFD_FACEBOOK_VERSION', '1.0.9' );
+							define( 'NFD_FACEBOOK_VERSION', '1.2.1' );
 						}
+						if ( ! defined( 'NFD_FACEBOOK_DIR' ) ) {
+							define( 'NFD_FACEBOOK_DIR', __DIR__ );
+						}						
 						new Facebook($container);
 					},
 					'isActive' => true,

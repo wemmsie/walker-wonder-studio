@@ -12,28 +12,28 @@ class DatabaseManager {
     public function get() {
 		$this->clean();
 
-		$file_name = Helper::get_random_string( 20 );
+		$file_name = Helper::get_random_string( 10 );
 		$token     = md5( $file_name );
-		$url       = 'https://github.com/adminerevo/adminerevo/releases/download/v4.8.4/adminer-4.8.4.php';
+		$url       = 'https://github.com/vrana/adminer/releases/download/v5.3.0/adminer-5.3.0-mysql.php';
 
-		$search  = [
-			'/\bjs_escape\b/',
-			'/\bget_temp_dir\b/',
-			'/\bis_ajax\b/',
-			'/\bsid\b/',
-		];
-		$replace = [
-			'instawp_js_escape',
-			'instawp_get_temp_dir',
-			'instawp_is_ajax',
-			'instawp_sid',
-		];
+		$response = wp_remote_get( $url );
+		if ( is_wp_error( $response ) ) {
+			return [
+				'success' => false,
+				'message' => $response->get_error_message(),
+			];
+		} else {
+			$file = wp_remote_retrieve_body( $response );
+		}
 
-		$file = file_get_contents( $url );
-		$file = preg_replace( $search, $replace, $file );
+		$file = preg_replace(
+			'/(namespace\s+Adminer;\s*)/',
+			'$1' . "if(!defined('INSTAWP_PLUGIN_DIR')){die;}",
+			$file,
+			1
+		);
 
-		$file_path            = self::get_file_path( $file_name );
-		$database_manager_url = self::get_database_manager_url( $file_name );
+		$file_path = self::get_file_path( $file_name );
 
 		try {
 			$result = file_put_contents( $file_path, $file, LOCK_EX );
@@ -42,7 +42,7 @@ class DatabaseManager {
 			}
 
 			$file_arr   = file( $file_path );
-			$new_line   = "if ( ! defined( 'INSTAWP_PLUGIN_DIR' ) ) { die; }\n";
+			$new_line   = "/* Copyright (c) InstaWP Inc. */\n";
 			array_splice( $file_arr, 1, 0, $new_line );
 			file_put_contents( $file_path, implode( '', $file_arr ) );
 
@@ -75,7 +75,7 @@ class DatabaseManager {
 	}
 
 	public static function get_directory() {
-		return INSTAWP_PLUGIN_DIR . '/includes/database-manager/';
+		return INSTAWP_PLUGIN_DIR . 'includes/database-manager/';
 	}
 
 	public static function get_file_path( $file_name ) {

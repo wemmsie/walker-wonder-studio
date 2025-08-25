@@ -1,13 +1,11 @@
-/**
- * Features JS API
- * JS interface for the features module and feature management
- */
 {
+	const { __, sprintf } = wp.i18n;
+
 	/**
 	 * Helper method to check if a feature is enabled by name
 	 *
 	 * @param {*} name
-	 * @return {boolean} wether the features is enabled
+	 * @return {boolean} whether the feature is enabled
 	 */
 	const isEnabled = async ( name ) => {
 		return window.NewfoldFeatures.features[ name ];
@@ -22,7 +20,7 @@
 		const result = {};
 		if ( await isEnabled( name ) ) {
 			result.success = false;
-			result.message = `'${ name }' is already enabled.`;
+			result.message = sprintf( __( "'%s' is already enabled.", 'wp-module-features' ), name );
 			return result;
 		}
 
@@ -35,10 +33,10 @@
 				if ( response === true ) {
 					updateFeature( name, true );
 					result.success = true;
-					result.message = `'${ name }' is now enabled`;
+					result.message = sprintf( __( "'%s' is now enabled", 'wp-module-features' ), name );
 				} else {
 					result.success = false;
-					result.message = `'${ name }' could not be enabled`;
+					result.message = sprintf( __( "'%s' could not be enabled", 'wp-module-features' ), name );
 				}
 			} )
 			.catch( ( error ) => {
@@ -58,7 +56,7 @@
 		const result = {};
 		if ( false === ( await isEnabled( name ) ) ) {
 			result.success = false;
-			result.message = `'${ name }' is already disabled.`;
+			result.message = sprintf( __( "'%s' is already disabled.", 'wp-module-features' ), name );
 			return result;
 		}
 
@@ -71,10 +69,10 @@
 				if ( response === true ) {
 					updateFeature( name, false );
 					result.success = true;
-					result.message = `'${ name }' is now disabled`;
+					result.message = sprintf( __( "'%s' is now disabled", 'wp-module-features' ), name );
 				} else {
 					result.success = false;
-					result.message = `'${ name }' could not be disabled`;
+					result.message = sprintf( __( "'%s' could not be disabled", 'wp-module-features' ), name );
 				}
 			} )
 			.catch( ( error ) => {

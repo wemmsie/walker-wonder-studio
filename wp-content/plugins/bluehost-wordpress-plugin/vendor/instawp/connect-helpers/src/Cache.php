@@ -42,19 +42,33 @@ class Cache {
 
 		// WP Rocket.
 		if ( is_plugin_active( 'wp-rocket/wp-rocket.php' ) ) {
-			$message = '';
-			
-			if ( function_exists( 'rocket_clean_minify' ) && function_exists( 'rocket_clean_domain' ) ) {
-				rocket_clean_minify();
-				rocket_clean_domain();
-			} else {
-				$message = 'Function not exists.';
-			}
+			$functions = [
+				'rocket_clean_minify',
+				'rocket_clean_domain',
+				'rocket_clean_cache_busting',
+				[ 'rocket_dismiss_box', 'rocket_warning_plugin_modification' ],
+				[ 'rocket_renew_box', 'preload_notice' ]
+			];
+
+			$executed = array_reduce( $functions, function( $count, $item ) {
+				if ( is_array( $item ) ) {
+					$func = $item[0];
+					$arg = $item[1];
+					if ( function_exists( $func ) ) {
+						$func( $arg );
+						return $count + 1;
+					}
+				} elseif ( function_exists( $item )) {
+					$item();
+					return $count + 1;
+				}
+				return $count;
+			}, 0 );
 
 			$results[] = [
 				'slug'    => 'wp-rocket',
 				'name'    => 'WP Rocket',
-				'message' => $message
+				'message' => $executed === 0 ? 'Function not exists.' : ''
 			];
 		}
 
@@ -424,6 +438,42 @@ class Cache {
 				'message' => $message
 			];
 		}
+
+	    // WPC Edge Cache
+	    if ( class_exists( '\Edge_Cache_Plugin' ) ) {
+		    $message    = '';
+			$edge_cache = new \Edge_Cache_Plugin();
+
+			if ( class_exists( '\Edge_Cache_Atomic' ) && class_exists( '\Edge_Cache_Purge' ) ) {
+                $platform = new \Edge_Cache_Atomic();
+				$purge    = new \Edge_Cache_Purge( $platform );
+
+				$wp_domain = $platform->get_domain_name();
+				$bat_cache = $purge->purge_batcache();
+            } else {
+				$wp_domain = $edge_cache->get_wp_domain();
+				$bat_cache = $edge_cache->purge_batcache();
+			}
+
+		    $data       = array(
+			    'wp_action' => sprintf( 'manual_%s', 'purge' ),
+			    'wp_domain' => $wp_domain,
+			    'at_host'   => php_uname('n'),
+			    'ip_addr'   => $_SERVER['REMOTE_ADDR'],
+			    'batcache'  => $bat_cache,
+		    );
+
+		    $response = $edge_cache->query_ec_backend( 'purge', array( 'body' => $data ) );
+		    if ( $response['success'] === false && ! empty( $response['error'] ) ) {
+			    $message = $response['error'];
+		    }
+
+		    $results[] = [
+			    'slug'    => 'edge-cache',
+			    'name'    => 'InstaWP Live Cache',
+			    'message' => $message,
+		    ];
+	    }
 
 		// WP Engine
 		if ( class_exists( '\WpeCommon' ) ) {

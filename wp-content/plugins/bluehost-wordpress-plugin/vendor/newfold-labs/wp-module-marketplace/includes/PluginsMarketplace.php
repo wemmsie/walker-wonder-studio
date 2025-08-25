@@ -21,6 +21,8 @@ class PluginsMarketplace {
 			add_action( 'admin_menu', array( __CLASS__, 'add_premuim_plugins_menu_link' ) );
 			add_filter( 'install_plugins_tabs', array( __CLASS__, 'add_premuim_plugins_tab' ) );
 			add_action( 'admin_head-plugin-install.php', array( __CLASS__, 'premuim_plugins_tab_enqueue_assets' ) );
+
+			\add_action( 'init', array( __CLASS__, 'load_text_domain' ), 100 );
 		}
 	}
 
@@ -84,7 +86,7 @@ class PluginsMarketplace {
 	 * @return array
 	 */
 	public static function add_premuim_plugins_tab( array $tabs ) {
-		$tabs['premium-marketplace'] = __( 'Premium', 'newfold-marketplace-module' );
+		$tabs['premium-marketplace'] = __( 'Premium', 'wp-module-marketplace' );
 
 		return $tabs;
 	}
@@ -102,14 +104,48 @@ class PluginsMarketplace {
 		wp_enqueue_style( 'nfd_plugins_marketplace_css', $assetsDir . 'css/NFDPluginsMarketplace.css', array(), container()->plugin()->version );
 		wp_enqueue_script( 'nfd_plugins_marketplace_js', $assetsDir . 'js/NFDPluginsMarketplace.js', array(), container()->plugin()->version, true );
 
+		\wp_set_script_translations(
+			'nfd_plugins_marketplace_js',
+			'wp-module-marketplace',
+			NFD_MARKETPLACE_DIR . '/languages'
+		);
+
 		wp_localize_script(
 			'nfd_plugins_marketplace_js',
 			'nfdPremiumPluginsMarketplace',
 			array(
 				'restApiRoot'            => \get_home_url() . '/index.php?rest_route=',
 				'restApiNonce'           => wp_create_nonce( 'wp_rest' ),
-				'marketplaceDescription' => __( 'Unlock the full potential of your WordPress website with premium plugins from', 'newfold-marketplace-module' ) . ' ' . ucwords( container()->plugin()->id ),
+				'marketplaceDescription' => sprintf(
+					/* translators: The brand from the plugin is inserted into the string */
+					esc_html__(
+						'Unlock the full potential of your WordPress website with premium plugins from %s.',
+						'wp-module-marketplace'
+					),
+					esc_html( ucwords( container()->plugin()->id ) )
+				),
 			)
+		);
+	}
+
+
+	/**
+	 * Load text domain for Module
+	 *
+	 * @return void
+	 */
+	public static function load_text_domain() {
+
+		\load_plugin_textdomain(
+			'wp-module-marketplace',
+			false,
+			NFD_MARKETPLACE_DIR . '/languages'
+		);
+
+		\load_script_textdomain(
+			'nfd_plugins_marketplace_js',
+			'wp-module-marketplace',
+			NFD_MARKETPLACE_DIR . '/languages'
 		);
 	}
 }

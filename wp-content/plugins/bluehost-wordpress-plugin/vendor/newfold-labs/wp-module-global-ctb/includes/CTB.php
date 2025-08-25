@@ -29,6 +29,7 @@ class CTB {
 		add_action( 'rest_api_init', array( CTBApi::class, 'registerRoutes' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'ctb_scripts' ) );
 		add_action( 'admin_footer', array( $this, 'ctb_footer' ) );
+		add_filter( 'newfold-runtime', array( $this, 'add_to_runtime' ) );
 	}
 
 	/**
@@ -83,5 +84,19 @@ class CTB {
 	 */
 	public function ctb_footer() {
 		echo "<div id='nfd-global-ctb-container' aria-hidden='true'></div>";
+	}
+
+	/**
+	 * Adds values to the runtime object.
+	 *
+	 * @param array $sdk The runtime object.
+	 *
+	 * @return array Modified runtime object.
+	 *
+	 * @see newfold/wp-module-runtime
+	 */
+	public function add_to_runtime( $sdk ) {
+
+		return array_merge( $sdk, array( 'locale' => get_locale() ) );
 	}
 }

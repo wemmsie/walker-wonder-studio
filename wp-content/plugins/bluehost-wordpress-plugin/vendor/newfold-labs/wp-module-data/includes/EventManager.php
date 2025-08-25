@@ -33,6 +33,11 @@ class EventManager {
 	);
 
 	/**
+	 * @var EventQueue
+	 */
+	private $event_queue;
+
+	/**
 	 * List of subscribers receiving event data
 	 *
 	 * @var array
@@ -45,6 +50,27 @@ class EventManager {
 	 * @var Event[]
 	 */
 	private $queue = array();
+
+	/**
+	 * The maximum number of attempts to send an event
+	 *
+	 * @var int
+	 */
+	private $attempts_limit = 3;
+
+	/**
+	 * Constructor
+	 *
+	 * Inject or instantiate required objects.
+	 *
+	 * @param ?EventQueue $event_queue
+	 */
+	public function __construct(
+		?EventQueue $event_queue = null
+	) {
+
+		$this->event_queue = $event_queue ?? EventQueue::getInstance();
+	}
 
 	/**
 	 * Initialize the Event Manager
@@ -122,7 +148,7 @@ class EventManager {
 	public function shutdown(): void {
 
 		// Due to a bug sending too many events, we are temporarily disabling these.
-		$disabled_events = array( 'pageview', 'wp_mail', 'plugin_updated' );
+		$disabled_events = array( 'pageview', 'page_view', 'wp_mail', 'plugin_updated' );
 		foreach ( $this->queue as $index => $event ) {
 			if ( in_array( $event->key, $disabled_events, true ) ) {
 				unset( $this->queue[ $index ] );
@@ -140,7 +166,7 @@ class EventManager {
 
 		// Save any async events for sending later
 		if ( ! empty( $async ) ) {
-			EventQueue::getInstance()->queue()->push( $async );
+			$this->event_queue->queue()->push( $async );
 		}
 
 		// Any remaining items in the queue should be sent now
@@ -213,26 +239,24 @@ class EventManager {
 	 * @param  Event[] $events  A list of events
 	 */
 	protected function send_request_events( array $events ): void {
+
 		foreach ( $this->get_subscribers() as $subscriber ) {
 			/**
 			 * @var array{succeededEvents:array,failedEvents:array}|WP_Error $response
 			 */
 			$response = $subscriber->notify( $events );
 
-			// Due to an unidentified bug causing events to be resent, we are temporarily disabling retries.
-			continue;
-
 			if ( ! ( $subscriber instanceof HiiveConnection ) ) {
 				continue;
 			}
 
 			if ( is_wp_error( $response ) ) {
-				EventQueue::getInstance()->queue()->push( $events );
+				$this->event_queue->queue()->push( $events );
 				continue;
 			}
 
 			if ( ! empty( $response['failedEvents'] ) ) {
-				EventQueue::getInstance()->queue()->push( $response['failedEvents'] );
+				$this->event_queue->queue()->push( $response['failedEvents'] );
 			}
 		}
 	}
@@ -244,7 +268,9 @@ class EventManager {
 	 */
 	public function send_saved_events_batch(): void {
 
-		$queue = EventQueue::getInstance()->queue();
+		$queue = $this->event_queue->queue();
+
+		$queue->remove_events_exceeding_attempts_limit( $this->attempts_limit );
 
 		/**
 		 * Array indexed by the table row id.
@@ -265,14 +291,13 @@ class EventManager {
 			return;
 		}
 
+		$queue->increment_attempt( array_keys( $events ) );
+
 		foreach ( $this->get_subscribers() as $subscriber ) {
 			/**
 			 * @var array{succeededEvents:array,failedEvents:array}|WP_Error $response
 			 */
 			$response = $subscriber->notify( $events );
-
-			// Due to an unidentified bug causing events to be resent, we are temporarily disabling retries.
-			continue;
 
 			if ( ! ( $subscriber instanceof HiiveConnection ) ) {
 				continue;
@@ -293,8 +318,5 @@ class EventManager {
 				$queue->release( array_keys( $response['failedEvents'] ) );
 			}
 		}
-
-		// Due to an unidentified bug causing events to be resent, we are temporarily disabling retries.
-		$queue->remove( array_keys( $events ) );
 	}
 }

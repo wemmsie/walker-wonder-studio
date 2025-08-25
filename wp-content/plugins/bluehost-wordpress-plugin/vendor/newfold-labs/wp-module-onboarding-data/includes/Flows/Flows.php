@@ -5,6 +5,7 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Services\FlowService;
 use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
+use NewfoldLabs\WP\Module\Onboarding\Data\Config;
 
 /**
  * Contains Onboarding Flow information.
@@ -16,7 +17,7 @@ final class Flows {
 	 * @var array
 	 */
 	protected static $data = array(
-		'version'              => '2.0.6',
+		'version'              => '2.0.7',
 
 		// Each time step is viewed, insert GMT timestamp to array.
 		'isViewed'             => array(),
@@ -139,7 +140,8 @@ final class Flows {
 		),
 
 		'sitegen'              => array(
-			'siteDetails'           => array(
+			'theForkExperimentVersion' => 0,
+			'siteDetails'              => array(
 				'name'                => '',
 				'type'                => '',
 				'style'               => '',
@@ -147,28 +149,29 @@ final class Flows {
 				'uniqueAboutBusiness' => '',
 				'minCharLimit'        => 34,
 				'mode'                => 'simple',
+				'locale'              => '',
 			),
-			'siteLogo'              => array(
+			'siteLogo'                 => array(
 				'id'       => 0,
 				'url'      => '',
 				'fileName' => '',
 				'fileSize' => 0,
 			),
-			'experience'            => array(
+			'experience'               => array(
 				'level' => 0,
 			),
-			'siteGenMetaStatus'     => array(
+			'siteGenMetaStatus'        => array(
 				'currentStatus' => 0,
 				'totalCount'    => 9,
 			),
-			'homepages'             => array(
+			'homepages'                => array(
 				'active' => array(),
 				'data'   => array(),
 			),
-			'skipCache'             => true,
-			'sitemapPagesGenerated' => false,
-			'customDesign'          => false,
-			'siteGenErrorMeta'      => array(
+			'skipCache'                => true,
+			'sitemapPagesGenerated'    => false,
+			'customDesign'             => false,
+			'siteGenErrorMeta'         => array(
 				'status'        => false,
 				'retryCount'    => 0,
 				'maxRetryCount' => 3,
@@ -176,7 +179,11 @@ final class Flows {
 		),
 
 		'continueWithoutAi'    => false,
-		'sitegenThemeMode' => '',
+		'sitegenThemeMode'     => '',
+		'onboardingRetries'    => array(
+			'retryCount'    => 0,
+			'maxRetryCount' => 3,
+		),
 	);
 
 	/**
@@ -220,8 +227,10 @@ final class Flows {
 	/**
 	 * Retrieve all the known onboarding flows.
 	 *
-	 * @return array A value of true for each key indicates that the flow has been approved
-	 * and a value of null indicates the flow has not been approved (or) has been temporarily disabled.
+	 * @return array Associative array of onboarding flows. A value of true for each key indicates that the
+	 *               flow has been approved. A value of null indicates the flow has not been approved or has
+	 *               been temporarily disabled. If no enabled flows are found, default flows are provided with
+	 *               a value of false.
 	 */
 	public static function get_flows() {
 		$current_brand = Data::current_brand();
@@ -326,16 +335,7 @@ final class Flows {
 	 * @return boolean
 	 */
 	public static function is_sitegen() {
-		if ( ! self::get_flows()['sitegen'] ) {
-			return false;
-		}
-
-		$flow_data = FlowService::read_data_from_wp_option();
-		if ( ! $flow_data || empty( $flow_data['activeFlow'] ) ) {
-			return false;
-		}
-
-		return 'sitegen' === $flow_data['activeFlow'];
+		return self::get_flows()['sitegen'];
 	}
 
 	/**

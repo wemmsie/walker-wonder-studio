@@ -1,0 +1,42 @@
+.modal {
+    @apply fixed z-[99] top-0 left-0 hidden w-full h-full justify-center items-center;
+    &.is-visible {
+        @apply visible flex;
+        .modal-overlay {
+            @apply absolute z-[97] bg-black opacity-30 w-full h-full;
+        }
+        .modal-transition {
+            @apply translate-y-0 opacity-100;
+        }
+        .modal-close .line {
+            @apply w-full h-[2px] bg-tertiary rounded-3xl absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2;
+            &:nth-child(1) { 
+                @apply rotate-45;
+            }
+            &:nth-child(2) {
+                @apply -rotate-45;
+            }
+        }
+    }
+    .modal-wrapper {
+        @apply relative z-[98] top-0 left-0 max-w-full max-h-full w-full shadow-1 m-auto overflow-hidden;
+    }
+    .modal-transition {
+        @apply transition-all translate-y-2 opacity-0;
+    }
+    .modal-close {
+        @apply flex justify-end fixed top-10 right-5 z-[99] bg-white bg-opacity-80 p-5 rounded-full transition-all;
+        &:hover {
+            @apply bg-opacity-100;
+        }
+        .modal-inner {
+            @apply w-8 h-8 relative;
+        }
+    }
+    .modal-body {
+        @apply h-full;
+    }
+    .modal-content {
+        @apply mt-5 h-full w-full max-h-full overflow-y-auto ;
+    }
+}

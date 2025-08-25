@@ -28,7 +28,9 @@ class OptinMonster extends Partner {
 	 * @return void
 	 */
 	private function disable_redirect() {
-		update_option( 'optin_monster_api_activation_redirect_disabled', true );
+		if ( get_option( 'optin_monster_api_activation_redirect_disabled' ) !== true ) {
+			update_option( 'optin_monster_api_activation_redirect_disabled', true );
+		}
 	}
 
 	/**

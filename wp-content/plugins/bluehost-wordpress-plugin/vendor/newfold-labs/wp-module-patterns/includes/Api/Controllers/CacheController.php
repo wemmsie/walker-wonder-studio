@@ -4,12 +4,23 @@ namespace NewfoldLabs\WP\Module\Patterns\Api\Controllers;
 use NewfoldLabs\WP\Module\Patterns\SiteClassification;
 use NewfoldLabs\WP\Module\Data\WonderBlocks\Requests\Fetch as WonderBlocksFetchRequest;
 use NewfoldLabs\WP\Module\Data\WonderBlocks\WonderBlocks;
+use NewfoldLabs\WP\Module\Patterns\CSSUtilities;
 
 /**
  * Controller for cache.
  */
 class CacheController {
 
+	/**
+	 * Clears the cached data based on the specified type.
+	 *
+	 * This endpoint handler clears cached data for patterns, templates, and/or categories
+	 * depending on the type parameter. If no type is specified, all caches will be cleared.
+	 * Additionally, refreshes CSS utility assets after clearing the cache.
+	 *
+	 * @param \WP_REST_Request $request The REST API request.
+	 * @return \WP_REST_Response Response with status of cache clearing operations.
+	 */
 	public static function clear_cache( \WP_REST_Request $request ) {
 
 		$type = $request->get_param( 'type' );
@@ -20,7 +31,7 @@ class CacheController {
 		// Initialize response
 		$response = array();
 
-		if ( ! $type || $type === 'patterns' ) {
+		if ( ! $type || 'patterns' === $type ) {
 			// Clear cache for patterns
 			$pattern_request = new WonderBlocksFetchRequest(
 				array(
@@ -33,7 +44,7 @@ class CacheController {
 			$response['patterns'] = 'Cache cleared';
 		}
 
-		if ( ! $type || $type === 'templates' ) {
+		if ( ! $type || 'templates' === $type ) {
 			// Clear cache for templates
 			$template_request = new WonderBlocksFetchRequest(
 				array(
@@ -46,7 +57,7 @@ class CacheController {
 			$response['templates'] = 'Cache cleared';
 		}
 
-		if ( ! $type || $type === 'categories' ) {
+		if ( ! $type || 'categories' === $type ) {
 
 			// Clear cache for categories
 			$category_request = new WonderBlocksFetchRequest(
@@ -71,6 +82,9 @@ class CacheController {
 
 			$response['categories'] = 'Cache cleared';
 		}
+
+		// Refresh the CSS utilities assets.
+		CSSUtilities::get_instance()->refresh_assets();
 
 		return new \WP_REST_Response( $response, 200 );
 	}

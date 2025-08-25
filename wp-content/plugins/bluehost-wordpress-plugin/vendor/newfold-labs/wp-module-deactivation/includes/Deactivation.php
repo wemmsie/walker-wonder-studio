@@ -30,15 +30,20 @@ class Deactivation {
 	public function __construct( Container $container ) {
 		$this->container = $container;
 
+		// deactivation hook
 		register_deactivation_hook(
 			$container->plugin()->file,
-			array( $this, 'handle' )
+			array( $this, 'on_deactivate' )
 		);
 
 		// Plugin deactivation survey.
-		add_action( 'admin_head-plugins.php', function () {
-			new DeactivationSurvey();
-		} );
+		\add_action( 'init', array( __CLASS__, 'load_text_domain' ), 100 );
+		add_action(
+			'admin_head-plugins.php',
+			function () {
+				new DeactivationSurvey();
+			}
+		);
 	}
 
 	/**
@@ -46,8 +51,17 @@ class Deactivation {
 	 *
 	 * @return void
 	 */
-	public function handle() {
+	public function on_deactivate() {
+		// disable coming soon mode
 		$this->disable_coming_soon();
+
+		// clear relevant transients
+		\delete_transient( 'newfold_marketplace' );
+		\delete_transient( 'newfold_notifications' );
+		\delete_transient( 'newfold_solutions' );
+
+		// flush rewrite rules
+		\flush_rewrite_rules();
 	}
 
 	/**
@@ -60,5 +74,19 @@ class Deactivation {
 		if ( $coming_soon_service && $coming_soon_service->is_enabled() ) {
 			$coming_soon_service->disable();
 		}
+	}
+
+	/**
+	 * Load text domain for Module
+	 *
+	 * @return void
+	 */
+	public static function load_text_domain() {
+
+		\load_plugin_textdomain(
+			'wp-module-deactivation',
+			false,
+			NFD_DEACTIVATION_DIR . '/languages'
+		);
 	}
 }

@@ -16,7 +16,7 @@ class InstallChecker {
 		$newestPost = $this->getNewestPost();
 
 		// If the "Hello World!" post doesn't exist, this isn't a fresh installation.
-		if ( $oldestPost->ID !== 1 ) {
+		if ( ! isset( $oldestPost->ID ) || $oldestPost->ID !== 1 ) {
 			return false;
 		}
 

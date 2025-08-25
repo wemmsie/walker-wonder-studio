@@ -9,6 +9,7 @@ use NewfoldLabs\WP\Module\Installer\TaskManagers\PluginInstallTaskManager;
 use NewfoldLabs\WP\Module\Installer\Tasks\PluginInstallTask;
 use NewfoldLabs\WP\Module\Data\SiteClassification\PrimaryType;
 use NewfoldLabs\WP\Module\Data\SiteClassification\SecondaryType;
+use NewfoldLabs\WP\Module\Onboarding\Services\ReduxStateService;
 use WP_Forge\UpgradeHandler\UpgradeHandler;
 
 /**
@@ -166,7 +167,7 @@ class FlowService {
 			\update_option( Options::get_option_name( 'blog_description', false ), $data['data']['blogDescription'] );
 		}
 
-		if ( ( 'sitegen' === Data::current_flow() && ! empty( $data['sitegen']['siteLogo'] ) ) && ! empty( $data['sitegen']['siteLogo']['id'] ) ) {
+		if ( ( 'sitegen' === $data['activeFlow'] && ! empty( $data['sitegen']['siteLogo'] ) ) && ! empty( $data['sitegen']['siteLogo']['id'] ) ) {
 			update_option( Options::get_option_name( 'site_icon', false ), $data['sitegen']['siteLogo']['id'] );
 			update_option( Options::get_option_name( 'site_logo', false ), $data['sitegen']['siteLogo']['id'] );
 		} elseif ( ( ! empty( $data['data']['siteLogo'] ) ) && ! empty( $data['data']['siteLogo']['id'] ) ) {
@@ -183,7 +184,7 @@ class FlowService {
 		if ( ! self::update_data_in_wp_option( $updated_data ) ) {
 			return new \WP_Error(
 				'database_update_failed',
-				'There was an error saving the data',
+				__( 'There was an error saving the data', 'wp-module-onboarding-data' ),
 				array( 'status' => 404 )
 			);
 		}
@@ -248,7 +249,7 @@ class FlowService {
 			if ( ! array_key_exists( $key, $params ) ) {
 				return new \WP_Error(
 					'param_not_provided',
-					'Parameter Not Provided : ' . $key,
+					sprintf( __( 'Parameter not provided: %s', 'wp-module-onboarding-data' ), $key ),
 					array( 'status' => 400 )
 				);
 			}
@@ -263,7 +264,12 @@ class FlowService {
 			if ( gettype( $value ) !== gettype( $params[ $key ] ) ) {
 				return new \WP_Error(
 					'wrong_param_type_provided',
-					'Wrong Parameter Type Provided : ' . $key . ' => ' . gettype( $params[ $key ] ) . '. Expected: ' . gettype( $value ),
+					sprintf(
+						__( 'Wrong parameter type provided for %1$s: got %2$s, expected %3$s.', 'wp-module-onboarding-data' ),
+						$key,
+						gettype( $params[ $key ] ),
+						gettype( $value )
+					),
 					array( 'status' => 400 )
 				);
 			}
@@ -279,7 +285,10 @@ class FlowService {
 				// Verify if a value expected as an Associative Array is NOT an Indexed Array
 				return new \WP_Error(
 					'wrong_param_type_provided',
-					'Wrong Parameter Type Provided : ' . $key . ' => Indexed Array. Expected: Associative Array',
+					sprintf(
+						__( 'Wrong parameter type provided for %s: Indexed Array. Expected: Associative Array.', 'wp-module-onboarding-data' ),
+						$key
+					),
 					array( 'status' => 400 )
 				);
 			}
@@ -318,7 +327,7 @@ class FlowService {
 		if ( ! isset( $enabled_flows[ $flow ] ) || true !== $enabled_flows[ $flow ] ) {
 			return new \WP_Error(
 				'nfd_onboarding_error',
-				'Flow not enabled.',
+				__( 'Flow not enabled.', 'wp-module-onboarding-data' ),
 				array( 'status' => 400 )
 			);
 		}
@@ -423,11 +432,28 @@ class FlowService {
 	/**
 	 * Fetches the Experience Level selected during Onboarding.
 	 *
-	 * @return false|string
+	 * @return int
 	 */
-	public static function get_experience_level() {
-		$data = self::read_data_from_wp_option( false );
-		return isset( $data['data']['wpComfortLevel'] ) ? $data['data']['wpComfortLevel'] : false;
+	public static function get_experience_level(): int {
+		$experience_level = 3;
+		$data = ReduxStateService::get( 'input' );
+		if ( is_array( $data ) && isset( $data['experienceLevel'] ) ) {
+			switch ( $data['experienceLevel'] ) {
+				case 'beginner':
+					$experience_level = 1;
+					break;
+				case 'intermediate':
+					$experience_level = 2;
+					break;
+				case 'advanced':
+					$experience_level = 3;
+					break;
+				default:
+					$experience_level = 3;
+					break;
+			}
+		}
+		return $experience_level;
 	}
 
 	/**

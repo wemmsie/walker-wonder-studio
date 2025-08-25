@@ -1,6 +1,7 @@
 <?php
 
 use NewfoldLabs\WP\Module\Data\Data;
+use NewfoldLabs\WP\Module\Data\EventQueue\Queues\BatchQueue;
 use NewfoldLabs\WP\Module\Data\Helpers\Encryption;
 use NewfoldLabs\WP\Module\Data\Helpers\Transient;
 use NewfoldLabs\WP\Module\Data\SiteCapabilities;
@@ -20,7 +21,26 @@ if ( defined( 'NFD_DATA_MODULE_VERSION' ) ) {
 	return;
 }
 
-define( 'NFD_DATA_MODULE_VERSION', '2.6.4' );
+define( 'NFD_DATA_MODULE_VERSION', '2.8.6' );
+
+if ( ! function_exists( 'nfd_create_event_queue_table' ) ) {
+	/**
+	 * Create the event queue table
+	 */
+	function nfd_create_event_queue_table() {
+		BatchQueue::create_table();
+	}
+}
+
+if ( ! function_exists( 'nfd_drop_event_queue_table' ) ) {
+	/**
+	 * Drop the event queue table
+	 */
+	function nfd_drop_event_queue_table() {
+		global $wpdb;
+		$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}nfd_data_event_queue" );
+	}
+}
 
 if ( function_exists( 'is_admin' ) && is_admin() ) {
 	$upgrade_handler = new UpgradeHandler(
@@ -48,8 +68,8 @@ if ( function_exists( 'add_action' ) && function_exists( 'add_filter' ) ) {
 				array(
 					'name'     => 'data',
 					'label'    => __( 'Data', 'newfold-data-module' ),
-					'callback' => function () {
-						$module = new Data();
+					'callback' => function ( Container $container ) {
+						$module = new Data( $container->plugin() );
 						$module->start();
 					},
 					'isActive' => true,
@@ -123,41 +143,4 @@ if ( function_exists( 'add_action' ) && function_exists( 'add_filter' ) ) {
 		}
 	);
 
-}
-
-/**
- * Create the event queue table
- */
-function nfd_create_event_queue_table() {
-	global $wpdb;
-
-	if ( ! function_exists( 'dbDelta' ) ) {
-		require ABSPATH . 'wp-admin/includes/upgrade.php';
-	}
-
-	$wpdb->hide_errors();
-
-	$charset_collate = $wpdb->get_charset_collate();
-
-	$sql = <<<SQL
-CREATE TABLE {$wpdb->prefix}nfd_data_event_queue (
-	id bigint(20) NOT NULL AUTO_INCREMENT,
-	event longtext NOT NULL,
-	attempts tinyint(3) NOT NULL DEFAULT 0,
-	reserved_at datetime DEFAULT NULL,
-	available_at datetime NOT NULL,
-	created_at datetime NOT NULL,
-	PRIMARY KEY (id)
-	) $charset_collate;
-SQL;
-
-	dbDelta( $sql );
-}
-
-/**
- * Drop the event queue table
- */
-function nfd_drop_event_queue_table() {
-	global $wpdb;
-	$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}nfd_data_event_queue" );
 }

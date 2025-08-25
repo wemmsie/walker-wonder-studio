@@ -10,7 +10,7 @@ function handle_contact_form()
 
         // Basic validation
         if (!empty($name) && !empty($email) && !empty($message) && !empty($help_selection)) {
-            $to      = 'kjones@zorvek.com, emily@thisjones.com';
+            $to      = 'walkerwondermusic@gmail.com, emily@thisjones.com';
             $subject = "Form Submission from $name";
 
             // Add 'From' and 'Reply-To' headers

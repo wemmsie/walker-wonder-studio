@@ -164,7 +164,7 @@ class FeaturesAPI extends WP_REST_Controller {
 		// else other error, typically permissions
 		return new WP_Error(
 			'nfd_features_error',
-			'Cannot modify this feature.',
+			__( 'Cannot modify this feature.', 'wp-module-features' ),
 			array( 'status' => 403 )
 		);
 	}
@@ -190,7 +190,7 @@ class FeaturesAPI extends WP_REST_Controller {
 		// else other error, typically permissions
 		return new WP_Error(
 			'nfd_features_error',
-			'Cannot modify this feature.',
+			__( 'Cannot modify this feature.', 'wp-module-features' ),
 			array( 'status' => 403 )
 		);
 	}

@@ -1,0 +1,735 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://github.com/newfold-labs/wp-module-next-steps/issues\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: en_AU <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-06-06T06:30:00+00:00\n"
+"PO-Revision-Date: 2025-01-21 17:05:00+0000\n"
+"Language: en_AU\n"
+"X-Domain: wp-module-next-steps\n"
+"X-Generator: WP-CLI 2.12.0\n"
+
+#: bootstrap.php:22
+#: includes/NextSteps.php:62
+#: includes/NextStepsWidget.php:39
+msgid "Next Steps"
+msgstr "Next Steps"
+
+#: includes/PlanManager.php:250
+msgid "Store Setup"
+msgstr "Store Setup"
+
+#: includes/PlanManager.php:251
+msgid "Complete your ecommerce store setup with these essential steps:"
+msgstr "Complete your ecommerce store setup with these essential steps:"
+
+#: includes/PlanManager.php:255
+#: includes/PlanManager.php:763
+#: includes/PlanManager.php:1208
+msgid "Build"
+msgstr "Build"
+
+#: includes/PlanManager.php:260
+msgid "Basic Store Setup"
+msgstr "Basic Store Setup"
+
+#: includes/PlanManager.php:265
+#: includes/PlanManager.php:773
+#: includes/PlanManager.php:1218
+msgid "Quick Setup"
+msgstr "Quick Setup"
+
+#: includes/PlanManager.php:279
+msgid "Customize Your Store"
+msgstr "Customize Your Store"
+
+#: includes/PlanManager.php:284
+#: includes/PlanManager.php:792
+msgid "Upload Logo"
+msgstr "Upload Logo"
+
+#: includes/PlanManager.php:292
+#: includes/PlanManager.php:800
+msgid "Choose Colors and Fonts"
+msgstr "Choose Colors and Fonts"
+
+#: includes/PlanManager.php:300
+#: includes/PlanManager.php:808
+#: includes/PlanManager.php:1253
+msgid "Customize Header"
+msgstr "Customize Header"
+
+#: includes/PlanManager.php:308
+#: includes/PlanManager.php:816
+#: includes/PlanManager.php:1261
+msgid "Customize Footer"
+msgstr "Customize Footer"
+
+#: includes/PlanManager.php:316
+msgid "Customize Homepage"
+msgstr "Customize Homepage"
+
+#: includes/PlanManager.php:326
+msgid "Set Up Shopping Experience"
+msgstr "Set Up Shopping Experience"
+
+#: includes/PlanManager.php:330
+msgid "Add a Product"
+msgstr "Add a Product"
+
+#: includes/PlanManager.php:338
+msgid "Customize the Shop Page"
+msgstr "Customize the Shop Page"
+
+#: includes/PlanManager.php:346
+msgid "Customize the Cart Page"
+msgstr "Customize the Cart Page"
+
+#: includes/PlanManager.php:354
+msgid "Customize the Checkout Flow"
+msgstr "Customize the Checkout Flow"
+
+#: includes/PlanManager.php:364
+msgid "Set Up Payments and Shipping"
+msgstr "Set Up Payments and Shipping"
+
+#: includes/PlanManager.php:368
+msgid "Set Up Payments"
+msgstr "Set Up Payments"
+
+#: includes/PlanManager.php:376
+msgid "Set Up Shipping"
+msgstr "Set Up Shipping"
+
+#: includes/PlanManager.php:384
+msgid "Set Up Taxes"
+msgstr "Set Up Taxes"
+
+#: includes/PlanManager.php:394
+msgid "Set Up Legal Pages"
+msgstr "Set Up Legal Pages"
+
+#: includes/PlanManager.php:398
+msgid "Privacy Policy"
+msgstr "Privacy Policy"
+
+#: includes/PlanManager.php:406
+msgid "Terms & Conditions"
+msgstr "Terms & Conditions"
+
+#: includes/PlanManager.php:414
+msgid "Return and Refund Policy"
+msgstr "Return and Refund Policy"
+
+#: includes/PlanManager.php:426
+#: includes/PlanManager.php:918
+#: includes/PlanManager.php:1341
+msgid "Brand"
+msgstr "Brand"
+
+#: includes/PlanManager.php:430
+msgid "First Marketing Steps"
+msgstr "First Marketing Steps"
+
+#: includes/PlanManager.php:434
+msgid "Configure Welcome Discount Popup"
+msgstr "Configure Welcome Discount Popup"
+
+#: includes/PlanManager.php:442
+msgid "Create a Gift Card to Sell in Your Shop"
+msgstr "Create a Gift Card to Sell in Your Shop"
+
+#: includes/PlanManager.php:472
+msgid "Launch and Promote - Social Media Setup & Engagement"
+msgstr "Launch and Promote - Social Media Setup & Engagement"
+
+#: includes/PlanManager.php:476
+msgid "Connect Facebook Store"
+msgstr "Connect Facebook Store"
+
+#: includes/PlanManager.php:484
+msgid "Connect Instagram Shopping"
+msgstr "Connect Instagram Shopping"
+
+#: includes/PlanManager.php:492
+msgid "Connect TikTok Shop"
+msgstr "Connect TikTok Shop"
+
+#: includes/PlanManager.php:512
+msgid "Add Social Media Feed to Homepage"
+msgstr "Add Social Media Feed to Homepage"
+
+#: includes/PlanManager.php:522
+msgid "Launch and Promote - SEO & Store Visibility"
+msgstr "Launch and Promote - SEO & Store Visibility"
+
+#: includes/PlanManager.php:526
+msgid "Optimize Your Store SEO"
+msgstr "Optimize Your Store SEO"
+
+#: includes/PlanManager.php:534
+#: includes/PlanManager.php:1003
+msgid "Submit Site to Google Search Console"
+msgstr "Submit Site to Google Search Console"
+
+#: includes/PlanManager.php:542
+msgid "Create a Custom Sitemap"
+msgstr "Create a Custom Sitemap"
+
+#: includes/PlanManager.php:554
+#: includes/PlanManager.php:1023
+#: includes/PlanManager.php:1461
+msgid "Grow"
+msgstr "Grow"
+
+#: includes/PlanManager.php:558
+msgid "Improve Your Customer Experience to Sell More"
+msgstr "Improve Your Customer Experience to Sell More"
+
+#: includes/PlanManager.php:562
+msgid "Customize the Thank You Page"
+msgstr "Customize the Thank You Page"
+
+#: includes/PlanManager.php:570
+msgid "Customize Your Customer's Account Page"
+msgstr "Customize Your Customer's Account Page"
+
+#: includes/PlanManager.php:592
+#: includes/PlanManager.php:1069
+msgid "Advanced Social & Influencer Marketing"
+msgstr "Advanced Social & Influencer Marketing"
+
+#: includes/PlanManager.php:624
+msgid "Launch Product Giveaway Campaign"
+msgstr "Launch Product Giveaway Campaign"
+
+#: includes/PlanManager.php:632
+msgid "Create Influencer Outreach List"
+msgstr "Create Influencer Outreach List"
+
+#: includes/PlanManager.php:640
+msgid "Track UTM Campaign Links"
+msgstr "Track UTM Campaign Links"
+
+#: includes/PlanManager.php:650
+msgid "Next Marketing Steps"
+msgstr "Next Marketing Steps"
+
+#: includes/PlanManager.php:654
+msgid "Write a Blog Post"
+msgstr "Write a Blog Post"
+
+#: includes/PlanManager.php:662
+msgid "Create a Sale & Promo Campaign for Your Products"
+msgstr "Create a Sale & Promo Campaign for Your Products"
+
+#: includes/PlanManager.php:670
+msgid "Create an Upsell Campaign"
+msgstr "Create an Upsell Campaign"
+
+#: includes/PlanManager.php:678
+msgid "Setup Yoast Premium to Drive Traffic to Your Store"
+msgstr "Setup Yoast Premium to Drive Traffic to Your Store"
+
+#: includes/PlanManager.php:688
+#: includes/PlanManager.php:1137
+msgid "Performance & Security"
+msgstr "Performance & Security"
+
+#: includes/PlanManager.php:712
+msgid "Create a Staging Website"
+msgstr "Create a Staging Website"
+
+#: includes/PlanManager.php:722
+msgid "Store Analysis"
+msgstr "Store Analysis"
+
+#: includes/PlanManager.php:726
+msgid "Monitor Traffic and Conversion Rates"
+msgstr "Monitor Traffic and Conversion Rates"
+
+#: includes/PlanManager.php:734
+msgid "Run A/B Test on Homepage Banner"
+msgstr "Run A/B Test on Homepage Banner"
+
+#: includes/PlanManager.php:758
+msgid "Blog Setup"
+msgstr "Blog Setup"
+
+#: includes/PlanManager.php:759
+msgid "Get your blog up and running with these essential steps:"
+msgstr "Get your blog up and running with these essential steps:"
+
+#: includes/PlanManager.php:768
+msgid "Basic Blog Setup"
+msgstr "Basic Blog Setup"
+
+#: includes/PlanManager.php:787
+msgid "Customize Your Blog"
+msgstr "Customize Your Blog"
+
+#: includes/PlanManager.php:826
+msgid "Create Content"
+msgstr "Create Content"
+
+#: includes/PlanManager.php:830
+msgid "Add Your First Blog Post"
+msgstr "Add Your First Blog Post"
+
+#: includes/PlanManager.php:838
+msgid "Create an \"About\" Page"
+msgstr "Create an \"About\" Page"
+
+#: includes/PlanManager.php:846
+msgid "Set a Featured Image for One Post"
+msgstr "Set a Featured Image for One Post"
+
+#: includes/PlanManager.php:856
+msgid "Set Up Navigation"
+msgstr "Set Up Navigation"
+
+#: includes/PlanManager.php:860
+#: includes/PlanManager.php:1283
+msgid "Add Pages for Home, Blog, About, Contact"
+msgstr "Add Pages for Home, Blog, About, Contact"
+
+#: includes/PlanManager.php:868
+#: includes/PlanManager.php:1291
+msgid "Create a Primary Menu"
+msgstr "Create a Primary Menu"
+
+#: includes/PlanManager.php:876
+msgid "Create a Footer Menu"
+msgstr "Create a Footer Menu"
+
+#: includes/PlanManager.php:886
+msgid "Set Up Essential Pages"
+msgstr "Set Up Essential Pages"
+
+#: includes/PlanManager.php:890
+#: includes/PlanManager.php:1313
+msgid "Add a Privacy Policy"
+msgstr "Add a Privacy Policy"
+
+#: includes/PlanManager.php:898
+#: includes/PlanManager.php:1321
+msgid "Add Terms & Conditions"
+msgstr "Add Terms & Conditions"
+
+#: includes/PlanManager.php:906
+#: includes/PlanManager.php:1329
+msgid "Add an Accessibility Statement"
+msgstr "Add an Accessibility Statement"
+
+#: includes/PlanManager.php:922
+msgid "First Audience-Building Steps"
+msgstr "First Audience-Building Steps"
+
+#: includes/PlanManager.php:926
+msgid "Add a Welcome-Subscribe Popup"
+msgstr "Add a Welcome-Subscribe Popup"
+
+#: includes/PlanManager.php:981
+msgid "Embed a Social Media Feed on Homepage"
+msgstr "Embed a Social Media Feed on Homepage"
+
+#: includes/PlanManager.php:995
+msgid "Optimize On-Page SEO"
+msgstr "Optimize On-Page SEO"
+
+#: includes/PlanManager.php:1011
+msgid "Generate & Submit XML Sitemap"
+msgstr "Generate & Submit XML Sitemap"
+
+#: includes/PlanManager.php:1027
+msgid "Enhance Reader Experience"
+msgstr "Enhance Reader Experience"
+
+#: includes/PlanManager.php:1043
+msgid "Customize Author/Profile Boxes"
+msgstr "Customize Author/Profile Boxes"
+
+#: includes/PlanManager.php:1051
+msgid "Display Testimonials or Highlighted Comments"
+msgstr "Display Testimonials or Highlighted Comments"
+
+#: includes/PlanManager.php:1059
+#: includes/PlanManager.php:1357
+msgid "Create a Favicon"
+msgstr "Create a Favicon"
+
+#: includes/PlanManager.php:1073
+msgid "Build an Email Newsletter"
+msgstr "Build an Email Newsletter"
+
+#: includes/PlanManager.php:1081
+msgid "Draft an Influencer/Guest-Post Outreach List"
+msgstr "Draft an Influencer/Guest-Post Outreach List"
+
+#: includes/PlanManager.php:1097
+msgid "Track Campaigns with UTM Links"
+msgstr "Track Campaigns with UTM Links"
+
+#: includes/PlanManager.php:1107
+msgid "Content & Traffic Strategy"
+msgstr "Content & Traffic Strategy"
+
+#: includes/PlanManager.php:1111
+msgid "Plan a Content Series or Editorial Calendar"
+msgstr "Plan a Content Series or Editorial Calendar"
+
+#: includes/PlanManager.php:1119
+msgid "Implement Internal-Linking Strategy"
+msgstr "Implement Internal-Linking Strategy"
+
+#: includes/PlanManager.php:1127
+msgid "Install Yoast Premium for Advanced Schemas"
+msgstr "Install Yoast Premium for Advanced Schemas"
+
+#: includes/PlanManager.php:1161
+msgid "Create a Staging Site"
+msgstr "Create a Staging Site"
+
+#: includes/PlanManager.php:1203
+msgid "Corporate Setup"
+msgstr "Corporate Setup"
+
+#: includes/PlanManager.php:1204
+msgid "Set up your corporate website with these essential steps:"
+msgstr "Set up your corporate website with these essential steps:"
+
+#: includes/PlanManager.php:1213
+msgid "Basic Site Setup"
+msgstr "Basic Site Setup"
+
+#: includes/PlanManager.php:1232
+msgid "Customize Your Website"
+msgstr "Customize Your Website"
+
+#: includes/PlanManager.php:1237
+msgid "Upload Company Logo"
+msgstr "Upload Company Logo"
+
+#: includes/PlanManager.php:1245
+msgid "Choose Brand Colors and Fonts"
+msgstr "Choose Brand Colors and Fonts"
+
+#: includes/PlanManager.php:1269
+msgid "Customize Homepage Layout"
+msgstr "Customize Homepage Layout"
+
+#: includes/PlanManager.php:1279
+msgid "Configure Navigation"
+msgstr "Configure Navigation"
+
+#: includes/PlanManager.php:1299
+msgid "Add a Footer Menu"
+msgstr "Add a Footer Menu"
+
+#: includes/PlanManager.php:1309
+msgid "Add Legal & Trust Content"
+msgstr "Add Legal & Trust Content"
+
+#: includes/PlanManager.php:1345
+msgid "Establish Your Brand Online"
+msgstr "Establish Your Brand Online"
+
+#: includes/PlanManager.php:1349
+msgid "Set Up a Custom Domain"
+msgstr "Set Up a Custom Domain"
+
+#: includes/PlanManager.php:1365
+msgid "Connect Your Google Business Profile"
+msgstr "Connect Your Google Business Profile"
+
+#: includes/PlanManager.php:1373
+msgid "Create a Branded Email Address"
+msgstr "Create a Branded Email Address"
+
+#: includes/PlanManager.php:1383
+msgid "Launch Essential Marketing Tools"
+msgstr "Launch Essential Marketing Tools"
+
+#: includes/PlanManager.php:1399
+msgid "Connect Google Search Console"
+msgstr "Connect Google Search Console"
+
+#: includes/PlanManager.php:1429
+msgid "Set Up Contact & Engagement"
+msgstr "Set Up Contact & Engagement"
+
+#: includes/PlanManager.php:1441
+msgid "Embed a Map or Location"
+msgstr "Embed a Map or Location"
+
+#: includes/PlanManager.php:1449
+msgid "Link to Social Media Profiles"
+msgstr "Link to Social Media Profiles"
+
+#: includes/PlanManager.php:1465
+msgid "Strengthen Online Presence"
+msgstr "Strengthen Online Presence"
+
+#: includes/PlanManager.php:1477
+msgid "Add Certifications, Memberships, or Awards"
+msgstr "Add Certifications, Memberships, or Awards"
+
+#: includes/PlanManager.php:1487
+msgid "Build Content for SEO & Trust"
+msgstr "Build Content for SEO & Trust"
+
+#: includes/PlanManager.php:1491
+msgid "Publish Your First Company Blog Post"
+msgstr "Publish Your First Company Blog Post"
+
+#: includes/PlanManager.php:1499
+msgid "Create a FAQ Page"
+msgstr "Create a FAQ Page"
+
+#: includes/PlanManager.php:1507
+msgid "Optimize Your Key Pages for Keywords"
+msgstr "Optimize Your Key Pages for Keywords"
+
+#: includes/PlanManager.php:1515
+msgid "Generate and Submit XML Sitemap"
+msgstr "Generate and Submit XML Sitemap"
+
+#: includes/PlanManager.php:1525
+msgid "Marketing & Lead Generation"
+msgstr "Marketing & Lead Generation"
+
+#: includes/PlanManager.php:1529
+msgid "Set Up an Email Capture Form"
+msgstr "Set Up an Email Capture Form"
+
+#: includes/PlanManager.php:1537
+msgid "Connect to CRM or Email Tool"
+msgstr "Connect to CRM or Email Tool"
+
+#: includes/PlanManager.php:1545
+msgid "Add a Call-to-Action Section to Homepage"
+msgstr "Add a Call-to-Action Section to Homepage"
+
+#: includes/PlanManager.php:1555
+msgid "Site Performance & Security"
+msgstr "Site Performance & Security"
+
+#: includes/PlanManager.php:1579
+msgid "Install a Security Plugin"
+msgstr "Install a Security Plugin"
+
+#: includes/PlanManager.php:1587
+msgid "Set Up a Staging Site"
+msgstr "Set Up a Staging Site"
+
+#: includes/PlanManager.php:1597
+msgid "Monitor & Improve"
+msgstr "Monitor & Improve"
+
+#: includes/PlanManager.php:1613
+msgid "Run a Speed Test"
+msgstr "Run a Speed Test"
+
+#: includes/PlanManager.php:1621
+msgid "Plan Your Next Content or Campaign Update"
+msgstr "Plan Your Next Content or Campaign Update"
+
+#: includes/StepsApi.php:293
+#: includes/StepsApi.php:315
+msgid "No plan found."
+msgstr "No plan found."
+
+#: includes/StepsApi.php:321
+msgid "No tracks found in plan."
+msgstr "No tracks found in plan."
+
+#: includes/StepsApi.php:327
+msgid "No sections found in track."
+msgstr "No sections found in track."
+
+#: includes/StepsApi.php:377
+#: includes/StepsApi.php:410
+#: includes/StepsApi.php:436
+msgid "Invalid parameters provided."
+msgstr "Invalid parameters provided."
+
+#: includes/StepsApi.php:380
+msgid "Invalid status provided."
+msgstr "Invalid status provided."
+
+#: includes/StepsApi.php:387
+msgid "Step not found."
+msgstr "Step not found."
+
+#: includes/StepsApi.php:417
+msgid "Section not found."
+msgstr "Section not found."
+
+#: includes/StepsApi.php:471
+msgid "Invalid plan type provided."
+msgstr "Invalid plan type provided."
+
+#: includes/StepsApi.php:503
+msgid "Failed to add task to section."
+msgstr "Failed to add task to section."
+
+#: build/next-steps-portal/bundle.js:1
+#: build/next-steps-widget/bundle.js:1
+#: build/next-steps-portal/bundle.js:2723
+msgid "Mark Complete"
+msgstr "Mark Complete"
+
+#: build/next-steps-portal/bundle.js:1
+#: build/next-steps-widget/bundle.js:1
+#: build/next-steps-portal/bundle.js:2741
+msgid "Skip"
+msgstr "Skip"
+
+#: build/next-steps-portal/bundle.js:1
+#: build/next-steps-widget/bundle.js:1
+#: build/next-steps-portal/bundle.js:2774
+msgid "Restart"
+msgstr "Restart"
+
+#: build/next-steps-portal/bundle.js:1
+#: build/next-steps-widget/bundle.js:1
+#: build/next-steps-portal/bundle.js:2797
+#: build/next-steps-portal/bundle.js:2812
+msgid "Unskip"
+msgstr "Unskip"
+
+#: build/next-steps-portal/bundle.js:1
+#: build/next-steps-widget/bundle.js:1
+#: build/next-steps-portal/bundle.js:2393
+msgid "Hide skipped tasks"
+msgstr "Hide skipped tasks"
+
+#: build/next-steps-portal/bundle.js:1
+#: build/next-steps-widget/bundle.js:1
+#: build/next-steps-portal/bundle.js:2394
+msgid "View skipped tasks"
+msgstr "View skipped tasks"
+
+#: build/next-steps-portal/bundle.js:1
+#: build/next-steps-widget/bundle.js:1
+#: build/next-steps-portal/bundle.js:2357
+msgid "Loading next steps..."
+msgstr "Loading next steps..."
+
+#: includes/PlanManager.php:927
+msgid "Convert visitors to email subscribers."
+msgstr "Convert visitors to email subscribers."
+
+#: includes/PlanManager.php:957
+msgid "Social Presence"
+msgstr "Social Presence"
+
+#: includes/PlanManager.php:991
+msgid "SEO & Visibility"
+msgstr "SEO & Visibility"
+
+#: includes/PlanManager.php:1089
+msgid "Run pillar article promotion on social ad"
+msgstr "Run pillar article promotion on social ad"
+
+#: includes/PlanManager.php:1407
+msgid "Explore SEO Plugin"
+msgstr "Explore SEO Plugin"
+
+#: includes/PlanManager.php:1433
+msgid "Add a Contact Form with email routing"
+msgstr "Add a Contact Form with email routing"
+
+#: includes/PlanManager.php:1469
+msgid "Add Client Logos or Testimonials or Reviews"
+msgstr "Add Client Logos or Testimonials or Reviews"
+
+#: includes/StepsApi.php:443
+msgid "Track not found."
+msgstr "Track not found."
+
+#: build/next-steps-portal/bundle.js:1
+#: build/next-steps-widget/bundle.js:1
+#: build/next-steps-portal/bundle.js:2586
+msgid "All complete!"
+msgstr "All complete!"
+
+#: build/next-steps-portal/bundle.js:1
+#: build/next-steps-widget/bundle.js:1
+#: build/next-steps-portal/bundle.js:2581
+msgid "Close"
+msgstr "Close"
+
+#: build/next-steps-portal/bundle.js:1
+#: build/next-steps-widget/bundle.js:1
+#: build/next-steps-portal/bundle.js:1658
+msgid "We encountered a connection error. Please check your internet connection and try again."
+msgstr "We encountered a connection error. Please check your internet connection and try again."
+
+#: build/next-steps-portal/bundle.js:1
+#: build/next-steps-widget/bundle.js:1
+#: build/next-steps-portal/bundle.js:1659
+msgid "We encountered an unexpected error. Please try refreshing the page or contact support if the problem persists."
+msgstr "We encountered an unexpected error. Please try refreshing the page or contact support if the problem persists."
+
+#: build/next-steps-portal/bundle.js:1
+#: build/next-steps-widget/bundle.js:1
+#: build/next-steps-portal/bundle.js:1664
+msgid "Connection Error"
+msgstr "Connection Error"
+
+#: build/next-steps-portal/bundle.js:1
+#: build/next-steps-widget/bundle.js:1
+#: build/next-steps-portal/bundle.js:1664
+msgid "Something went wrong"
+msgstr "Something went wrong"
+
+#: build/next-steps-portal/bundle.js:1
+#: build/next-steps-widget/bundle.js:1
+#: build/next-steps-portal/bundle.js:1672
+msgid "Try Again"
+msgstr "Try Again"
+
+#: build/next-steps-portal/bundle.js:1
+#: build/next-steps-widget/bundle.js:1
+#: build/next-steps-portal/bundle.js:1679
+#: build/next-steps-portal/bundle.js:1752
+#: build/next-steps-portal/bundle.js:1805
+msgid "Refresh Page"
+msgstr "Refresh Page"
+
+#: build/next-steps-portal/bundle.js:1
+#: build/next-steps-widget/bundle.js:1
+#: build/next-steps-portal/bundle.js:1685
+msgid "Technical Details"
+msgstr "Technical Details"
+
+#: build/next-steps-portal/bundle.js:1
+#: build/next-steps-widget/bundle.js:1
+#: build/next-steps-portal/bundle.js:1744
+msgid "Next Steps Unavailable"
+msgstr "Next Steps Unavailable"
+
+#: build/next-steps-portal/bundle.js:1
+#: build/next-steps-widget/bundle.js:1
+#: build/next-steps-portal/bundle.js:1746
+msgid "The Next Steps module encountered an error and cannot be displayed right now."
+msgstr "The Next Steps module encountered an error and cannot be displayed right now."
+
+#: build/next-steps-portal/bundle.js:1
+#: build/next-steps-widget/bundle.js:1
+#: build/next-steps-portal/bundle.js:2554
+msgid "Task temporarily unavailable"
+msgstr "Task temporarily unavailable"
+
+#: build/next-steps-portal/bundle.js:1797
+msgid "Connection Issue"
+msgstr "Connection Issue"
+
+#: build/next-steps-portal/bundle.js:1799
+msgid "Unable to save your changes right now. Please check your connection and try again."
+msgstr "Unable to save your changes right now. Please check your connection and try again."

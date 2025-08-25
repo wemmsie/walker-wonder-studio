@@ -26,7 +26,7 @@ class DeactivationSurvey {
 
 		$defaults = array(
 			'surveyAriaTitle'   => __( 'Plugin Deactivation Survey', 'wp-module-deactivation' ),
-			'surveyTitle'       => sprintf( 
+			'surveyTitle'       => sprintf(
 				__( 'Thank you for using the %s plugin!', 'wp-module-deactivation' ),
 				ucwords( container()->plugin()->id )
 			),
@@ -43,50 +43,52 @@ class DeactivationSurvey {
 			'continue'          => __( 'Continue', 'wp-module-deactivation' ),
 			'continueAriaLabel' => __( 'Continue Deactivation', 'wp-module-deactivation' ),
 			'sureTitle'         => __( 'Are you sure you want to deactivate?', 'wp-module-deactivation' ),
-			'sureDesc'          => sprintf( 
+			'deactivating'      => __( 'Deactivating', 'wp-module-deactivation' ),
+			'sureDesc'          => sprintf(
 				__( 'If the %s plugin is deactivated, these features will no longer work:', 'wp-module-deactivation' ),
 				ucwords( container()->plugin()->id )
 			),
 			'sureCards'         => array(
 				array(
-					'title' => sprintf( 
-						__( '%s Caching', 'wp-module-deactivation' ), 
+					'title'     => sprintf(
+						__( '%s Caching', 'wp-module-deactivation' ),
 						ucwords( container()->plugin()->id )
 					),
-					'desc'  => __( 'Automatically clears the server page cache when your site updates', 'wp-module-deactivation' ),
+					'desc'      => __( 'Automatically clears the server page cache when your site updates', 'wp-module-deactivation' ),
 					'condition' => 'window.NewfoldFeatures.features.performance',
 				),
 				array(
-					'title' => sprintf(
-						__( '%s Staging', 'wp-module-deactivation' ), 
+					'title'     => sprintf(
+						__( '%s Staging', 'wp-module-deactivation' ),
 						ucwords( container()->plugin()->id )
 					),
-					'desc'  => __( 'Create a staging copy of your site to safely test changes', 'wp-module-deactivation' ),
+					'desc'      => __( 'Create a staging copy of your site to safely test changes', 'wp-module-deactivation' ),
 					'condition' => 'window.NewfoldFeatures.features.staging',
 				),
 				array(
-					'title' => __( 'WooCommerce Tools', 'wp-module-deactivation' ),
-					'desc'  => __( 'Run campaigns and promotions on your store', 'wp-module-deactivation' ),
+					'title'     => __( 'WooCommerce Tools', 'wp-module-deactivation' ),
+					'desc'      => __( 'Run campaigns and promotions on your store', 'wp-module-deactivation' ),
 					'condition' => 'window.NewfoldRuntime.isWoocommerceActive',
 				),
 				array(
-					'title' => __( 'Wonder Blocks & Patterns Library', 'wp-module-deactivation' ),
-					'desc'  => __( 'Dozens of beautiful block templates and patterns', 'wp-module-deactivation' ),
+					'title'     => __( 'Wonder Blocks & Patterns Library', 'wp-module-deactivation' ),
+					'desc'      => __( 'Dozens of beautiful block templates and patterns', 'wp-module-deactivation' ),
 					'condition' => 'window.NewfoldFeatures.features.patterns',
 				),
 			),
-			'sureHelp'     => sprintf( 
-				__( 'Need Help? Check the <a href="%s">help center</a> for support.', 'wp-module-deactivation' ),
-				'/wp-admin/admin.php?page=' . container()->plugin()->id . '#/help'
+			'sureHelp'          => sprintf(
+				__( 'Need Help? Check the %1$shelp center%2$s for support.', 'wp-module-deactivation' ),
+				'<a href="/wp-admin/admin.php?page=' . container()->plugin()->id . '#/help">',
+				'</a>'
 			),
 		);
 
 		// Merge defaults with container values from plugin
 		// $this->strings = wp_parse_args(
-		// 	$this->container->has( 'deactivation' ) ? 
-		// 	$this->container['deactivation'] : 
-		// 	array(), 
-		// 	$defaults
+		// $this->container->has( 'deactivation' ) ?
+		// $this->container['deactivation'] :
+		// array(),
+		// $defaults
 		// );
 		$this->strings = $defaults;
 
@@ -146,5 +148,4 @@ class DeactivationSurvey {
 			)
 		);
 	}
-
 }

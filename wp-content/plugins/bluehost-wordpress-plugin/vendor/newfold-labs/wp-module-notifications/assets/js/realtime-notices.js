@@ -24,10 +24,10 @@
 
 			let shouldShow = false;
 
-			// Don't show if it already exists
-			if (document.querySelector('div.newfold-realtime-notice[data-id="' + this.id + '"]') !== null) {
-				return shouldShow;
-			}
+			// Don't show if it already exists as a realtime or default notification
+            if (document.querySelector('div.newfold-realtime-notice[data-id="' + this.id + '"]') !== null || document.querySelector('div.newfold-notice[data-id="' + this.id + '"]') !== null ) {
+                return shouldShow;
+            }
 
 			// Check if notice has expired
 			if (this.expiration > Math.round(Date.now() / 1000)) {
@@ -166,7 +166,7 @@
 					this.cardSelector = 'plugin-card';
 				break;
 				case 'theme_search':
-					this.wpContainerSelector = 'div.themes.wp-clearfix';
+					this.wpContainerSelector = '#wpbody-content > div.wrap > div.theme-browser.content-filterable.rendered > div';
 					this.cardSelector = 'theme';
 				break;
 			}
@@ -232,7 +232,7 @@
 
 		createElement() {
 			const el = document.createElement('div');
-			el.setAttribute('class', this.cardSelector+' newfold-search-results');
+			el.setAttribute('class', `${this.cardSelector} newfold-search-results`);
 			el.setAttribute('data-id', this.id);
 			el.innerHTML = this.content;
 			this.el = el;
@@ -251,6 +251,32 @@
 		
 			const interval = setInterval(insertIntoList, 100);
 		}
+
+		addEventListeners( el ) {
+            // Handle notification close/dismiss events
+            const dismissButton = el.querySelector( '[data-action="dismiss-search"]' );
+            if ( dismissButton ) {
+                dismissButton.addEventListener(
+                    'click',
+                    this.dismissSearch.bind( this )
+                );
+            }
+        }
+
+        dismissSearch( e ) {
+            // e.preventDefault();
+            window.fetch(
+                `${ window.NewfoldRuntime.restUrl }newfold-notifications/v1/notifications/${ this.id }`,
+                {
+                    credentials: 'same-origin',
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-WP-Nonce': window.NewfoldRuntime.restNonce,
+                    },
+                }
+            );
+        }
 
 	}
 
@@ -278,14 +304,39 @@
 		}
 
 		enable() {
-			document
-				.getElementById(this.searchInputSelector)
-				.addEventListener('input', this.inputHandler);
-			if (this.typeSelector) {
-				document
-				.getElementById(this.typeSelector)
-				.addEventListener('change', this.onPluginSearch.bind(this));
+			const addEventListeners = () => {
+				const searchInput = document.getElementById(this.searchInputSelector);
+				if (searchInput) {
+					searchInput.addEventListener('input', this.inputHandler);
+				}
+
+				if (this.typeSelector) {
+					const typeSelector = document.getElementById(this.typeSelector);
+					if (typeSelector) {
+						typeSelector.addEventListener('change', this.onPluginSearch.bind(this));
+					}
+				}
+			};
+
+			// Check if elements are already in the DOM
+			if (document.getElementById(this.searchInputSelector) && (!this.typeSelector || document.getElementById(this.typeSelector))) {
+				addEventListeners();
+				return;
 			}
+
+			// Set up a MutationObserver to watch for changes in the DOM
+			const observer = new MutationObserver(() => {
+				const searchInputExists = document.getElementById(this.searchInputSelector);
+				const typeSelectorExists = !this.typeSelector || document.getElementById(this.typeSelector);
+
+				if (searchInputExists && typeSelectorExists) {
+					addEventListeners();
+					observer.disconnect();  // Stop observing once elements are found
+				}
+			});
+
+			// Start observing the document for child elements being added
+			observer.observe(document.body, { childList: true, subtree: true });
 		}
 
 		disable() {

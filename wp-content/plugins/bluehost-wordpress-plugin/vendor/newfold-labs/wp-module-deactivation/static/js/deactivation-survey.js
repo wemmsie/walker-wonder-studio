@@ -3,6 +3,7 @@
 	const runtimeData = window.newfoldDeactivationSurvey;
 	// Dialog instance / will be initialized later
 	let deactivationSurveyDialog;
+	let deactivateLink;
 
 	const renderDialog = () => {
 		// Create dialog container
@@ -122,12 +123,38 @@
 		return content;
 	};
 
+	const getDeactivatingContent = () => {
+		const content = `
+			<div class="nfd-deactivation__content nfd-deactivation-goodbye nfd-hidden" aria-hidden="true">
+				<div class="nfd-deactivation__header">
+					<p class="nfd-deactivation__header-subtitle">${ runtimeData.strings.deactivating }...</p>
+				</div>
+				<div class="nfd-deactivation__body">
+					<div 
+						class="spinner is-active"
+						style="
+							background-position: 20px 0;
+							float: none;
+							height: auto;
+							padding: 10px 0 10px 50px;
+							width: auto;
+						"
+					></div>
+				</div>
+				<div class="nfd-deactivation__footer">
+				</div>
+			</div>
+		`;
+		return content;
+	};
+
 	const getDialogHTML = () => {
 		const content = `
 			<div class="nfd-deactivation-survey__overlay" nfd-deactivation-survey-destroy></div>
 				<div class="nfd-deactivation-survey__container" role="document" data-step="1">
 					${ getSureContent() }
 					${ getSurveyContent() }
+					${ getDeactivatingContent() }
 				</div>
 			<div class="nfd-deactivation-survey__disabled nfd-hidden"></div>
 		`;
@@ -150,13 +177,25 @@
 	};
 
 	const deactivatePlugin = () => {
-		destroyDialog();
 		// Get deactivation link and redirect
-		const deactivateLink = document.getElementById(
-			'deactivate-' + runtimeData.pluginSlug
-		).href;
 		if ( deactivateLink ) {
 			window.location.href = deactivateLink;
+			const container = document.querySelector(
+				'.nfd-deactivation-survey__container'
+			);
+			const survey = document.querySelector( '.nfd-deactivation-survey' );
+			const goodbye = document.querySelector(
+				'.nfd-deactivation-goodbye'
+			);
+			// update container with data setp 3
+			container.setAttribute( 'data-step', '3' );
+
+			// hide interstitial are you sure page
+			survey.classList.add( 'nfd-hidden' );
+			survey.setAttribute( 'aria-hidden', true );
+			// display survey content
+			goodbye.classList.remove( 'nfd-hidden' );
+			goodbye.removeAttribute( 'aria-hidden' );
 		} else {
 			console.error( 'Error: Deactivation link not found.' );
 		}
@@ -192,10 +231,9 @@
 		isSubmitting();
 
 		// Send event
-		return await sendSurveyEvent( skipped )
-			.then( () => {
-				deactivatePlugin();
-			} );
+		return await sendSurveyEvent( skipped ).then( () => {
+			deactivatePlugin();
+		} );
 	};
 
 	/**
@@ -289,9 +327,13 @@
 		const wpAdmin = document.querySelector( 'body.wp-admin' );
 		wpAdmin.addEventListener( 'click', ( e ) => {
 			// Plugin deactivation listener
-			if ( e.target.id === 'deactivate-' + runtimeData.pluginSlug ) {
+			if (
+				e.target.id.includes( 'deactivate-' ) &&
+				e.target.id.includes( window.NewfoldRuntime.plugin.brand )
+			) {
 				e.preventDefault();
 				renderDialog();
+				deactivateLink = e.target.href;
 			}
 
 			// Remove dialog listener

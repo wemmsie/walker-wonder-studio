@@ -16,7 +16,7 @@ function isEnabled( $name ) {
 	} else {
 		return new WP_Error(
 			'nfd_features_error',
-			'Feature not found.',
+			__( 'Feature not found', 'wp-module-features' ),
 			array( 'status' => 404 )
 		);
 	}
@@ -34,7 +34,7 @@ function enable( $name ) {
 	} else {
 		return new WP_Error(
 			'nfd_features_error',
-			'Feature not found.',
+			__( 'Feature not found', 'wp-module-features' ),
 			array( 'status' => 404 )
 		);
 	}
@@ -52,7 +52,7 @@ function disable( $name ) {
 	} else {
 		return new WP_Error(
 			'nfd_features_error',
-			'Feature not found.',
+			__( 'Feature not found', 'wp-module-features' ),
 			array( 'status' => 404 )
 		);
 	}

@@ -2,8 +2,16 @@
 
 header {
   @apply w-full bg-background bg-opacity-80 fixed top-0 left-0 z-50 transition-all duration-300 backdrop-blur-md;
+  .logo {
+    @apply opacity-0;
+  }
   &.scrolled {
     @apply shadow-1;
+  }
+  &.scrolled, &.toggled {
+    .logo {
+      @apply opacity-100
+    }
   }
 
   /* Drawer Menu */
@@ -11,11 +19,11 @@ header {
     @apply w-full max-w-screen overflow-hidden max-h-0 opacity-0 justify-between m-auto gap-8 duration-500 flex flex-wrap transition-all;
 
     .sub-drawer {
-      @apply flex m-auto w-full justify-between max-w-subscreen relative;
+      @apply flex m-auto w-full justify-between max-w-subscreen relative gap-20;
     }
 
     .divider {
-      @apply h-[1px] bg-blue w-full opacity-50 max-w-screen;
+      @apply h-[1px] bg-primary w-full opacity-50 max-w-screen;
     }
   }
 
@@ -35,8 +43,10 @@ header {
 
     /* Main Navigation */
     .main-nav {
-      @apply relative my-5 w-full flex flex-wrap max-w-subscreen m-auto;
-
+      @apply relative my-5 w-full flex flex-wrap max-w-subscreen m-auto items-center;
+      .site-info {
+        @apply max-w-[400px];
+      }
       /* Branding or Additional Links */
       .werk {
         @apply absolute bottom-0 flex left-1/2 -translate-x-1/2 justify-end z-20 -mr-20 max-w-subscreen w-full m-auto;
@@ -57,7 +67,7 @@ header {
       @apply flex gap-3;
 
       .social {
-        @apply bg-green border-2 border-green rounded-full p-[10px] h-10 w-10 inline-block transition-all;
+        @apply bg-primary border-2 border-primary rounded-full p-[10px] h-10 w-10 inline-block transition-all;
 
         img {
           @apply transition-all;
@@ -77,15 +87,18 @@ header {
 
   /* Main Menu */
   .menu-main-menu-container {
-    @apply w-1/2 min-w-[400px];
+    @apply w-1/2;
   }
 
   /* Menu Items */
   .menu {
-    @apply flex justify-between w-full pb-0;
+    @apply flex justify-between w-full pb-0 gap-10;
+    .top > a {
+      @apply pointer-events-none cursor-default;
+    }
 
     .top-menu-item {
-      @apply text-black;
+      @apply font-aktiv font-bold text-tertiary;
 
       ul {
         @apply flex flex-col gap-1 mt-5;
@@ -93,10 +106,10 @@ header {
     }
 
     .sub-menu-item {
-      @apply text-grey text-8 mb-1 transition-all;
+      @apply text-grey text-8 mb-1 transition-all font-poppins font-normal lowercase;
 
       a:hover {
-        @apply text-blue;
+        @apply text-primary;
       }
     }
   }
@@ -108,7 +121,7 @@ header {
     &:nth-child(1),
     &:nth-child(2),
     &:nth-child(3) {
-      @apply bg-black;
+      @apply bg-tertiary;
     }
 
     &:nth-child(2) {
@@ -122,7 +135,7 @@ header {
 
   /* Menu Toggle */
   .menu-toggle {
-    @apply cursor-pointer relative w-7 h-7 z-30;
+    @apply cursor-pointer relative w-7 h-8 z-30;
 
     &.open {
       .burger {
@@ -159,7 +172,7 @@ header {
     }
     .nav-container {
       .main-nav {
-        @apply bg-background z-50 flex justify-between items-center w-full flex-row;
+        @apply z-50 flex justify-between items-center w-full flex-row;
 
         .menu-main-menu-container {
           @apply pt-10 min-w-0 w-full;
@@ -169,7 +182,7 @@ header {
         .menu {
           @apply flex flex-col gap-3;
           .top-menu-item {
-            @apply text-10 w-full font-medium;
+            @apply text-10 w-full;
           }
           .sub-menu-item {
             @apply text-9 w-full font-normal;

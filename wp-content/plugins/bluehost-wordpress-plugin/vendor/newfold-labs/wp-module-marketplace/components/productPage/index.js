@@ -7,10 +7,30 @@ const initialState = {
 	error: false,
 };
 
+const defaults = {
+	text: {
+		productPage: {
+			error: {
+				title: __(
+					'Oops! Something Went Wrong',
+					'wp-module-marketplace'
+				),
+				description: __(
+					'An error occurred while loading the content. Please try again later.',
+					'wp-module-marketplace'
+				),
+			},
+		},
+	},
+};
+
 const ProductPage = ( { productPageId, methods, constants } ) => {
 	const [ data, setData ] = methods.useState( {
 		...initialState,
 	} );
+
+	// set defaults if not provided
+	constants = Object.assign( defaults, constants );
 
 	methods.useEffect( () => {
 		// Reset the state
@@ -55,11 +75,7 @@ const ProductPage = ( { productPageId, methods, constants } ) => {
 	return (
 		<div>
 			{ data.loading && <ProductPageLoading /> }
-			{ data.error && (
-				<ProductPageError
-					text={ constants.text?.productPage?.error ?? {} }
-				/>
-			) }
+			{ data.error && <ProductPageError constants={ constants } /> }
 			{ data.html && (
 				<div
 					dangerouslySetInnerHTML={ {

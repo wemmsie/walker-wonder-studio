@@ -1,7 +1,7 @@
 import { Title } from '@newfold/ui-component-library';
 import errorVector from '../../includes/assets/img/dog-walking.svg';
 
-const ProductPageError = ( { text = {} } ) => {
+const ProductPageError = ( { constants } ) => {
 	return (
 		<div aria-live="assertive">
 			<div
@@ -17,11 +17,10 @@ const ProductPageError = ( { text = {} } ) => {
 				/>
 				<div className="nfd-text-center">
 					<Title as="h2" size="1">
-						{ text?.title ?? 'Oops! Something Went Wrong' }
+						{ constants.text.productPage.error.title }
 					</Title>
 					<p className="nfd-mt-2 nfd-text-base">
-						{ text?.description ??
-							'An error occurred while loading the content. Please try again later.' }
+						{ constants.text.productPage.error.description }
 					</p>
 				</div>
 			</div>

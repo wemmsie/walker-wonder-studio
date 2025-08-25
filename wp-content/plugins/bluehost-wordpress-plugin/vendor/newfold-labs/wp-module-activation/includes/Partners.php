@@ -15,6 +15,7 @@ use NewfoldLabs\WP\Module\Activation\Partners\MonsterInsights;
 use NewfoldLabs\WP\Module\Activation\Partners\OptinMonster;
 use NewfoldLabs\WP\Module\Activation\Partners\WpForms;
 use NewfoldLabs\WP\Module\Activation\Partners\Yoast;
+use NewfoldLabs\WP\Module\Activation\Partners\WordPress;
 
 /**
  * Partner class.
@@ -36,13 +37,6 @@ class Partners {
 	public function __construct( Container $container ) {
 		$this->container = $container;
 
-		$is_fresh_install = $container->has( 'isFreshInstallation' ) ? $container->get( 'isFreshInstallation' ) : false;
-		if ( $is_fresh_install ) {
-			update_option( 'nfd_module_activation_fresh_install', true );
-		} else {
-			update_option( 'nfd_module_activation_fresh_install', false );
-		}
-
 		$akismet          = new Akismet();
 		$creative_mail    = new CreativeMail();
 		$jetpack          = new Jetpack();
@@ -50,6 +44,7 @@ class Partners {
 		$optin_monster    = new OptinMonster();
 		$wp_forms         = new WpForms();
 		$yoast            = new Yoast();
+		$wordpress        = new WordPress();
 
 		$akismet->init();
 		$creative_mail->init();
@@ -58,5 +53,27 @@ class Partners {
 		$optin_monster->init();
 		$wp_forms->init();
 		$yoast->init();
+		$wordpress->init();
+
+		add_filter( 'plugins_loaded', array( $this, 'is_fresh_install' ) );
+	}
+
+	/**
+	 * Check if it is a fresh installation.
+	 *
+	 * @hooked plugins_loaded
+	 */
+	public function is_fresh_install(): void {
+
+		$container = $this->container;
+
+		$is_fresh_install = $container->has( 'isFreshInstallation' ) && $container->get( 'isFreshInstallation' );
+
+		$current_value = get_option( 'nfd_module_activation_fresh_install' );
+		$desired_value = $is_fresh_install ? true : false;
+
+		if ( $current_value !== $desired_value ) {
+			update_option( 'nfd_module_activation_fresh_install', $desired_value );
+		}
 	}
 }

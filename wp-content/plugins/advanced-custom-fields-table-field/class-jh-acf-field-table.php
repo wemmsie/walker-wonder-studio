@@ -15,13 +15,31 @@ class jh_acf_field_table extends acf_field {
 	*  @return	n/a
 	*/
 
+	public $settings;
+
+	public $name;
+
+	public $description;
+
+	public $preview_image;
+
+	public $doc_url;
+
+	public $label;
+
+	public $category;
+
+	public $defaults;
+
+	public $l10n;
+
 	function __construct() {
 
 		/*
 		*  settings (array) Array of settings
 		*/
 		$this->settings = array(
-			'version' => '1.3.26',
+			'version' => '1.3.30',
 			'dir_url' => plugins_url( '', __FILE__ ) . '/',
 		);
 
@@ -31,17 +49,23 @@ class jh_acf_field_table extends acf_field {
 
 		$this->name = 'table';
 
+		$this->description = __('This allows you to easily edit tabular content.', 'advanced-custom-fields-table-field');
+
+		$this->preview_image = plugins_url( '', __FILE__ ) . '/assets/images/field-preview-table.png';
+
+		$this->doc_url = 'https://wordpress.org/plugins/advanced-custom-fields-table-field/';
+
 		/*
 		*  label (string) Multiple words, can include spaces, visible when selecting a field type
 		*/
 
-		$this->label = __('Table', 'acf-table');
+		$this->label = __('Table', 'advanced-custom-fields-table-field');
 
 		/*
 		*  category (string) basic | content | choice | relational | jquery | layout | CUSTOM GROUP NAME
 		*/
 
-		$this->category = 'layout';
+		$this->category = 'content';
 
 		/*
 		*  defaults (array) Array of default settings which are merged into the field object. These are used later in settings
@@ -57,7 +81,7 @@ class jh_acf_field_table extends acf_field {
 		*/
 
 		$this->l10n = array(
-			//'error'	=> __('Error! Please enter a higher value.', 'acf-table'),
+			//'error'	=> __('Error! Please enter a higher value.', 'advanced-custom-fields-table-field'),
 		);
 
 		// do not delete!
@@ -84,7 +108,8 @@ class jh_acf_field_table extends acf_field {
 						if ( json_last_error() !== JSON_ERROR_NONE ) {
 
 							// canceling meta value uptdate
-							error_log( 'The plugin advanced-custom-fields-table-field prevented a third party update_post_meta( ' . $object_id . ', "' . $meta_key . '", $value ); action that would save a broken JSON string.' . "\n" . 'For details see https://codex.wordpress.org/Function_Reference/update_post_meta#Character_Escaping.' );
+							$error_message = 'The plugin advanced-custom-fields-table-field prevented a third party update_post_meta( ' . $object_id . ', "' . $meta_key . '", $value ); action that would save a broken JSON string.' . "\n" . 'For details see https://codex.wordpress.org/Function_Reference/update_post_meta#Character_Escaping.';
+							trigger_error( esc_html( $error_message ), E_USER_WARNING );
 							return true;
 						}
 					}
@@ -124,27 +149,27 @@ class jh_acf_field_table extends acf_field {
 		*/
 
 		acf_render_field_setting( $field, array(
-			'label'			=> __('Table Header','acf-table'),
-			'instructions'	=> __('Presetting the usage of table header','acf-table'),
+			'label'			=> __('Table Header','advanced-custom-fields-table-field'),
+			'instructions'	=> __('Presetting the usage of table header','advanced-custom-fields-table-field'),
 			'type'			=> 'radio',
 			'name'			=> 'use_header',
 			'choices'   	=>  array(
-				0   =>  __( "Optional", 'acf-table' ),
-				1   =>  __( "Yes", 'acf-table' ),
-				2   =>  __( "No", 'acf-table' ),
+				0   =>  __( "Optional", 'advanced-custom-fields-table-field' ),
+				1   =>  __( "Yes", 'advanced-custom-fields-table-field' ),
+				2   =>  __( "No", 'advanced-custom-fields-table-field' ),
 			),
 			'layout'		=>  'horizontal',
 			'default_value'	=> 0,
 		));
 
 		acf_render_field_setting( $field, array(
-			'label'			=> __('Table Caption','acf-table'),
-			'instructions'	=> __('Presetting the usage of table caption','acf-table'),
+			'label'			=> __('Table Caption','advanced-custom-fields-table-field'),
+			'instructions'	=> __('Presetting the usage of table caption','advanced-custom-fields-table-field'),
 			'type'			=> 'radio',
 			'name'			=> 'use_caption',
 			'choices'   	=>  array(
-				1   =>  __( "Yes", 'acf-table' ),
-				2   =>  __( "No", 'acf-table' ),
+				1   =>  __( "Yes", 'advanced-custom-fields-table-field' ),
+				2   =>  __( "No", 'advanced-custom-fields-table-field' ),
 			),
 			'layout'		=>  'horizontal',
 			'default_value'	=> 2,
@@ -198,10 +223,10 @@ class jh_acf_field_table extends acf_field {
 					if ( $data_field['use_header'] === 0 ) {
 
 						$e .= '<div class="acf-table-optionbox">';
-							$e .= '<label for="acf-table-opt-use-header">' . __( 'use table header', 'acf-table' ) . ' </label>';
+							$e .= '<label for="acf-table-opt-use-header">' . __( 'use table header', 'advanced-custom-fields-table-field' ) . ' </label>';
 							$e .= '<select class="acf-table-optionbox-field acf-table-fc-opt-use-header" id="acf-table-opt-use-header" name="acf-table-opt-use-header">';
-								$e .= '<option value="0">' . __( 'No', 'acf-table' ) . '</option>';
-								$e .= '<option value="1">' . __( 'Yes', 'acf-table' ) . '</option>';
+								$e .= '<option value="0">' . __( 'No', 'advanced-custom-fields-table-field' ) . '</option>';
+								$e .= '<option value="1">' . __( 'Yes', 'advanced-custom-fields-table-field' ) . '</option>';
 							$e .= '</select>';
 						$e .= '</div>';
 					}
@@ -213,7 +238,7 @@ class jh_acf_field_table extends acf_field {
 					if ( $data_field['use_caption'] === 1 ) {
 
 						$e .= '<div class="acf-table-optionbox">';
-							$e .= '<label for="acf-table-opt-caption">' . __( 'table caption', 'acf-table' ) . ' </label><br>';
+							$e .= '<label for="acf-table-opt-caption">' . __( 'Table Caption', 'advanced-custom-fields-table-field' ) . ' </label><br>';
 							$e .= '<input class="acf-table-optionbox-field acf-table-fc-opt-caption" id="acf-table-opt-caption" type="text" name="acf-table-opt-caption" value=""></input>';
 						$e .= '</div>';
 					}
@@ -442,13 +467,19 @@ class jh_acf_field_table extends acf_field {
 				// try post_meta
 				$data = get_post_meta( $post_id, $field['name'], true );
 
+				// try user meta
+				if ( empty( $data ) ) {
+
+					$data = get_user_meta( str_replace('user_', '', $post_id ), $field['name'], true );
+				}
+
 				// try term_meta
 				if ( empty( $data ) ) {
 
 					$data = get_term_meta( str_replace('term_', '', $post_id ), $field['name'], true );
 				}
 
-				//try options
+				// try options
 				if (
 					empty( $data ) AND (
 						$post_id = 'options' OR
@@ -670,7 +701,7 @@ class jh_acf_field_table extends acf_field {
 		// Advanced usage
 		if( $value < $field['custom_minimum_setting'] )
 		{
-			$valid = __('The value is too little!','acf-table'),
+			$valid = __('The value is too little!','advanced-custom-fields-table-field'),
 		}
 
 		// return

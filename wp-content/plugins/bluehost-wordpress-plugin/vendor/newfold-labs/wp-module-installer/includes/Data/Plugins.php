@@ -21,14 +21,24 @@ final class Plugins {
 			'approved' => true,
 			'path'     => 'jetpack-boost/jetpack-boost.php',
 		),
+		'jetpack-protect'                   => array(
+			'approved' => true,
+			'path'     => 'jetpack-protect/jetpack-protect.php',
+		),
 		'woocommerce'                       => array(
 			'approved'              => true,
 			'path'                  => 'woocommerce/woocommerce.php',
 			'post_install_callback' => array( __CLASS__, 'wc_prevent_redirect_on_activation' ),
 		),
 		'wordpress-seo'                     => array(
-			'approved' => true,
-			'path'     => 'wordpress-seo/wp-seo.php',
+			'approved'              => true,
+			'path'                  => 'wordpress-seo/wp-seo.php',
+			'post_install_callback' => array( __CLASS__, 'wpseo_prevent_redirect_on_activation' ),
+		),
+		'wordpress-seo-premium'             => array(
+			'approved'              => true,
+			'path'                  => 'wordpress-seo-premium/wp-seo-premium.php',
+			'post_install_callback' => array( __CLASS__, 'wpseo_premium_prevent_redirect_on_activation' ),
 		),
 		'wpforms-lite'                      => array(
 			'approved' => true,
@@ -137,6 +147,22 @@ final class Plugins {
 	protected static $domains = array(
 		'downloads.wordpress.org' => true,
 		'nonapproveddomain.com'   => null,
+		'hiive.cloud'             => true,
+	);
+	/**
+	 * Holds the possible status codes for a plugin.
+	 *
+	 * @var array $status_codes Possible plugin status codes including:
+	 *     'unknown'       - The plugin's status cannot be determined.
+	 *     'installed'     - The plugin is installed but not activated.
+	 *     'active'        - The plugin is installed and active.
+	 *     'not_installed' - The plugin is not installed on the system.
+	 */
+	protected static $status_codes = array(
+		'unknown'       => 'unknown',
+		'installed'     => 'installed',
+		'active'        => 'active',
+		'not_installed' => 'not_installed',
 	);
 
 	/**
@@ -167,16 +193,26 @@ final class Plugins {
 	}
 
 	/**
+	 * Retrieves the array of plugin status codes.
+	 *
+	 * @return array
+	 */
+	public static function get_status_codes() {
+		return self::$status_codes;
+	}
+
+	/**
 	 * Use this return value for a faster search of slug/url/domain.
 	 *
 	 * @return array
 	 */
 	public static function get() {
 		return array(
-			'wp_slugs'  => self::$wp_slugs,
-			'nfd_slugs' => self::$nfd_slugs,
-			'urls'      => self::$urls,
-			'domains'   => self::$domains,
+			'wp_slugs'     => self::$wp_slugs,
+			'nfd_slugs'    => self::$nfd_slugs,
+			'urls'         => self::$urls,
+			'domains'      => self::$domains,
+			'status_codes' => self::$status_codes,
 		);
 	}
 
@@ -222,7 +258,42 @@ final class Plugins {
 	 * @return void
 	 */
 	public static function wc_prevent_redirect_on_activation() {
-		\delete_transient( '_wc_activation_redirect' );
+		delete_transient( '_wc_activation_redirect' );
+	}
+
+
+	/**
+	 * Prevent redirect to YOAST page after activation (free version).
+	 *
+	 * @return void
+	 */
+	public static function wpseo_prevent_redirect_on_activation() {
+		$wpseo_options = get_option( 'wpseo' );
+
+		if ( is_array( $wpseo_options ) ) {
+			$wpseo_options['should_redirect_after_install_free'] = true;
+			if ( isset( $wpseo_options['activation_redirect_timestamp_free'] ) ) {
+				unset( $wpseo_options['activation_redirect_timestamp_free'] );
+			}
+			update_option( 'wpseo', $wpseo_options );
+		}
+	}
+
+	/**
+	 * Prevent redirect to YOAST page after activation (premium version).
+	 *
+	 * @return void
+	 */
+	public static function wpseo_premium_prevent_redirect_on_activation() {
+		$wpseo_options = get_option( 'wpseo_premium' );
+
+		if ( is_array( $wpseo_options ) ) {
+			$wpseo_options['should_redirect_after_install'] = true;
+			if ( isset( $wpseo_options['activation_redirect_timestamp'] ) ) {
+				unset( $wpseo_options['activation_redirect_timestamp'] );
+			}
+			update_option( 'wpseo_premium', $wpseo_options );
+		}
 	}
 
 	/**
@@ -240,7 +311,7 @@ final class Plugins {
 		);
 		$request->set_header( 'Content-Type', 'application/json' );
 		$request->set_body( wp_json_encode( array( $module => $active ) ) );
-		$response = \rest_do_request( $request );
+		$response = rest_do_request( $request );
 
 		if ( 200 !== $response->status ) {
 			return false;

@@ -2,6 +2,8 @@
 
 namespace NewfoldLabs\WP\Module\Data;
 
+use NewfoldLabs\WP\Module\Data\API\Capabilities;
+use NewfoldLabs\WP\ModuleLoader\Plugin;
 use wpscholar\Url;
 use function WP_Forge\Helpers\dataGet;
 
@@ -20,15 +22,36 @@ class Data {
 	/**
 	 * Last instantiated instance of this class.
 	 *
+	 * @used-by EventManager::rest_api_init()
+	 *
 	 * @var Data
 	 */
 	public static $instance;
 
 	/**
+	 * Dependency injection container.
+	 *
+	 * @var Plugin
+	 */
+	protected $plugin;
+
+	/**
+	 * @var EventManager $event_manager
+	 */
+	protected $event_manager;
+
+	/**
 	 * Data constructor.
 	 */
-	public function __construct() {
+	public function __construct(
+		Plugin $plugin,
+		?EventManager $event_manager = null
+	) {
 		self::$instance = $this;
+
+		$this->plugin = $plugin;
+
+		$this->event_manager = $event_manager ?? new EventManager();
 	}
 
 	/**
@@ -47,6 +70,8 @@ class Data {
 
 		// If we ever get a 401 response from the Hiive API, delete the token.
 		add_filter( 'http_response', array( $this, 'delete_token_on_401_response' ), 10, 3 );
+		// Register the admin scripts.
+		add_action( 'admin_enqueue_scripts', array( $this, 'scripts' ) );
 	}
 
 	/**
@@ -58,8 +83,7 @@ class Data {
 
 		$this->hiive = new HiiveConnection();
 
-		$manager = new EventManager();
-		$manager->initialize_rest_endpoint();
+		$this->event_manager->initialize_rest_endpoint();
 
 		// Initialize the required verification endpoints
 		$this->hiive->register_verification_hooks();
@@ -74,14 +98,42 @@ class Data {
 			return;
 		}
 
-		$manager->init();
+		$this->event_manager->init();
 
-		$manager->add_subscriber( $this->hiive );
+		$this->event_manager->add_subscriber( $this->hiive );
 
 		if ( defined( 'NFD_DATA_DEBUG' ) && NFD_DATA_DEBUG ) {
 			$this->logger = new Logger();
-			$manager->add_subscriber( $this->logger );
+			$this->event_manager->add_subscriber( $this->logger );
 		}
+
+		// Register endpoint for clearing capabilities cache
+		$capabilities_api = new Capabilities( new SiteCapabilities() );
+		add_action( 'rest_api_init', array( $capabilities_api, 'register_routes' ) );
+
+	}
+
+	/**
+	 * Enqueue admin scripts for our click events and other tracking.
+	 */
+	public function scripts(): void {
+		wp_enqueue_script(
+			'newfold-hiive-events',
+			$this->plugin->url . 'vendor/newfold-labs/wp-module-data/assets/click-events.js',
+			array( 'wp-api-fetch', 'nfd-runtime' ),
+			$this->plugin->version,
+			true
+		);
+
+		// Inline script for global vars for ctb
+		wp_localize_script(
+			'newfold-hiive-events',
+			'nfdHiiveEvents',
+			array(
+				'eventEndpoint' => esc_url_raw( get_home_url() . '/index.php?rest_route=/newfold-data/v1/events/' ),
+				'brand'         => $this->plugin->brand,
+			)
+		);
 	}
 
 	/**
@@ -107,6 +159,8 @@ class Data {
 
 	/**
 	 * Authenticate incoming REST API requests.
+	 *
+	 * Sets current user to user id provided in `$_GET['user_id']` or the first admin user if no user ID is provided.
 	 *
 	 * @hooked rest_authentication_errors
 	 *
@@ -151,7 +205,7 @@ class Data {
 		// Allow access if token is valid
 		if ( $is_valid ) {
 
-			if ( isset( $_GET['user_id'] ) ) {
+			if ( isset( $_GET['user_id'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 				// If a user ID is provided, use it to find the desired user.
 				$user = get_user_by( 'id', filter_input( INPUT_GET, 'user_id', FILTER_SANITIZE_NUMBER_INT ) );

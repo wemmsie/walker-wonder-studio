@@ -1,0 +1,364 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://github.com/newfold-labs/wp-module-hosting/issues\n"
+"Last-Translator: Carlos Rodriguez <carlos.rodriguez@newfold.com>\n"
+"Language-Team: Brazilian Portuguese <ldpbr-translation@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-02-13T09:55:55+00:00\n"
+"PO-Revision-Date: 2025-05-07 12:12+0100\n"
+"Language: pt_BR\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: wp-module-hosting\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: includes/Helpers/HiiveHelper.php:66
+msgid "Failed to connect to Hiive API."
+msgstr "Falha ao conectar-se à API do Hiive."
+
+#: includes/HostingPanel/HostingPanel.php:135
+msgid "Feature class does not exist."
+msgstr "A classe de recurso não existe."
+
+#: includes/HostingPanel/HostingPanel.php:206
+msgid "Invalid feature identifier."
+msgstr "Identificador de recurso inválido."
+
+#: includes/HostingPanel/HostingPanel.php:223
+msgid "Action not supported."
+msgstr "Ação não suportada."
+
+#: includes/HostingPanel/HostingPanel.php:236
+#: build/hosting/hosting.min.js:12
+msgid "Hosting"
+msgstr "Hospedagem"
+
+#: includes/HostingPanel/RestApi/Controllers/HostingPanelController.php:100
+msgid "Failed to retrieve hosting info"
+msgstr "Falha ao recuperar as informações da hospedagem"
+
+#: includes/HostingPanel/RestApi/Controllers/HostingPanelController.php:132
+#: build/hosting/hosting.min.js:1
+msgid "Action executed successfully"
+msgstr "Ação executada com sucesso"
+
+#: includes/ObjectCache/ObjectCache.php:21
+msgid "Object cache is not set up."
+msgstr "O cache de objetos não está configurado."
+
+#: includes/ObjectCache/ObjectCache.php:30
+msgid "Object cache is installed but disabled."
+msgstr "O cache de objetos está instalado, mas desativado."
+
+#: includes/ObjectCache/ObjectCache.php:36
+msgid "Object cache is enabled and functioning."
+msgstr "O cache de objetos está habilitado e funcionando."
+
+#: includes/ObjectCache/ObjectCache.php:63
+msgid "Failed to clear object cache."
+msgstr "Falha ao limpar o cache de objetos."
+
+#: includes/ObjectCache/ObjectCache.php:80
+#: includes/ObjectCache/ObjectCache.php:117
+msgid "Failed to initialize filesystem."
+msgstr "Falha ao inicializar o sistema de arquivos."
+
+#: includes/ObjectCache/ObjectCache.php:94
+msgid "Failed to disable object cache."
+msgstr "Falha ao desabilitar o cache de objetos."
+
+#: includes/ObjectCache/ObjectCache.php:100
+msgid "Object cache is already disabled."
+msgstr "O cache de objetos já está desabilitado."
+
+#: includes/ObjectCache/ObjectCache.php:137
+msgid "Failed to restore object cache."
+msgstr "Falha ao restaurar o cache de objetos."
+
+#: includes/ObjectCache/ObjectCache.php:148
+msgid "Failed to install object cache."
+msgstr "Falha ao instalar o cache de objetos."
+
+#: includes/ObjectCache/ObjectCache.php:154
+msgid "Could not enable object caching."
+msgstr "Não foi possível habilitar o cache de objetos."
+
+#: build/hosting/hosting.min.js:1
+msgid "Object Caching"
+msgstr "Cache de Objetos"
+
+#: build/hosting/hosting.min.js:1
+msgid "Object Caching is enabled"
+msgstr "Cache de objetos está habilitado"
+
+#: build/hosting/hosting.min.js:1
+msgid "Object Caching is NOT enabled"
+msgstr "Cache de objetos NÃO está habilitado"
+
+#: build/hosting/hosting.min.js:1
+msgid "Object Caching is NOT setup"
+msgstr "Cache de objetos NÃO está configurado"
+
+#: build/hosting/hosting.min.js:1
+msgid "Your site's data is being cached for better performance."
+msgstr "Os dados do seu site estão sendo armazenados em cache para melhor desempenho."
+
+#: build/hosting/hosting.min.js:1
+msgid "Your site's data is not being cached, which may slow things down."
+msgstr "Os dados do seu site não estão sendo armazenados em cache, o que pode deixar o desempenho mais lento."
+
+#: build/hosting/hosting.min.js:1
+msgid "Object Caching is not set up on your site. Learn more about enabling it."
+msgstr "O cache de objetos não está configurado em seu site. Saiba mais sobre como habilitá-lo."
+
+#: build/hosting/hosting.min.js:1
+msgid "Clear Object Cache"
+msgstr "Limpar Cache de Objetos"
+
+#: build/hosting/hosting.min.js:1
+msgid "Enable Object Caching"
+msgstr "Habilitar Cache de Objetos"
+
+#: build/hosting/hosting.min.js:1
+msgid "Disable Object Cache"
+msgstr "Desabilitar Cache de Objetos"
+
+#: build/hosting/hosting.min.js:1
+msgid "Learn more"
+msgstr "Saiba mais"
+
+#: build/hosting/hosting.min.js:1
+msgid "Object Caching Update Failed"
+msgstr "Falha ao atualizar o Cache de Objetos"
+
+#: build/hosting/hosting.min.js:1
+msgid "There was an error updating the object caching settings. Please try again."
+msgstr "Ocorreu um erro ao atualizar as configurações de cache de objetos. Tente novamente."
+
+#: build/hosting/hosting.min.js:1
+msgid "Object Cache Cleared"
+msgstr "Cache de Objetos Limpo"
+
+#: build/hosting/hosting.min.js:1
+msgid "The object cache was successfully cleared."
+msgstr "O cache de objetos foi limpo com sucesso."
+
+#: build/hosting/hosting.min.js:1
+msgid "Copied!"
+msgstr "Copiado!"
+
+#: build/hosting/hosting.min.js:1
+msgid "PHP Version"
+msgstr "Versão do PHP"
+
+#: build/hosting/hosting.min.js:1
+msgid "Could not determine the PHP version"
+msgstr "Não foi possível determinar a versão do PHP"
+
+#. translators: 1: Current PHP version, 2: Recommended PHP version
+#: build/hosting/hosting.min.js:2
+msgid "%1$s (%2$s Recommended)"
+msgstr "%1$s (%2$s recomendado)"
+
+#: build/hosting/hosting.min.js:2
+msgid "Update"
+msgstr "Atualizar"
+
+#: build/hosting/hosting.min.js:2
+msgid "Manage"
+msgstr "Gerenciar"
+
+#: build/hosting/hosting.min.js:2
+msgid "Malware Check"
+msgstr "Verificação de Malware"
+
+#: build/hosting/hosting.min.js:2
+msgid "Partial Scan Completed"
+msgstr "Verificação parcial concluída"
+
+#: build/hosting/hosting.min.js:2
+msgid "Scan Status Unknown"
+msgstr "Status da verificação desconhecido"
+
+#: build/hosting/hosting.min.js:2
+msgid "Your site's safe from malware!"
+msgstr "Seu site está seguro contra malware!"
+
+#: build/hosting/hosting.min.js:2
+msgid "Possible malware detected. Contact support for help resolving potential issues."
+msgstr "Possível malware detectado. Entre em contato com o suporte para ajudar a resolver os problemas potenciais."
+
+#: build/hosting/hosting.min.js:2
+msgid "The current malware scan status could not be determined."
+msgstr "Não foi possível determinar o status atual da verificação de malware."
+
+#: build/hosting/hosting.min.js:2
+msgid "Run a Full Scan"
+msgstr "Executar uma verificação completa"
+
+#: build/hosting/hosting.min.js:2
+msgid "see details"
+msgstr "ver detalhes"
+
+#: build/hosting/hosting.min.js:2
+msgid "Scanning for malware…"
+msgstr "Escaneando por malware…"
+
+#: build/hosting/hosting.min.js:2
+msgid "Contact Support"
+msgstr "Entrar em contato com o Suporte"
+
+#: build/hosting/hosting.min.js:2
+msgid "Could not determine scan status. Please try again."
+msgstr "Não foi possível determinar o status da verificação. Tente novamente."
+
+#: build/hosting/hosting.min.js:2
+msgid "Scan status API failed"
+msgstr "Falha na API do status da verificação"
+
+#: build/hosting/hosting.min.js:2
+msgid "Nameservers"
+msgstr "Servidores de Nomes"
+
+#: build/hosting/hosting.min.js:2
+msgid "No name servers found"
+msgstr "Nenhum servidor de nomes encontrado"
+
+#: build/hosting/hosting.min.js:2
+msgid "COPY"
+msgstr "COPIAR"
+
+#: build/hosting/hosting.min.js:2
+msgid "Name servers work as a directory that translates domain names into IP addresses. Helps you to connect your website to different services."
+msgstr "Os servidores de nomes funcionam como um diretório que traduz nomes de domínio em endereços IP. Isso ajuda a conectar seu site a diferentes serviços."
+
+#: build/hosting/hosting.min.js:2
+msgid "SSH Login Info"
+msgstr "Informações de Login SSH"
+
+#: build/hosting/hosting.min.js:2
+msgid "SSH Keys"
+msgstr "Chaves SSH"
+
+#: build/hosting/hosting.min.js:2
+msgid "SSH provides a secure way to access the web server over CLI to run server commands through a terminal."
+msgstr "O SSH fornece uma maneira segura de acessar o servidor web através de CLI para executar comandos no servidor por meio de um terminal."
+
+#: build/hosting/hosting.min.js:2
+msgid "Manage keys"
+msgstr "Gerenciar chaves"
+
+#: build/hosting/hosting.min.js:2
+msgid "SSH Login:"
+msgstr "Login SSH:"
+
+#: build/hosting/hosting.min.js:2
+msgid "SSH info unavailable"
+msgstr "Informações do SSH não disponíveis"
+
+#: build/hosting/hosting.min.js:2
+msgid "Copy"
+msgstr "Copiar"
+
+#: build/hosting/hosting.min.js:2
+msgid "CDN"
+msgstr "CDN"
+
+#: build/hosting/hosting.min.js:2
+msgid "CDN is enabled"
+msgstr "CDN está habilitado"
+
+#: build/hosting/hosting.min.js:2
+msgid "CDN is NOT enabled"
+msgstr "CDN NÃO está habilitado"
+
+#: build/hosting/hosting.min.js:2
+msgid "Your site's static content is being cached."
+msgstr "O conteúdo estático do seu site está sendo armazenado em cache."
+
+#: build/hosting/hosting.min.js:2
+msgid "Your site's static content is NOT being cached."
+msgstr "O conteúdo estático do seu site NÃO está sendo armazenado em cache."
+
+#: build/hosting/hosting.min.js:2
+msgid "Clear Cache"
+msgstr "Limpar Cache"
+
+#: build/hosting/hosting.min.js:2
+msgid "Disable Cache"
+msgstr "Desabilitar Cache"
+
+#: build/hosting/hosting.min.js:2
+msgid "Enable CDN"
+msgstr "Habilitar CDN"
+
+#: build/hosting/hosting.min.js:2
+msgid "CDN Cache Cleared"
+msgstr "Cache do CDN Limpo"
+
+#: build/hosting/hosting.min.js:2
+msgid "Static content cache has been successfully cleared."
+msgstr "O cache de conteúdo estático foi limpo com sucesso."
+
+#: build/hosting/hosting.min.js:2
+msgid "CDN Purge Failed"
+msgstr "Falha ao limpar o CDN"
+
+#: build/hosting/hosting.min.js:2
+msgid "We were unable to clear the CDN cache. Please try again."
+msgstr "Não conseguimos limpar o cache do CDN. Tente novamente."
+
+#: build/hosting/hosting.min.js:2
+msgid "just now"
+msgstr "agora mesmo"
+
+#. translators: %d is the number of minutes ago
+#: build/hosting/hosting.min.js:5
+msgid "%d minute(s) ago"
+msgstr "%d minuto(s) atrás"
+
+#. translators: %d is the number of hours ago
+#: build/hosting/hosting.min.js:8
+msgid "%d hour(s) ago"
+msgstr "%d hora(s) atrás"
+
+#. translators: %d is the number of days ago
+#: build/hosting/hosting.min.js:11
+msgid "%d day(s) ago"
+msgstr "%d dia(s) atrás"
+
+#. translators: %s is the relative time since last refresh, like "5 minutes ago"
+#: build/hosting/hosting.min.js:12
+msgid "Last updated: %s"
+msgstr "Última atualização: %s"
+
+#: build/hosting/hosting.min.js:12
+msgid "Refresh"
+msgstr "Atualizar"
+
+#: build/hosting/hosting.min.js:12
+msgid "Hang tight, we're gathering the latest info…"
+msgstr "Aguarde, estamos reunindo as últimas informações…"
+
+#: build/hosting/hosting.min.js:12
+msgid "Error:"
+msgstr "Erro:"
+
+#. translators: %s: hosting plan name
+#: build/hosting/hosting.min.js:13
+msgid "A general overview of your %s hosting plan and your site's performance."
+msgstr "Uma visão geral do seu plano de hospedagem %s e do desempenho do seu site."
+
+#: build/hosting/hosting.min.js:13
+msgid "A general overview of your hosting and your site's performance."
+msgstr "Uma visão geral da sua hospedagem e do desempenho do seu site."
+
+#: build/hosting/hosting.min.js:13
+msgid "PLAN_NAME"
+msgstr "NOME_DO_PLANO"
+
+#: build/hosting/hosting.min.js:13
+msgid "Manage Hosting"
+msgstr "Gerenciar Hospedagem"

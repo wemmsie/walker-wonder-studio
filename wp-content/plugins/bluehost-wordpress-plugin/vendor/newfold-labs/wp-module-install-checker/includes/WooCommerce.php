@@ -19,13 +19,21 @@ class WooCommerce {
 	 * @return int[]
 	 */
 	public static function getAllPageIds() {
-		return [
-			wc_get_page_id( 'shop' ),
-			wc_get_page_id( 'cart' ),
-			wc_get_page_id( 'checkout' ),
-			wc_get_page_id( 'myaccount' ),
-			wc_get_page_id( 'refund_returns' ),
-		];
+		
+		$pages = array(
+			'shop',
+			'cart',
+			'checkout',
+			'myaccount',
+			'refund_returns'
+		);
+		
+		array_walk( $pages, function ( &$page ) {
+			$page =  wc_get_page_id( $page );
+		});
+		
+		return array_filter( $pages, function ( $page ) {
+			return $page >= 1;
+		} );
 	}
-
 }

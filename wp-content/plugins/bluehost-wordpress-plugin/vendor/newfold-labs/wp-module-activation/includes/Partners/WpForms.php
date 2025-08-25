@@ -27,6 +27,8 @@ class WpForms extends Partner {
 	 * @return void
 	 */
 	private function disable_redirect() {
-		update_option( 'wpforms_activation_redirect', true );
+		if ( get_option( 'wpforms_activation_redirect' ) !== true ) {
+			update_option( 'wpforms_activation_redirect', true );
+		}
 	}
 }

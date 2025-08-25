@@ -36,17 +36,12 @@ final class Config {
 	 * @return boolean
 	 */
 	public static function get_site_capability( $capability ) {
+		if ( ! self::check_permissions() ) {
+			return false;
+		}
+
 		$site_capabilities = new SiteCapabilities();
 		return $site_capabilities->get( $capability );
-	}
-
-	/**
-	 * Checks if the site is on Jarvis hosting.
-	 *
-	 * @return boolean
-	 */
-	public static function is_jarvis() {
-		return self::get_site_capability( 'isJarvis' );
 	}
 
 	/**
@@ -65,5 +60,69 @@ final class Config {
 	 */
 	public static function can_migrate_site() {
 		return self::get_site_capability( 'canMigrateSite' );
+	}
+
+	/**
+	 * Gets the current site's capability if it has solution.
+	 *
+	 * @return boolean
+	 */
+	public static function has_solution() {
+		return self::get_site_capability( 'hasSolution' );
+	}
+
+	/**
+	 * Checks if the request is an onboarding request.
+	 *
+	 * @param string|null $request_url The request URL to check, if not provided, it will use the referer.
+	 * @return bool
+	 */
+	public static function is_onboarding_request( ?string $request_url = null ): bool {
+		try {
+			$request_url = $request_url ?? wp_get_referer();
+			$request_url = parse_url( $request_url );
+			$home_url    = parse_url( home_url() );
+
+			// Fail if request is not coming from the site
+			if (
+				isset( $request_url['host'] ) &&
+				isset( $home_url['host'] ) &&
+				$request_url['host'] !== $home_url['host']
+			) {
+				return false;
+			}
+
+			// Fail if request is not coming from the onboarding page
+			if (
+				! isset( $request_url['query'] ) ||
+				0 !== strpos( $request_url['query'], 'page=nfd-onboarding' )
+			) {
+				return false;
+			}
+
+			return true;
+		} catch (\Throwable $th) {
+			return false;
+		}
+	}
+
+	/**
+	 * Checks if the request is valid and has the necessary permissions.
+	 *
+	 * The capability check can be invoked many times during a request lifecycle.
+	 * Sometimes we need to reach out to Hiive to get results.
+	 * So we use this permission check to avoid unnecessary calls to Hiive.
+	 *
+	 * @return bool
+	 */
+	private static function check_permissions(): bool {
+		if (
+			current_user_can( 'manage_options' ) &&
+			( self::is_onboarding_request() || wp_is_serving_rest_request() || is_admin() )
+		) {
+			return true;
+		}
+
+		return false;
 	}
 }

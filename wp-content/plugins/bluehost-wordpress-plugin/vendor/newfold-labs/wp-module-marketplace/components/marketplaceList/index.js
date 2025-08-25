@@ -1,5 +1,5 @@
 import { default as MarketplaceItem } from '../marketplaceItem/';
-import { Button, Title } from '@newfold/ui-component-library';
+import { Button } from '@newfold/ui-component-library';
 
 /**
  * MarketplaceList Component
@@ -9,12 +9,12 @@ import { Button, Title } from '@newfold/ui-component-library';
  * @return
  */
 const MarketplaceList = ( {
-	marketplaceItems,
-	currentCount,
-	category,
-	methods,
-	constants,
-} ) => {
+							  marketplaceItems,
+							  currentCount,
+							  category,
+							  methods,
+							  constants,
+						  } ) => {
 	const [ itemsCount, setItemsCount ] = methods.useState( currentCount );
 	const [ currentItems, setCurrentItems ] = methods.useState( [] );
 	const [ activeItems, setActiveItems ] = methods.useState( [] );
@@ -28,6 +28,8 @@ const MarketplaceList = ( {
 	 * @return
 	 */
 	const filterProductsByCategory = ( items, category ) => {
+		if ( 'all' === category.name ) return items;
+
 		return items.filter( ( item ) => {
 			return item.categories.includes( category.title );
 		} );
@@ -42,11 +44,7 @@ const MarketplaceList = ( {
 	 * @return
 	 */
 	const setProductListCount = ( items, itemsCount ) => {
-		let count = 0;
-		return items.filter( ( item ) => {
-			count++;
-			return count <= itemsCount;
-		} );
+		return [ ...items ].slice( 0, itemsCount );
 	};
 
 	/**
@@ -75,7 +73,7 @@ const MarketplaceList = ( {
 	return (
 		<>
 			<div
-				className={ `marketplace-list marketplace-list-${ category.name } wppbh-app-marketplace-list nfd-grid nfd-gap-6 nfd-grid-cols-1 min-[1120px]:nfd-grid-cols-2 min-[1400px]:nfd-grid-cols-3` }
+				className={ `marketplace-list marketplace-list-${ category.name } wppbh-app-marketplace-list nfd-grid nfd-gap-6 nfd-grid-cols-1 min-[575px]:nfd-grid-cols-2 md:nfd-grid-cols-1 min-[1060px]:nfd-grid-cols-2 min-[1360px]:nfd-grid-cols-3` }
 			>
 				{ activeItems.length > 0 &&
 					activeItems.map( ( item ) => (
@@ -88,11 +86,11 @@ const MarketplaceList = ( {
 					) ) }
 				{ ! activeItems.length && <p>{ constants.text.noProducts }</p> }
 				{ currentItems && currentItems.length > itemsCount && (
-					<div style={ { display: 'flex', margin: '1rem 0' } }>
+					<div className="nfd-flex nfd-mx-4 nfd-col-span-full">
 						<Button
 							onClick={ loadMoreClick }
-							variant="primary"
-							className="align-center"
+							variant="secondary"
+							className="align-center nfd-bg-transparent nfd-transition-all nfd-duration-200 nfd-text-[#196bde] hover:nfd-bg-[#ccdcf4]"
 							style={ { margin: 'auto' } }
 						>
 							{ constants.text.loadMore }

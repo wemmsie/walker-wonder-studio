@@ -88,6 +88,7 @@ class ModuleController {
 						return true;
 					}
 					break;
+				// The Sitegen flow always starts with wp-setup, regardless of whether the AI Sitegen capability is set.
 				case 'wp-setup':
 					return true;
 			}

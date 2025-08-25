@@ -26,12 +26,21 @@ class Features {
 	private static $registry = null;
 
 	/**
+	 * Module Path
+	 *
+	 * @var String
+	 */
+	private static $module_path = null;
+
+	/**
 	 * Constructor.
 	 */
 	private function __construct() {
 
 		// Create registry
 		self::$registry = new Registry();
+
+		self::$module_path = container()->plugin()->url . 'vendor/newfold-labs/wp-module-features';
 
 		if ( function_exists( 'add_action' ) ) {
 
@@ -47,6 +56,7 @@ class Features {
 			// Register API script and localized values
 			add_action( 'admin_enqueue_scripts', array( __CLASS__, 'assets' ) );
 
+			\add_action( 'init', array( __CLASS__, 'load_text_domain' ), 100 );
 		}
 
 		// Add default filter to make any feature null value return false
@@ -107,7 +117,7 @@ class Features {
 		wp_register_script(
 			'newfold-features',
 			$scriptPath,
-			array( 'wp-api-fetch' ),
+			array( 'wp-api-fetch', 'wp-i18n' ),
 			container()->plugin()->version,
 			true
 		);
@@ -117,10 +127,16 @@ class Features {
 			'newfold-features',
 			'NewfoldFeatures',
 			array(
-				'features' => self::getFeatures(),
+				'features'  => self::getFeatures(),
 				'togglable' => self::getToggleableFeatures(),
-				'restUrl'  => esc_url_raw( rest_url() ) . 'newfold-features/v1',
+				'restUrl'   => esc_url_raw( rest_url() ) . 'newfold-features/v1',
 			)
+		);
+
+		\wp_set_script_translations(
+			'newfold-features',
+			'wp-module-features',
+			self::$module_path . '/languages'
 		);
 	}
 	/**
@@ -201,5 +217,27 @@ class Features {
 	 */
 	public static function hasFeature( $name ) {
 		return self::$registry->has( $name );
+	}
+
+	/**
+	 * Load text domain for Module
+	 *
+	 * @return void
+	 */
+	public static function load_text_domain() {
+
+		$module_path = container()->plugin()->url . 'vendor/newfold-labs/wp-module-features';
+
+		\load_plugin_textdomain(
+			'wp-module-features',
+			false,
+			$module_path . '/languages'
+		);
+
+		\load_script_textdomain(
+			'newfold-features',
+			'wp-module-features',
+			self::$module_path . '/languages'
+		);
 	}
 }

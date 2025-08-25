@@ -1,0 +1,364 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Module Hosting\n"
+"Report-Msgid-Bugs-To: https://github.com/newfold-labs/wp-module-pls/issues\n"
+"Last-Translator: Newfold Digital\n"
+"Language-Team: Dutch\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-02-13T09:55:55+00:00\n"
+"PO-Revision-Date: 2024-03-19 12:00+0100\n"
+"Language: nl_NL\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Manual\n"
+"X-Domain: wp-module-hosting\n"
+
+#: includes/Helpers/HiiveHelper.php:66
+msgid "Failed to connect to Hiive API."
+msgstr "Kan geen verbinding maken met de Hiive API."
+
+#: includes/HostingPanel/HostingPanel.php:135
+msgid "Feature class does not exist."
+msgstr "Functieklasse bestaat niet."
+
+#: includes/HostingPanel/HostingPanel.php:206
+msgid "Invalid feature identifier."
+msgstr "Ongeldige functie-identificatie."
+
+#: includes/HostingPanel/HostingPanel.php:223
+msgid "Action not supported."
+msgstr "Actie niet ondersteund."
+
+#: includes/HostingPanel/HostingPanel.php:236
+#: build/hosting/hosting.min.js:12
+msgid "Hosting"
+msgstr "Hosting"
+
+#: includes/HostingPanel/RestApi/Controllers/HostingPanelController.php:100
+msgid "Failed to retrieve hosting info"
+msgstr "Kan hostinginformatie niet ophalen"
+
+#: includes/HostingPanel/RestApi/Controllers/HostingPanelController.php:132
+#: build/hosting/hosting.min.js:1
+msgid "Action executed successfully"
+msgstr "Actie succesvol uitgevoerd"
+
+#: includes/ObjectCache/ObjectCache.php:21
+msgid "Object cache is not set up."
+msgstr "Objectcache is niet ingesteld."
+
+#: includes/ObjectCache/ObjectCache.php:30
+msgid "Object cache is installed but disabled."
+msgstr "Objectcache is geïnstalleerd maar uitgeschakeld."
+
+#: includes/ObjectCache/ObjectCache.php:36
+msgid "Object cache is enabled and functioning."
+msgstr "Objectcache is ingeschakeld en functioneert."
+
+#: build/hosting/hosting.min.js:2
+msgid "CDN"
+msgstr "CDN"
+
+#: build/hosting/hosting.min.js:2
+msgid "CDN is enabled"
+msgstr "CDN is ingeschakeld"
+
+#: build/hosting/hosting.min.js:2
+msgid "CDN is NOT enabled"
+msgstr "CDN is NIET ingeschakeld"
+
+#: build/hosting/hosting.min.js:2
+msgid "Your site's static content is being cached."
+msgstr "De statische inhoud van uw site wordt gecached."
+
+#: build/hosting/hosting.min.js:2
+msgid "Your site's static content is NOT being cached."
+msgstr "De statische inhoud van uw site wordt NIET gecached."
+
+#: build/hosting/hosting.min.js:2
+msgid "Clear Cache"
+msgstr "Cache wissen"
+
+#: build/hosting/hosting.min.js:2
+msgid "Disable Cache"
+msgstr "Cache uitschakelen"
+
+#: build/hosting/hosting.min.js:2
+msgid "Enable CDN"
+msgstr "CDN inschakelen"
+
+#: build/hosting/hosting.min.js:2
+msgid "CDN Cache Cleared"
+msgstr "CDN-cache gewist"
+
+#: build/hosting/hosting.min.js:2
+msgid "Static content cache has been successfully cleared."
+msgstr "Cache van statische inhoud is succesvol gewist."
+
+#: build/hosting/hosting.min.js:2
+msgid "CDN Purge Failed"
+msgstr "CDN wissen mislukt"
+
+#: build/hosting/hosting.min.js:2
+msgid "We were unable to clear the CDN cache. Please try again."
+msgstr "We konden de CDN-cache niet wissen. Probeer het opnieuw."
+
+#: build/hosting/hosting.min.js:2
+msgid "just now"
+msgstr "zojuist"
+
+#. translators: %d is the number of minutes ago
+#: build/hosting/hosting.min.js:5
+msgid "%d minute(s) ago"
+msgstr "%d minu(u)t(en) geleden"
+
+#. translators: %d is the number of hours ago
+#: build/hosting/hosting.min.js:8
+msgid "%d hour(s) ago"
+msgstr "%d u(u)r geleden"
+
+#. translators: %d is the number of days ago
+#: build/hosting/hosting.min.js:11
+msgid "%d day(s) ago"
+msgstr "%d dag(en) geleden"
+
+#. translators: %s is the relative time since last refresh, like "5 minutes ago"
+#: build/hosting/hosting.min.js:12
+msgid "Last updated: %s"
+msgstr "Laatst bijgewerkt: %s"
+
+#: build/hosting/hosting.min.js:12
+msgid "Refresh"
+msgstr "Vernieuwen"
+
+#: build/hosting/hosting.min.js:1
+msgid "Copied!"
+msgstr "Gekopieerd!"
+
+#: build/hosting/hosting.min.js:2
+msgid "Malware Check"
+msgstr "Malwarecontrole"
+
+#: build/hosting/hosting.min.js:2
+msgid "Partial Scan Completed"
+msgstr "Gedeeltelijke scan voltooid"
+
+#: build/hosting/hosting.min.js:2
+msgid "Scan Status Unknown"
+msgstr "Scanstatus onbekend"
+
+#: build/hosting/hosting.min.js:2
+msgid "Possible malware detected. Contact support for help resolving potential issues."
+msgstr "Mogelijke malware gedetecteerd. Neem contact op met support voor hulp bij het oplossen van mogelijke problemen."
+
+#: build/hosting/hosting.min.js:2
+msgid "The current malware scan status could not be determined."
+msgstr "De huidige malwarescanstatus kon niet worden bepaald."
+
+#: build/hosting/hosting.min.js:2
+msgid "Run a Full Scan"
+msgstr "Volledige scan uitvoeren"
+
+#: build/hosting/hosting.min.js:2
+msgid "see details"
+msgstr "details bekijken"
+
+#: build/hosting/hosting.min.js:2
+msgid "Scanning for malware…"
+msgstr "Scannen op malware…"
+
+#: build/hosting/hosting.min.js:2
+msgid "Contact Support"
+msgstr "Contact opnemen met support"
+
+#: build/hosting/hosting.min.js:2
+msgid "Could not determine scan status. Please try again."
+msgstr "Kon scanstatus niet bepalen. Probeer het opnieuw."
+
+#: build/hosting/hosting.min.js:2
+msgid "Scan status API failed"
+msgstr "Scanstatus API mislukt"
+
+#: build/hosting/hosting.min.js:2
+msgid "Nameservers"
+msgstr "Nameservers"
+
+#: build/hosting/hosting.min.js:2
+msgid "No name servers found"
+msgstr "Geen nameservers gevonden"
+
+#: build/hosting/hosting.min.js:2
+msgid "COPY"
+msgstr "KOPIËREN"
+
+#: build/hosting/hosting.min.js:2
+msgid "Name servers work as a directory that translates domain names into IP addresses. Helps you to connect your website to different services."
+msgstr "Nameservers werken als een directory die domeinnamen vertaalt naar IP-adressen. Helpt u om uw website te verbinden met verschillende diensten."
+
+#: build/hosting/hosting.min.js:1
+msgid "Object Caching"
+msgstr "Objectcaching"
+
+#: build/hosting/hosting.min.js:1
+msgid "Object Caching is enabled"
+msgstr "Objectcaching is ingeschakeld"
+
+#: build/hosting/hosting.min.js:1
+msgid "Object Caching is NOT enabled"
+msgstr "Objectcaching is NIET ingeschakeld"
+
+#: build/hosting/hosting.min.js:1
+msgid "Object Caching is NOT setup"
+msgstr "Objectcaching is NIET ingesteld"
+
+#: build/hosting/hosting.min.js:1
+msgid "Your site's data is being cached for better performance."
+msgstr "De gegevens van uw site worden gecached voor betere prestaties."
+
+#: build/hosting/hosting.min.js:1
+msgid "Your site's data is not being cached, which may slow things down."
+msgstr "De gegevens van uw site worden niet gecached, wat de snelheid kan verminderen."
+
+#: build/hosting/hosting.min.js:1
+msgid "Object Caching is not set up on your site. Learn more about enabling it."
+msgstr "Objectcaching is niet ingesteld op uw site. Lees meer over het inschakelen ervan."
+
+#: build/hosting/hosting.min.js:1
+msgid "Clear Object Cache"
+msgstr "Objectcache wissen"
+
+#: build/hosting/hosting.min.js:1
+msgid "Enable Object Caching"
+msgstr "Objectcaching inschakelen"
+
+#: build/hosting/hosting.min.js:1
+msgid "Disable Object Cache"
+msgstr "Objectcache uitschakelen"
+
+#: build/hosting/hosting.min.js:1
+msgid "Learn more"
+msgstr "Meer informatie"
+
+#: build/hosting/hosting.min.js:1
+msgid "Object Caching Update Failed"
+msgstr "Bijwerken objectcaching mislukt"
+
+#: build/hosting/hosting.min.js:1
+msgid "There was an error updating the object caching settings. Please try again."
+msgstr "Er is een fout opgetreden bij het bijwerken van de objectcaching-instellingen. Probeer het opnieuw."
+
+#: build/hosting/hosting.min.js:1
+msgid "Object Cache Cleared"
+msgstr "Objectcache gewist"
+
+#: build/hosting/hosting.min.js:1
+msgid "The object cache was successfully cleared."
+msgstr "De objectcache is succesvol gewist."
+
+#: build/hosting/hosting.min.js:12
+msgid "Hang tight, we're gathering the latest info…"
+msgstr "Even geduld, we verzamelen de laatste informatie…"
+
+#: build/hosting/hosting.min.js:12
+msgid "Error:"
+msgstr "Fout:"
+
+#. translators: %s: hosting plan name
+#: build/hosting/hosting.min.js:13
+msgid "A general overview of your %s hosting plan and your site's performance."
+msgstr "Een algemeen overzicht van uw %s hostingplan en de prestaties van uw site."
+
+#: build/hosting/hosting.min.js:13
+msgid "A general overview of your hosting and your site's performance."
+msgstr "Een algemeen overzicht van uw hosting en de prestaties van uw site."
+
+#: build/hosting/hosting.min.js:13
+msgid "PLAN_NAME"
+msgstr "PLAN_NAAM"
+
+#: build/hosting/hosting.min.js:13
+msgid "Manage Hosting"
+msgstr "Hosting beheren"
+
+#: build/hosting/hosting.min.js:1
+msgid "PHP Version"
+msgstr "PHP-versie"
+
+#: build/hosting/hosting.min.js:1
+msgid "Could not determine the PHP version"
+msgstr "Kon de PHP-versie niet bepalen"
+
+#. translators: 1: Current PHP version, 2: Recommended PHP version
+#: build/hosting/hosting.min.js:2
+msgid "%1$s (%2$s Recommended)"
+msgstr "%1$s (%2$s Aanbevolen)"
+
+#: build/hosting/hosting.min.js:2
+msgid "SSH Login Info"
+msgstr "SSH-inloginformatie"
+
+#: build/hosting/hosting.min.js:2
+msgid "SSH Keys"
+msgstr "SSH-sleutels"
+
+#: build/hosting/hosting.min.js:2
+msgid "SSH provides a secure way to access the web server over CLI to run server commands through a terminal."
+msgstr "SSH biedt een veilige manier om via CLI toegang te krijgen tot de webserver om serveropdrachten uit te voeren via een terminal."
+
+#: build/hosting/hosting.min.js:2
+msgid "SSH Login:"
+msgstr "SSH-inloggen:"
+
+#: build/hosting/hosting.min.js:2
+msgid "SSH info unavailable"
+msgstr "SSH-informatie niet beschikbaar"
+
+#: includes/ObjectCache/ObjectCache.php:63
+msgid "Failed to clear object cache."
+msgstr "Kan objectcache niet wissen."
+
+#: includes/ObjectCache/ObjectCache.php:80
+#: includes/ObjectCache/ObjectCache.php:117
+msgid "Failed to initialize filesystem."
+msgstr "Kan bestandssysteem niet initialiseren."
+
+#: includes/ObjectCache/ObjectCache.php:94
+msgid "Failed to disable object cache."
+msgstr "Kan objectcache niet uitschakelen."
+
+#: includes/ObjectCache/ObjectCache.php:100
+msgid "Object cache is already disabled."
+msgstr "Objectcache is al uitgeschakeld."
+
+#: includes/ObjectCache/ObjectCache.php:137
+msgid "Failed to restore object cache."
+msgstr "Kan objectcache niet herstellen."
+
+#: includes/ObjectCache/ObjectCache.php:148
+msgid "Failed to install object cache."
+msgstr "Kan objectcache niet installeren."
+
+#: includes/ObjectCache/ObjectCache.php:154
+msgid "Could not enable object caching."
+msgstr "Kan objectcaching niet inschakelen."
+
+#: build/hosting/hosting.min.js:2
+msgid "Your site's safe from malware!"
+msgstr "Uw site is veilig voor malware!"
+
+#: build/hosting/hosting.min.js:2
+msgid "Update"
+msgstr "Bijwerken"
+
+#: build/hosting/hosting.min.js:2
+msgid "Manage"
+msgstr "Beheren"
+
+#: build/hosting/hosting.min.js:2
+msgid "Manage keys"
+msgstr "Sleutels beheren"
+
+#: build/hosting/hosting.min.js:2
+msgid "Copy"
+msgstr "Kopiëren"

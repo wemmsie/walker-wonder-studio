@@ -13,14 +13,19 @@
 			<nav id='site-navigation' class='main-nav'>
 				<div class='logo'>
 					<a href='/'>
-						<?php require_once get_template_directory() . '/assets/svg/dap-logo.svg'; ?>
+						<?php require_once get_template_directory() . '/assets/svg/studio_logo.svg'; ?>
 					</a>
 				</div>
 				<div class='werk'>
-					<a href='/about/'>
-						<button class='pill pill-sm pill-blue'>Work with us</button>
-					</a>
-					<div class='spacer'></div>
+					<?php $navigation_cta = get_field('navigation_cta', 'option'); ?>
+					<?php if ($navigation_cta) : ?>
+						<a href="<?php echo esc_url($navigation_cta['url']); ?>" target="<?php echo esc_attr($navigation_cta['target']); ?>">
+							<button class='pill pill-sm pill-blue'>
+								<?php echo esc_html($navigation_cta['title']); ?>
+							</button></a>
+						<div class='spacer'></div>
+					<?php endif; ?>
+
 				</div>
 				<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
 					<span class="burger"></span>

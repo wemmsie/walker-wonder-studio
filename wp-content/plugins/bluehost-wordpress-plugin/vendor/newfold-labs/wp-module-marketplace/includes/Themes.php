@@ -146,7 +146,7 @@ class Themes {
 			const themesFilterContainer = document.querySelector('.wp-filter .filter-links');
 			const marketplacePremiumThemesLink = document.createElement('li');
 
-			marketplacePremiumThemesLink.innerHTML = '<a style="text-decoration: none;" onclick="location.href=\'<?php echo esc_url( admin_url( 'admin.php?page=' . container()->plugin()->id . '#/marketplace/themes' ) ); ?>\'"><?php esc_html_e( 'Premium', 'newfold-marketplace-module' ); ?></a>';
+			marketplacePremiumThemesLink.innerHTML = '<a style="text-decoration: none;" onclick="location.href=\'<?php echo esc_url( admin_url( 'admin.php?page=' . container()->plugin()->id . '#/marketplace/themes' ) ); ?>\'"><?php esc_html_e( 'Premium', 'wp-module-marketplace' ); ?></a>';
 			themesFilterContainer.appendChild(marketplacePremiumThemesLink);
 		});
 		</script>

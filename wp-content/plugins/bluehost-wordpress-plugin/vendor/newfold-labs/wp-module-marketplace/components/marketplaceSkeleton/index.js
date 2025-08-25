@@ -12,7 +12,7 @@ const MarketplaceSkeleton = ( { width, height, className = '' } ) => {
 		<div
 			// eslint-disable-next-line prettier/prettier
 			className={ classNames(
-				'newfold-marketplace-skeleton',
+				'newfold-marketplace-skeleton nfd-flex-1',
 				className
 			) }
 			style={ {

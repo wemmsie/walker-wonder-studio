@@ -10,7 +10,7 @@ final class Events {
 	 *
 	 * @var array
 	 */
-	protected static $category = array( 'wonder_start' );
+	protected static $category = array( 'wonder_start', 'experiment' );
 
 	/**
 	 * List of valid actions that an event can perform.
@@ -25,6 +25,7 @@ final class Events {
 		'onboarding_chapter_started'  => true,
 		'onboarding_chapter_complete' => true,
 		'onboarding_complete'         => true,
+		'onboarding_restarted'        => true,
 		'experience_level_set'        => true,
 		'primary_type_set'            => true,
 		'secondary_type_set'          => true,
@@ -56,6 +57,7 @@ final class Events {
 		'error_state_triggered'       => true,
 		'migration_initiated'         => true,
 		'mfe_migration_initiated'     => true,
+		'exp_fork_diy_mar25'          => true,
 	);
 
 	/**

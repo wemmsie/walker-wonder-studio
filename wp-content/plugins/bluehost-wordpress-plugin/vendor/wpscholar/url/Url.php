@@ -86,7 +86,7 @@ class Url {
 	 * @return string
 	 */
 	public static function getCurrentUrl() {
-		return self::getCurrentScheme() . '://' . getenv( 'HTTP_HOST' ) . getenv( 'REQUEST_URI' );
+		return self::getCurrentScheme() . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 	}
 
 	/**
@@ -95,18 +95,39 @@ class Url {
 	 * @return string
 	 */
 	public static function getCurrentScheme() {
-		$is_ssl = (boolean) getenv( 'HTTPS' ) || '443' === getenv( 'SERVER_PORT' ) || 'https' === getenv( 'HTTP_X_FORWARDED_PROTO' );
-		$scheme = $is_ssl ? 'https' : 'http';
 
-		return $scheme;
+		// Check HTTPS server variable
+		if ( isset( $_SERVER['HTTPS'] ) ) {
+			if ( 'on' === strtolower( $_SERVER['HTTPS'] ) ) {
+				return 'https';
+			}
+
+			if ( '1' === (string) $_SERVER['HTTPS'] ) {
+				return 'https';
+			}
+		}
+
+		// Check port
+		if ( isset( $_SERVER['SERVER_PORT'] ) && '443' === (string) $_SERVER['SERVER_PORT'] ) {
+			return 'https';
+		}
+
+		// Check forwarded protocol
+		if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && 'https' === $_SERVER['HTTP_X_FORWARDED_PROTO'] ) {
+			return 'https';
+		}
+
+		return 'http';
 	}
 
 	/**
 	 * Build a URL from its component parts.
 	 *
-	 * @param array $parts
+	 * @param array $parts Array containing URL components with possible keys:
+	 *                     'scheme', 'user', 'pass', 'host', 'port', 'path',
+	 *                     'query', 'fragment'
 	 *
-	 * @return string
+	 * @return string The constructed URL
 	 */
 	public static function buildUrl( array $parts ) {
 		$url = '';
@@ -144,10 +165,10 @@ class Url {
 	/**
 	 * Build a path from its component parts.
 	 *
-	 * @param array $segments
-	 * @param bool  $trailing_slash
+	 * @param array $segments Array of path segments to combine into a path
+	 * @param bool  $trailing_slash Whether to append a trailing slash to the path
 	 *
-	 * @return string
+	 * @return string The constructed path string
 	 */
 	public static function buildPath( array $segments, $trailing_slash = false ) {
 		$path = '';
@@ -164,9 +185,9 @@ class Url {
 	/**
 	 * Strip the query string from a URL.
 	 *
-	 * @param string $url
+	 * @param string $url The URL to strip the query string from
 	 *
-	 * @return string
+	 * @return string The URL with query string removed
 	 */
 	public static function stripQueryString( $url ) {
 		$url        = new self( $url );
@@ -178,7 +199,7 @@ class Url {
 	/**
 	 * Create a new instance.
 	 *
-	 * @param string $url
+	 * @param string $url The URL to parse, defaults to current URL if empty
 	 */
 	public function __construct( $url = '' ) {
 		if ( empty( $url ) ) {
@@ -190,7 +211,7 @@ class Url {
 	/**
 	 * Parse a URL into its component parts.
 	 *
-	 * @param string $url
+	 * @param string $url The URL string to parse into components
 	 *
 	 * @return $this
 	 */
@@ -227,9 +248,9 @@ class Url {
 	}
 
 	/**
-	 * Gat a URL path segment by index.
+	 * Get a URL path segment by index.
 	 *
-	 * @param int $index
+	 * @param int $index The zero-based position of the segment to retrieve
 	 *
 	 * @return string|null
 	 */
@@ -242,10 +263,10 @@ class Url {
 	/**
 	 * Add a query variable to the URL.
 	 *
-	 * @param string $name
-	 * @param string $value
+	 * @param string $name  The name of the query variable to add
+	 * @param string $value The value to set for the query variable
 	 *
-	 * @return string
+	 * @return string The complete URL string with the added query variable
 	 */
 	public function addQueryVar( $name, $value ) {
 		$query_vars          = $this->getQueryVars();
@@ -258,9 +279,9 @@ class Url {
 	/**
 	 * Remove a query variable from the URL.
 	 *
-	 * @param string $name
+	 * @param string $name The name of the query variable to remove
 	 *
-	 * @return string
+	 * @return string The complete URL string with the query variable removed
 	 */
 	public function removeQueryVar( $name ) {
 		$query_vars = $this->getQueryVars();
@@ -273,7 +294,7 @@ class Url {
 	/**
 	 * Get a query variable from the URL.
 	 *
-	 * @param string $name
+	 * @param string $name The name of the query variable to retrieve
 	 *
 	 * @return string|null
 	 */
@@ -298,9 +319,9 @@ class Url {
 	/**
 	 * Add a fragment to the URL.
 	 *
-	 * @param string $value
+	 * @param string $value The fragment to add to the URL
 	 *
-	 * @return string
+	 * @return string The complete URL string with the fragment added
 	 */
 	public function addFragment( $value ) {
 		$this->fragment = $value;
@@ -347,9 +368,9 @@ class Url {
 	/**
 	 * Magic method for getting properties.
 	 *
-	 * @param string $name
+	 * @param string $name The name of the property to get
 	 *
-	 * @return string|int|null
+	 * @return string|int|null The value of the property if it exists, null otherwise
 	 */
 	public function __get( $name ) {
 		$value    = null;
@@ -364,27 +385,22 @@ class Url {
 	/**
 	 * Magic method for setting properties.
 	 *
-	 * @param string $name  Property name to set.
-	 * @param string $value Property value to set.
+	 * @param string      $name  Property name to set.
+	 * @param string|null $value Property value to set.
 	 *
 	 * @return $this
 	 */
 	public function __set( $name, $value ) {
 		$property = "_{$name}";
 		if ( 'url' === $name ) {
-
 			// If setting URL, parse and set all the URL parts
-			$this->parseUrl( $value );
-
+			$this->parseUrl( (string) $value );
 		} elseif ( property_exists( $this, $property ) ) {
-
 			// If setting a URL part, build and set the full URL
 			$this->$property = (string) $value;
 			$this->_url      = self::buildUrl( $this->toArray() );
-
 		}
 
 		return $this;
 	}
-
 }

@@ -3,7 +3,7 @@
 namespace NewfoldLabs\WP\Module\Patterns\Library;
 
 use NewfoldLabs\WP\Module\Patterns\Data\Brands;
-
+use NewfoldLabs\WP\Module\Patterns\Services\PluginService;
 
 /**
  * Admin library class
@@ -23,6 +23,11 @@ final class Admin {
 		foreach ( self::$admin_pages as $admin_page ) {
 			\add_action( "load-{$admin_page}.php", array( __CLASS__, 'load_wonder_blocks' ) );
 		}
+
+		\add_action( 'init', array( PluginService::class, 'setup' ) );
+		\add_action( 'init', array( __CLASS__, 'load_text_domain' ), 100 );
+
+		\add_filter( 'load_script_translation_file', array( __CLASS__, 'load_script_translation_file' ), 10, 3 );
 	}
 
 	/**
@@ -65,17 +70,42 @@ final class Admin {
 				'nfdWonderBlocks',
 				array(
 					'nonce'        => \wp_create_nonce( 'wp_rest' ),
-					'nfdRestURL'   => \esc_url_raw( \rest_url( 'nfd-wonder-blocks/v1' ) ),
+					'nfdRestURL'   => \get_home_url() . '/index.php?rest_route=/nfd-wonder-blocks/v1',
 					'assets'       => \esc_url( NFD_WONDER_BLOCKS_URL . '/assets' ),
 					'wpVer'        => \esc_html( get_bloginfo( 'version' ) ),
 					'nfdWBVersion' => \esc_html( NFD_WONDER_BLOCKS_VERSION ),
-					'brand'        => Brands::getCurrentBrand(),
+					'brand'        => Brands::get_current_brand(),
 				)
+			);
+
+			\wp_set_script_translations(
+				'nfd-wonder-blocks',
+				'nfd-wonder-blocks',
+				NFD_WONDER_BLOCKS_DIR . '/languages'
 			);
 
 			\wp_enqueue_script( 'nfd-wonder-blocks' );
 			\wp_enqueue_style( 'nfd-wonder-blocks' );
 		}
+	}
+
+	/**
+	 * Filter default WP script translations file to load the correct one
+	 *
+	 * @param string $file The translations file.
+	 * @param string $handle Script handle.
+	 * @param string $domain The strings textdomain.
+	 * @return string
+	 */
+	public static function load_script_translation_file( $file, $handle, $domain ) {
+
+		if ( 'nfd-wonder-blocks' === $handle ) {
+			$locale = determine_locale();
+			$key    = md5( 'build/' . NFD_WONDER_BLOCKS_VERSION . '/wonder-blocks.js' );
+			$file   = NFD_WONDER_BLOCKS_DIR . "/languages/{$domain}-{$locale}-{$key}.json";
+		}
+
+		return $file;
 	}
 
 	/**
@@ -151,5 +181,25 @@ final class Admin {
 		}
 
 		return $classes;
+	}
+
+	/**
+	 * Load text domain for Module
+	 *
+	 * @return void
+	 */
+	public static function load_text_domain() {
+
+		\load_plugin_textdomain(
+			'nfd-wonder-blocks',
+			false,
+			NFD_WONDER_BLOCKS_DIR . '/languages'
+		);
+
+		\load_script_textdomain(
+			'nfd-wonder-blocks',
+			'nfd-wonder-blocks',
+			NFD_WONDER_BLOCKS_DIR . '/languages'
+		);
 	}
 }

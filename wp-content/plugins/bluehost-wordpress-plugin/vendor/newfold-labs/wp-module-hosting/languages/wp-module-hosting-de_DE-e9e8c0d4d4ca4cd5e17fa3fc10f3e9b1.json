@@ -1,0 +1,225 @@
+{
+    "translation-revision-date": "2024-03-19 12:00+0100",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/hosting\/hosting.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "de_DE",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Hosting": [
+                "Hosting"
+            ],
+            "Action executed successfully": [
+                "Aktion erfolgreich ausgef\u00fchrt"
+            ],
+            "CDN": [
+                "CDN"
+            ],
+            "CDN is enabled": [
+                "CDN ist aktiviert"
+            ],
+            "CDN is NOT enabled": [
+                "CDN ist NICHT aktiviert"
+            ],
+            "Your site's static content is being cached.": [
+                "Die statischen Inhalte Ihrer Website werden zwischengespeichert."
+            ],
+            "Your site's static content is NOT being cached.": [
+                "Die statischen Inhalte Ihrer Website werden NICHT zwischengespeichert."
+            ],
+            "Clear Cache": [
+                "Cache leeren"
+            ],
+            "Disable Cache": [
+                "Cache deaktivieren"
+            ],
+            "Enable CDN": [
+                "CDN aktivieren"
+            ],
+            "CDN Cache Cleared": [
+                "CDN-Cache geleert"
+            ],
+            "Static content cache has been successfully cleared.": [
+                "Der Cache f\u00fcr statische Inhalte wurde erfolgreich geleert."
+            ],
+            "CDN Purge Failed": [
+                "CDN-Cache konnte nicht geleert werden"
+            ],
+            "We were unable to clear the CDN cache. Please try again.": [
+                "Der CDN-Cache konnte nicht geleert werden. Bitte versuchen Sie es erneut."
+            ],
+            "just now": [
+                "gerade eben"
+            ],
+            "%d minute(s) ago": [
+                "vor %d Minute(n)"
+            ],
+            "%d hour(s) ago": [
+                "vor %d Stunde(n)"
+            ],
+            "%d day(s) ago": [
+                "vor %d Tag(en)"
+            ],
+            "Last updated: %s": [
+                "Zuletzt aktualisiert: %s"
+            ],
+            "Refresh": [
+                "Aktualisieren"
+            ],
+            "Copied!": [
+                "Kopiert!"
+            ],
+            "Malware Check": [
+                "Malware-Pr\u00fcfung"
+            ],
+            "Partial Scan Completed": [
+                "Teilscan abgeschlossen"
+            ],
+            "Scan Status Unknown": [
+                "Scan-Status unbekannt"
+            ],
+            "Your site's safe from malware!": [
+                "Ihre Website ist frei von Malware!"
+            ],
+            "Possible malware detected. Contact support for help resolving potential issues.": [
+                "M\u00f6gliche Malware erkannt. Kontaktieren Sie den Support f\u00fcr Hilfe bei der L\u00f6sung potenzieller Probleme."
+            ],
+            "The current malware scan status could not be determined.": [
+                "Der aktuelle Malware-Scan-Status konnte nicht ermittelt werden."
+            ],
+            "Run a Full Scan": [
+                "Vollst\u00e4ndigen Scan durchf\u00fchren"
+            ],
+            "see details": [
+                "Details anzeigen"
+            ],
+            "Scanning for malware\u2026": [
+                "Suche nach Malware\u2026"
+            ],
+            "Contact Support": [
+                "Support kontaktieren"
+            ],
+            "Could not determine scan status. Please try again.": [
+                "Scan-Status konnte nicht ermittelt werden. Bitte versuchen Sie es erneut."
+            ],
+            "Scan status API failed": [
+                "Scan-Status-API fehlgeschlagen"
+            ],
+            "Nameservers": [
+                "Nameserver"
+            ],
+            "No name servers found": [
+                "Keine Nameserver gefunden"
+            ],
+            "COPY": [
+                "KOPIEREN"
+            ],
+            "Name servers work as a directory that translates domain names into IP addresses. Helps you to connect your website to different services.": [
+                "Nameserver fungieren als Verzeichnis, das Domainnamen in IP-Adressen \u00fcbersetzt. Sie helfen Ihnen, Ihre Website mit verschiedenen Diensten zu verbinden."
+            ],
+            "Object Caching": [
+                "Objekt-Caching"
+            ],
+            "Object Caching is enabled": [
+                "Objekt-Caching ist aktiviert"
+            ],
+            "Object Caching is NOT enabled": [
+                "Objekt-Caching ist NICHT aktiviert"
+            ],
+            "Object Caching is NOT setup": [
+                "Objekt-Caching ist NICHT eingerichtet"
+            ],
+            "Your site's data is being cached for better performance.": [
+                "Die Daten Ihrer Website werden f\u00fcr bessere Leistung zwischengespeichert."
+            ],
+            "Your site's data is not being cached, which may slow things down.": [
+                "Die Daten Ihrer Website werden nicht zwischengespeichert, was die Leistung beeintr\u00e4chtigen kann."
+            ],
+            "Object Caching is not set up on your site. Learn more about enabling it.": [
+                "Objekt-Caching ist auf Ihrer Website nicht eingerichtet. Erfahren Sie mehr \u00fcber die Aktivierung."
+            ],
+            "Clear Object Cache": [
+                "Objekt-Cache leeren"
+            ],
+            "Enable Object Caching": [
+                "Objekt-Caching aktivieren"
+            ],
+            "Disable Object Cache": [
+                "Objekt-Cache deaktivieren"
+            ],
+            "Learn more": [
+                "Mehr erfahren"
+            ],
+            "Object Caching Update Failed": [
+                "Objekt-Caching-Aktualisierung fehlgeschlagen"
+            ],
+            "There was an error updating the object caching settings. Please try again.": [
+                "Beim Aktualisieren der Objekt-Caching-Einstellungen ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+            ],
+            "Object Cache Cleared": [
+                "Objekt-Cache geleert"
+            ],
+            "The object cache was successfully cleared.": [
+                "Der Objekt-Cache wurde erfolgreich geleert."
+            ],
+            "Hang tight, we're gathering the latest info\u2026": [
+                "Einen Moment, wir sammeln die neuesten Informationen\u2026"
+            ],
+            "Error:": [
+                "Fehler:"
+            ],
+            "A general overview of your %s hosting plan and your site's performance.": [
+                "Eine allgemeine \u00dcbersicht \u00fcber Ihren %s Hosting-Plan und die Leistung Ihrer Website."
+            ],
+            "A general overview of your hosting and your site's performance.": [
+                "Eine allgemeine \u00dcbersicht \u00fcber Ihr Hosting und die Leistung Ihrer Website."
+            ],
+            "PLAN_NAME": [
+                "PLAN_NAME"
+            ],
+            "Manage Hosting": [
+                "Hosting verwalten"
+            ],
+            "PHP Version": [
+                "PHP-Version"
+            ],
+            "Could not determine the PHP version": [
+                "PHP-Version konnte nicht ermittelt werden"
+            ],
+            "%1$s (%2$s Recommended)": [
+                "%1$s (%2$s empfohlen)"
+            ],
+            "Update": [
+                "Aktualisieren"
+            ],
+            "Manage": [
+                "Verwalten"
+            ],
+            "SSH Login Info": [
+                "SSH-Login-Informationen"
+            ],
+            "SSH Keys": [
+                "SSH-Schl\u00fcssel"
+            ],
+            "SSH provides a secure way to access the web server over CLI to run server commands through a terminal.": [
+                "SSH bietet eine sichere M\u00f6glichkeit, \u00fcber CLI auf den Webserver zuzugreifen, um Serverbefehle \u00fcber ein Terminal auszuf\u00fchren."
+            ],
+            "Manage keys": [
+                "Schl\u00fcssel verwalten"
+            ],
+            "SSH Login:": [
+                "SSH-Login:"
+            ],
+            "SSH info unavailable": [
+                "SSH-Informationen nicht verf\u00fcgbar"
+            ],
+            "Copy": [
+                "Kopieren"
+            ]
+        }
+    }
+}

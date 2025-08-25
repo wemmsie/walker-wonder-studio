@@ -60,7 +60,7 @@ footer {
       p {
         @apply text-gray-300;
         a {
-          @apply font-medium text-blue;
+          @apply font-medium text-primary;
         }
       }
     }
@@ -80,12 +80,12 @@ footer {
 
     &:focus,
     &:focus-visible {
-      @apply border-blue;
+      @apply border-primary;
     }
   }
 
   .icon {
-    @apply absolute right-4 top-1/2 -translate-y-1/2 text-blue transition-all;
+    @apply absolute right-4 top-1/2 -translate-y-1/2 text-primary transition-all;
 
     &:hover {
       @apply cursor-pointer;

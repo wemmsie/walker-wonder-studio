@@ -131,17 +131,20 @@ const MarketplaceItem = ( { item, methods, constants } ) => {
 				primaryCTA = (
 					<Button
 						as="a"
-						href={ item.primaryUrl }
+						href={ window.NewfoldRuntime?.linkTracker?.addUtmParams( item.primaryUrl ) || item.primaryUrl }
 						target="_blank"
 						data-action="load-nfd-ctb"
 						data-ctb-id={ item.clickToBuyId }
+						data-nfd-click="newfold-marketplaceitem-click"
+						data-nfd-event-key={ item.primaryCallToAction }
+						data-nfd-product-id={ item.clickToBuyId }
 					>
 						{ item.primaryCallToAction }
 					</Button>
 				);
 			} else {
 				primaryCTA = (
-					<Button as="a" href={ item.primaryUrl } target="_blank">
+					<Button as="a" href={ window.NewfoldRuntime?.linkTracker?.addUtmParams( item.primaryUrl ) || item.primaryUrl } target="_blank">
 						{ item.primaryCallToAction }
 					</Button>
 				);
@@ -161,7 +164,7 @@ const MarketplaceItem = ( { item, methods, constants } ) => {
 				as: 'a',
 				className:
 					'nfd-inline-flex nfd-items-center nfd-gap-1.5 nfd-w-max nfd-no-underline',
-				href: generateSecondaryUrl(),
+				href: window.NewfoldRuntime?.linkTracker?.addUtmParams( generateSecondaryUrl() ) || generateSecondaryUrl(),
 				target: isInternal ? '_self' : '_blank',
 				onClick: handleNavigate,
 			};
@@ -187,7 +190,12 @@ const MarketplaceItem = ( { item, methods, constants } ) => {
 
 		if ( item.secondaryCallToAction && item.secondaryUrl ) {
 			secondaryCTA = (
-				<Link { ...getLinkAttributes() }>
+				<Link
+					{ ...getLinkAttributes() }
+					data-nfd-click="newfold-marketplaceitem-click"
+					data-nfd-event-key={ item.secondaryCallToAction }
+					data-nfd-product-id={ item.id }
+				>
 					<span className="nfd-text-primary">
 						{ item.secondaryCallToAction }
 					</span>

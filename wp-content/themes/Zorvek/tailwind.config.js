@@ -17,6 +17,7 @@ module.exports = {
     './**/*.php', // Include all PHP files
   ],
   safelist: [
+    ...Object.keys(colors).map((k) => `fill-${k}`),
     {
       pattern: /^bg-/,
     },
@@ -32,6 +33,9 @@ module.exports = {
       boxShadow: {
         1: 'rgba(0, 0, 0, 0.07) 0px 3px 8px;',
         2: 'rgba(0, 0, 0, 0.08) 0px 5px 12px;',
+      },
+      fill: {
+        ...colors, // gives fill-primary, fill-secondary, etc.
       },
       spacing: {
         post: '25px',
@@ -77,33 +81,7 @@ module.exports = {
         ...colors,
         gray: {
           1: '#E8E5EB',
-        }, // Dynamic colors
-        // blue: {
-        //   1: '#016ff2', // PRIMARY - BLUE
-        //   2: '#01b5de', // SECONDARY - BLUE
-        //   3: '#5157EB',
-        // },
-        // red: {
-        //   1: '#f66168', // SECONDARY - CORAL
-        //   2: '#905', // CODE TEXT
-        // },
-        // yellow: {
-        //   1: '#ffc603', // SECONDARY - SAFFRON YELLOW
-        // },
-        // green: {
-        //   1: '#70F2AA', // SECONDARY - GREEN
-        //   2: '#a3ffcc', // TERTIARY - GREEN
-        // },
-        // grey: {
-        //   1: '#F9F7F7', // PRIMARY BACKGROUND
-        //   3: '#E8E5EB', // SECONDARY
-        //   5: '#f5f2f0', // CODE
-        //   6: '#b1abb8',
-        // },
-        // black: {
-        //   1: '#00002f', // BLACK
-        //   2: '#5f5f73',
-        // },
+        },
       },
 
       fontSize: {
@@ -150,9 +128,9 @@ module.exports = {
     },
 
     fontFamily: {
-      poppins: ['Poppins', 'sans-serif'],
-      korolev: ['korolev', 'sans-serif'],
-      'korolev-condensed': ['korolev-condensed', 'sans-serif'],
+      poppins: ['poppins', 'sans-serif'],
+      futura: ['futura', 'sans-serif'],
+      aktiv: ['aktiv-grotesk-extended', 'sans-serif'],
       awesome: ['Font Awesome 5 Free'],
     },
   },

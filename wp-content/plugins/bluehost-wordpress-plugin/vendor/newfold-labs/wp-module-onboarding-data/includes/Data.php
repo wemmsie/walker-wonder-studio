@@ -4,6 +4,8 @@ namespace NewfoldLabs\WP\Module\Onboarding\Data;
 use NewfoldLabs\WP\Module\CustomerBluehost\CustomerBluehost;
 use NewfoldLabs\WP\Module\Onboarding\Data\Flows\Flows;
 use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
+use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService;
+use NewfoldLabs\WP\Module\Onboarding\Data\Services\WonderBlocksService;
 
 use function NewfoldLabs\WP\ModuleLoader\container;
 
@@ -20,24 +22,27 @@ final class Data {
 			'siteUrl'             => \get_site_url(),
 			'restUrl'             => \get_home_url() . '/index.php?rest_route=',
 			'adminUrl'            => \admin_url(),
+			'status'              => get_option( Options::get_option_name( 'status' ) ),
 			'currentBrand'        => self::current_brand(),
 			'currentPlan'         => self::current_plan(),
 			'currentFlow'         => self::current_flow(),
 			'pluginInstallHash'   => PluginInstaller::rest_get_plugin_install_hash(),
-			'previewSettings'     => array(
-				'settings'        => Preview::get_settings(),
-				'stepPreviewData' => Themes::step_preview_data(),
+			'languages'           => Languages::get_all_languages(),
+			'siteGen'             => array(
+				'identifiers' => array_keys( SiteGenService::enabled_identifiers() ),
 			),
 			'currentUserDetails'  => self::wp_current_user_details(),
 			'isFreshInstallation' => self::is_fresh_installation(),
 			'sentryInitDsnURL'    => 'https://cd5bd4c30b914e0d1d0f49413e600afa@o4506197201715200.ingest.us.sentry.io/4507383861805056',
+			'fallbackHomepages'   => WonderBlocksService::get_fallback_homepages(),
 		);
 	}
 
 	/**
-	 * Establish brand to apply to Onboarding experience.
+	 * Establish the brand to apply to the Onboarding experience.
 	 *
-	 * @return array
+	 * @return array The configuration array of the current brand. If the specified brand is not found,
+	 *               returns the default brand configuration.
 	 */
 	public static function current_brand() {
 		$brands = Brands::get_brands();

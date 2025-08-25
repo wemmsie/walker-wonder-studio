@@ -7,8 +7,10 @@
 
 namespace Bluehost;
 
+use NewfoldLabs\WP\Module\Data\SiteCapabilities;
 use function NewfoldLabs\WP\Context\getContext;
 use function NewfoldLabs\WP\Module\Features\isEnabled;
+use function NewfoldLabs\WP\Module\LinkTracker\Functions\build_link as buildLink;
 
 /**
  * \Bluehost\Admin
@@ -41,6 +43,8 @@ final class Admin {
 			/* Disable admin notices on App pages */
 			\add_action( 'admin_init', array( __CLASS__, 'disable_admin_notices' ) );
 		}
+
+		\add_action( 'update_option_WPLANG', array( __CLASS__, 'clear_transient_on_language_change' ), 10, 2 );
 	}
 
 	/**
@@ -63,50 +67,47 @@ final class Admin {
 	 *
 	 * @return array
 	 */
-	public static function subpages() {
-		global $bluehost_module_container;
+	public static function plugin_subpages() {
 
-		$home          = array(
-			'bluehost#/home' => __( 'Home', 'wp-plugin-bluehost' ),
+		$home     = array(
+			'route'    => 'bluehost#/home',
+			'title'    => __( 'Home', 'wp-plugin-bluehost' ),
+			'priority' => 1,
 		);
-		$pagesAndPosts = array(
-			'bluehost#/pages-and-posts' => __( 'Pages & Posts', 'wp-plugin-bluehost' ),
+		$settings = array(
+			'route'    => 'bluehost#/settings',
+			'title'    => __( 'Settings', 'wp-plugin-bluehost' ),
+			'priority' => 60,
 		);
-		$store         = array(
-			'bluehost#/store' => __( 'Store', 'wp-plugin-bluehost' ),
-		);
-		$marketplace   = array(
-			'bluehost#/marketplace' => __( 'Marketplace', 'wp-plugin-bluehost' ),
-		);
-		// add performance if enabled
-		$performance = isEnabled( 'performance' )
-			? array(
-				'bluehost#/performance' => __( 'Performance', 'wp-plugin-bluehost' ),
-			)
-			: array();
-		$settings    = array(
-			'bluehost#/settings' => __( 'Settings', 'wp-plugin-bluehost' ),
-		);
-		// add staging if enabled
-		$staging = isEnabled( 'staging' )
-			? array(
-				'bluehost#/staging' => __( 'Staging', 'wp-plugin-bluehost' ),
-			)
-			: array();
-		$help    = array(
-			'bluehost#/help' => __( 'Help', 'wp-plugin-bluehost' ),
+		$help     = array(
+			'route'    => 'bluehost#/help',
+			'title'    => __( 'Help Resources', 'wp-plugin-bluehost' ),
+			'priority' => 70,
 		);
 
-		return array_merge(
-			$home,
-			$pagesAndPosts,
-			$store,
-			$marketplace,
-			$performance,
-			$settings,
-			$staging,
-			$help
+		// apply filter to add module subnav items
+		$subnav = apply_filters(
+			'nfd_plugin_subnav', // modules can filter this to add their own subnav items
+			array(
+				$settings,
+				$home,
+				$help,
+			)
 		);
+
+		// sort subnav items by priority
+		usort(
+			$subnav,
+			function ( $a, $b ) {
+				if ( $a['priority'] === $b['priority'] ) {
+					return 0;
+				}
+				return ( $a['priority'] < $b['priority'] ? -1 : 1 );
+			}
+		);
+
+		// return subnav items sorted by priority
+		return $subnav;
 	}
 
 	/**
@@ -140,18 +141,16 @@ final class Admin {
 			0
 		);
 
-		// If we're outside of Bluehost, add subpages to Bluehost menu
-		if ( false === ( isset( $_GET['page'] ) && strpos( filter_input( INPUT_GET, 'page', FILTER_UNSAFE_RAW ), 'bluehost' ) >= 0 ) ) { // phpcs:ignore
-			foreach ( self::subpages() as $route => $title ) {
-				\add_submenu_page(
-					'bluehost',
-					$title,
-					$title,
-					'manage_options',
-					$route,
-					array( __CLASS__, 'render' )
-				);
-			}
+		// Add subpages to menu
+		foreach ( self::plugin_subpages() as $subpage ) {
+			\add_submenu_page(
+				'bluehost',
+				$subpage['title'],
+				$subpage['title'],
+				'manage_options',
+				$subpage['route'],
+				array_key_exists( 'callback', $subpage ) ? $subpage['callback'] : array( __CLASS__, 'render' )
+			);
 		}
 	}
 
@@ -162,22 +161,22 @@ final class Admin {
 	 */
 	public static function render() {
 		global $wp_version;
+		if ( ! function_exists( 'get_plugin_data' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+		$plugin_data = get_plugin_data( BLUEHOST_PLUGIN_FILE );
 
 		echo '<!-- Bluehost -->' . PHP_EOL;
 
-		if ( version_compare( $wp_version, '5.4', '>=' ) ) {
+		if ( version_compare( $wp_version, $plugin_data['RequiresWP'], '>=' ) ) {
 			echo '<div id="wppbh-app" class="wppbh wppbh_app"></div>' . PHP_EOL;
+			echo '<div id="nfd-portal-apps"><div id="nfd-next-steps-portal" /><div id="nfd-coming-soon-portal" /></div>' . PHP_EOL;
 		} else {
-			// fallback messaging for WordPress older than 5.4
-			echo '<div id="wppbh-app" class="wppbh wppbh_app">' . PHP_EOL;
-			echo '<header class="wppbh-header" style="min-height: 90px; padding: 1rem; margin-bottom: 1.5rem;"><div class="wppbh-header-inner"><div class="wppbh-logo-wrap">' . PHP_EOL;
-			echo '<img src="' . esc_url( BLUEHOST_PLUGIN_URL . 'assets/svg/bluehost-logo.svg' ) . '" alt="Bluehost logo" />' . PHP_EOL;
-			echo '</div></div></header>' . PHP_EOL;
-			echo '<div class="wrap">' . PHP_EOL;
-			echo '<div class="card" style="margin-left: 20px;"><h2 class="title">' . esc_html__( 'Please update to a newer WordPress version.', 'wp-plugin-bluehost' ) . '</h2>' . PHP_EOL;
-			echo '<p>' . esc_html__( 'There are new WordPress components which this plugin requires in order to render the interface.', 'wp-plugin-bluehost' ) . '</p>' . PHP_EOL;
-			echo '<p><a href="' . esc_url( admin_url( 'update-core.php' ) ) . '" class="button component-button is-primary button-primary" variant="primary">' . esc_html__( 'Please update now', 'wp-plugin-bluehost' ) . '</a></p>' . PHP_EOL;
-			echo '</div></div></div>' . PHP_EOL;
+			// fallback messaging for outdated WordPress
+			$appWhenOutdated = BLUEHOST_PLUGIN_DIR . '/inc/AppWhenOutdated.php';
+			if ( file_exists( $appWhenOutdated ) ) {
+				include_once $appWhenOutdated;
+			}
 		}
 
 		echo '<!-- /Bluehost -->' . PHP_EOL;
@@ -186,53 +185,65 @@ final class Admin {
 	/**
 	 * Load Page Scripts & Styles.
 	 *
-	 * @param String $hook - The hook name
-	 *
 	 * @return void
 	 */
-	public static function assets( $hook ) {
+	public static function assets() {
+		$asset_file = BLUEHOST_BUILD_DIR . '/index.asset.php';
 
-		// These assets will be loaded in the bluehost app space only
-		if ( false !== stripos( $hook, 'bluehost' ) ) {
+		if ( is_readable( $asset_file ) ) {
+			$asset = include_once $asset_file;
+		} else {
+			return;
+		}
 
-			$asset_file = BLUEHOST_BUILD_DIR . '/index.asset.php';
+		\wp_register_script(
+			'nfd-portal-registry',
+			BLUEHOST_BUILD_URL . '/portal-registry.js',
+			array( 'wp-components', 'wp-element' ),
+			$asset['version'],
+			true
+		);
 
-			if ( is_readable( $asset_file ) ) {
-				$asset = include_once $asset_file;
-			} else {
-				return;
-			}
+		\wp_register_script(
+			'bluehost-script',
+			BLUEHOST_BUILD_URL . '/index.js',
+			array_merge(
+				$asset['dependencies'],
+				array(
+					'newfold-features',
+					'nfd-runtime',
+					'nfd-installer',
+					'nfd-portal-registry',
+				)
+			),
+			$asset['version'],
+			true
+		);
 
-			\wp_register_script(
-				'bluehost-script',
-				BLUEHOST_BUILD_URL . '/index.js',
-				array_merge( $asset['dependencies'], array( 'newfold-features', 'nfd-runtime' ) ),
-				$asset['version'],
-				true
-			);
+		\wp_set_script_translations(
+			'bluehost-script',
+			'wp-plugin-bluehost',
+			BLUEHOST_PLUGIN_DIR . '/languages'
+		);
 
-			\wp_set_script_translations(
-				'bluehost-script',
-				'wp-plugin-bluehost',
-				BLUEHOST_PLUGIN_DIR . '/languages'
-			);
+		\wp_register_style(
+			'bluehost-style',
+			BLUEHOST_BUILD_URL . '/index.css',
+			array( 'wp-components', 'nfd-installer' ),
+			$asset['version']
+		);
 
-			\wp_register_style(
-				'bluehost-style',
-				BLUEHOST_BUILD_URL . '/index.css',
-				array( 'wp-components' ),
-				$asset['version']
-			);
+		$screen = get_current_screen();
 
-			$screen = get_current_screen();
-			if ( false !== strpos( $screen->id, 'bluehost' ) ) {
-				\wp_enqueue_script( 'bluehost-script' );
-				\wp_enqueue_style( 'bluehost-style' );
-			}
+		// Ensure we're on the Bluehost admin page before enqueuing scripts
+		if ( isset( $screen->id ) && false !== strpos( $screen->id, 'bluehost' ) ) {
+			// Enqueue the necessary Bluehost scripts and styles
+			wp_enqueue_script( 'bluehost-script' );
+			wp_enqueue_style( 'bluehost-style' );
 		}
 
 		// These assets are loaded in all wp-admin
-		\wp_register_script( 'newfold-plugin', null, null, BLUEHOST_PLUGIN_VERSION, true );
+		\wp_register_script( 'newfold-plugin', false, array(), BLUEHOST_PLUGIN_VERSION, true );
 		\wp_localize_script(
 			'newfold-plugin',
 			'nfdplugin',
@@ -274,8 +285,8 @@ final class Admin {
 	public static function actions( $actions ) {
 		return array_merge(
 			array(
-				'overview' => '<a href="' . \admin_url( 'admin.php?page=bluehost#/home' ) . '">' . __( 'Home', 'wp-plugin-bluehost' ) . '</a>',
-				'settings' => '<a href="' . \admin_url( 'admin.php?page=bluehost#/settings' ) . '">' . __( 'Settings', 'wp-plugin-bluehost' ) . '</a>',
+				'overview' => '<a href="' . buildLink( admin_url( 'admin.php?page=bluehost#/home' ) ) . '">' . __( 'Home', 'wp-plugin-bluehost' ) . '</a>',
+				'settings' => '<a href="' . buildLink( admin_url( 'admin.php?page=bluehost#/settings' ) ) . '">' . __( 'Settings', 'wp-plugin-bluehost' ) . '</a>',
 			),
 			$actions
 		);
@@ -299,8 +310,29 @@ final class Admin {
 	 * @return string
 	 */
 	public static function add_brand_to_admin_footer( $footer_text ) {
-		$footer_text = \sprintf( \__( 'Thank you for creating with <a href="https://wordpress.org/">WordPress</a> and <a href="https://bluehost.com/about">Bluehost</a>.', 'wp-plugin-bluehost' ) );
+		$wordpress_url = '<a href="' . buildLink( 'https://wordpress.org/', array( 'source' => 'bluehost_admin_footer' ) ) . '">WordPress</a>';
+		$bluehost_url  = '<a href="' . buildLink( 'https://bluehost.com/about', array( 'source' => 'bluehost_admin_footer' ) ) . '">Bluehost</a>';
 
-		return $footer_text;
+		return \sprintf( \__( 'Thank you for creating with %1$s and %2$s', 'wp-plugin-bluehost' ), $wordpress_url, $bluehost_url );
+	}
+
+	/**
+	 * Clears a specific transient when the WordPress admin language setting is changed.
+	 *
+	 * This function hooks into the `update_option_WPLANG` action to detect when
+	 * the site language is updated in the WordPress settings. If a change is detected,
+	 * it deletes the specified transient to ensure fresh data is retrieved.
+	 *
+	 * @param string $old_value The previous language setting (e.g., 'en_US').
+	 * @param string $new_value The new language setting (e.g., 'fr_FR').
+	 */
+	public static function clear_transient_on_language_change( $old_value, $new_value ) {
+		// Check if the language has actually changed
+		if ( $old_value !== $new_value ) {
+			// Delete the transients to refresh cached data
+			delete_transient( 'newfold_marketplace' );
+			delete_transient( 'newfold_notifications' );
+			delete_transient( 'newfold_solutions' );
+		}
 	}
 } // END \Bluehost\Admin

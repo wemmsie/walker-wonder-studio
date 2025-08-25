@@ -1,14 +1,15 @@
 /* TYPOGRAPHY */
 
 .typo-h1, h1 {
-  @apply font-korolev font-bold;
+  @apply font-aktiv font-bold;
 }
+.typo-h2, h2,
 .typo-h3, h3,
 .typo-h4, h4,
-.typo-p,
+.typo-p, p,
 .pill,
 .menu {
-  @apply font-poppins;
+  @apply font-poppins font-normal;
 }
 
 .typo-h1, h1 {
@@ -32,7 +33,7 @@
 }
 
 .typo-p, p {
-  @apply my-3 text-black text-9 md:text-10;
+  @apply my-1 text-black text-9 md:text-10;
 }
 
 .resource-section ul {
@@ -40,7 +41,7 @@
   li {
     @apply relative my-3 py-0;
     &:before {
-      @apply -left-4 top-0 text-12 absolute text-blue -translate-x-1/2;
+      @apply -left-4 top-0 text-12 absolute text-primary -translate-x-1/2;
       content: '\2192';
     }
   }
@@ -55,25 +56,25 @@
 }
 
 code {
-  @apply bg-background p-1 rounded-lg text-red;
+  @apply bg-background p-1 rounded-lg text-fifth;
 }
 
 .pill {
   @apply rounded-full transition-all border-2 py-2 px-4 md:py-3 md:px-6 cursor-pointer inline-block sm:text-9 text-8;
   &.pill-blue {
-    @apply bg-blue border-blue text-white;
+    @apply bg-primary border-primary text-white;
     &:hover {
-      @apply bg-transparent text-blue;
+      @apply bg-transparent text-primary;
     }
   }
   &.pill-white {
-    @apply bg-white border-white text-blue;
+    @apply bg-white border-white text-primary;
     &:hover {
       @apply bg-transparent;
     }
   }
   &.pill-sm {
-    @apply py-2 px-4 sm:py-[5px] sm:px-10 sm:text-9 text-8;
+    @apply py-2 px-4 md:pt-[7px] sm:py-[5px] sm:px-10 sm:text-9 text-8;
   }
 }
 
@@ -82,36 +83,37 @@ code {
 }
 
 /* LOGO */
-#dap-logo {
+#logo {
   .cls-1 {
-    @apply fill-yellow;
+    @apply fill-primary;
     //test
   }
   .cls-2 {
-    @apply fill-red;
+    @apply fill-secondary;
   }
   .cls-3 {
-    @apply fill-blue;
-  }
-  .cls-4 {
-    @apply fill-blue;
-  }
-  .cls-5 {
-    @apply fill-black;
+    @apply fill-none;
   }
 }
 
 main p a {
-  @apply marching-ants marching bg-green bg-opacity-50 transition-all inline-block;
+  @apply relative bg-opacity-50 transition-all inline-block my-[1px];
+  &:after {
+    @apply absolute w-[104%] h-[2px] bottom-[2px] left-1/2 -translate-x-1/2 bg-primary transition-all -z-10;
+    content: '';
+  }
   &:hover {
-    @apply bg-transparent;
+    @apply bg-transparent text-white;
+    &:after {
+      @apply h-[95%];
+    }
   }
 }
 
 .highlighter {
   @apply relative;
   &::before {
-    @apply absolute w-[110%] bottom-[0%] left-1/2 -translate-x-1/2 h-[0.8vw] bg-green transition-all -z-[1];
+    @apply absolute w-[110%] bottom-[0%] left-1/2 -translate-x-1/2 h-[0.8vw] bg-tertiary transition-all -z-[1];
     content: '';
   }
 }

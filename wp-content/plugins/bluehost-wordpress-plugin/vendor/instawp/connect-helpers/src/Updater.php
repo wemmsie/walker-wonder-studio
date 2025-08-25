@@ -20,15 +20,15 @@ class Updater {
 
 		$results = [];
 		foreach ( $this->args as $update ) {
-			if ( empty( $update['type'] ) || count( $update ) != 2 ) {
-				$results[] = [
+			if ( ! isset( $update['type'], $update['slug'] ) ) {
+				$results[ $update['slug'] ] = [
 					'success' => false,
 					'message' => esc_html( 'Required parameters are missing!' ),
 				];
 				continue;
 			}
 
-			$results[] = 'core' === $update['type'] ? $this->core_updater( $update ) : $this->updater( $update['type'], $update['slug'] );
+			$results[ $update['slug'] ] = 'core' === $update['type'] ? $this->core_updater( $update ) : $this->updater( $update['type'], $update['slug'] );
 		}
 
 		return $results;
@@ -87,6 +87,9 @@ class Updater {
 		$result   = $upgrader->upgrade( $update, [
 			'allow_relaxed_file_ownership' => $allow_relaxed_file_ownership,
 		] );
+
+		delete_site_transient( 'update_core' );
+		wp_version_check( [], true );
 
 		if ( is_wp_error( $result ) ) {
 			if ( $result->get_error_data() && is_string( $result->get_error_data() ) ) {
@@ -182,9 +185,13 @@ class Updater {
 					)
 				);
 
-				if ( $self_update_res && ! is_wp_error( $self_update_res ) ) {
+				if ( is_wp_error( $self_update_res ) ) {
+					$result = $self_update_res;
+				} else {
 					$result = true;
 				}
+			} else {
+				$result = null;
 			}
 
 			if ( ! function_exists( 'activate_plugin' ) || ! function_exists( 'is_plugin_active' ) ) {
@@ -195,6 +202,8 @@ class Updater {
 			if ( $is_plugin_active ) {
 				activate_plugin( $item, '', false, true );
 			}
+
+			wp_clean_plugins_cache();
 			wp_update_plugins();
 		} elseif ( 'theme' === $type ) {
 			wp_update_themes();
@@ -202,6 +211,7 @@ class Updater {
 			$upgrader = new \Theme_Upgrader( $skin );
 			$result   = $upgrader->upgrade( $item );
 
+			wp_clean_themes_cache();
 			wp_update_themes();
 		}
 
@@ -220,6 +230,11 @@ class Updater {
 			return [
 				'message' => empty( $message ) ? esc_html( 'Success!' ) : $message,
 				'success' => empty( $message ),
+			];
+		} else if ( $result === null ) {
+			return [
+				'message' => esc_html( 'Update not available for this item!' ),
+				'success' => false,
 			];
 		}
 

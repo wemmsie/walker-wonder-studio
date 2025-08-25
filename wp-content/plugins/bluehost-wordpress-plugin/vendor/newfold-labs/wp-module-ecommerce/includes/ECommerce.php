@@ -32,6 +32,13 @@ class ECommerce {
 	protected $container;
 
 	/**
+	 * Identifier for script handle.
+	 *
+	 * @var string
+	 */
+	public static $handle_i18n = 'nfd-ecommerce-i18n';
+
+	/**
 	 * Array map of API controllers.
 	 *
 	 * @var array
@@ -71,7 +78,6 @@ class ECommerce {
 		'update_site_server_clicked',
 	);
 
-
 	/**
 	 * ECommerce constructor.
 	 *
@@ -87,8 +93,6 @@ class ECommerce {
 		add_action( 'rest_api_init', array( $this, 'register_routes' ) );
 		add_action( 'load-toplevel_page_' . $container->plugin()->id, array( $this, 'register_assets' ) );
 		add_action( 'load-toplevel_page_' . $container->plugin()->id, array( $this, 'register_textdomains' ) );
-		add_filter( 'woocommerce_coupons_enabled', array( $this, 'disable_coupon_field_on_cart' ) );
-		add_filter( 'woocommerce_before_cart', array( $this, 'hide_banner_notice_on_cart' ) );
 		add_action( 'before_woocommerce_init', array( $this, 'hide_woocommerce_set_up' ) );
 		add_action( 'before_woocommerce_init', array( $this, 'custom_payment_gateways_order' ) );
 		add_action( 'before_woocommerce_init', array( $this, 'dismiss_woo_payments_cta' ) );
@@ -104,17 +108,12 @@ class ECommerce {
 		add_action( 'wp_login', array( $this, 'show_store_setup' ) );
 		add_action( 'auth_cookie_expired', array( $this, 'show_store_setup' ) );
 		add_action( 'admin_head', array( $this, 'hide_wp_pointer_with_css' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'set_wpnav_collapse_setting' ) );
 		add_action( 'admin_footer', array( $this, 'remove_woocommerce_ssl_notice' ), 20 );
+		\add_filter( 'load_script_translation_file', array( $this, 'load_script_translation_file' ), 10, 3 );
+		add_filter( 'woocommerce_admin_get_feature_config', array( $this, 'disable_modern_payments_settings' ), 999 );
 
 		add_action( 'init', array( $this, 'admin_init_conditional_on_capabilities' ) );
 
-		// Handle WonderCart Integrations
-		if ( is_plugin_active( 'wonder-cart/init.php' ) ) {
-			$wonder_cart = new WonderCart( $container );
-			$wonder_cart->init();
-		}
-
 		CaptiveFlow::init();
 		WooCommerceBacklink::init( $container );
 		register_meta(
@@ -122,12 +121,12 @@ class ECommerce {
 			'nf_dc_page',
 			array(
 				'type'         => 'string',
-				'description'  => 'Reference to page category',
+				'description'  => __( 'Reference to page category', 'wp-module-ecommerce' ),
 				'show_in_rest' => true,
 				'single'       => true,
 			)
 		);
-		add_filter( 'newfold-runtime', array( $this, 'add_to_runtime' ) );
+
 		$this->add_filters(
 			array( 'postbox_classes_page_wpseo_meta', 'postbox_classes_post_wpseo_meta', 'postbox_classes_product_wpseo_meta' ),
 			function ( $classes ) {
@@ -142,26 +141,10 @@ class ECommerce {
 			$wonder_cart->init();
 		}
 
-		CaptiveFlow::init();
-		WooCommerceBacklink::init( $container );
-		register_meta(
-			'post',
-			'nf_dc_page',
-			array(
-				'type'         => 'string',
-				'description'  => 'Reference to page category',
-				'show_in_rest' => true,
-				'single'       => true,
-			)
-		);
+		// Load Quick Add Product feature.
+		( new QuickAddProduct( $container ) )->init();
+
 		add_filter( 'newfold_runtime', array( $this, 'add_to_runtime' ) );
-		$this->add_filters(
-			array( 'postbox_classes_page_wpseo_meta', 'postbox_classes_post_wpseo_meta', 'postbox_classes_product_wpseo_meta' ),
-			function ( $classes ) {
-				$classes[] = 'closed';
-				return $classes;
-			}
-		);
 	}
 
 	/**
@@ -188,17 +171,6 @@ class ECommerce {
 	}
 
 	/**
-	 * Set the wpnav_collapse setting
-	 */
-	public function set_wpnav_collapse_setting() {
-
-		$brandNameValue = $this->container->plugin()->brand;
-		wp_enqueue_script( 'nfd_wpnavbar_setting', NFD_ECOMMERCE_PLUGIN_URL . 'vendor/newfold-labs/wp-module-ecommerce/includes/wpnavbar.js', array( 'jquery' ), '1.0', true );
-		$params = array( 'nfdbrandname' => $brandNameValue );
-		wp_localize_script( 'nfd_wpnavbar_setting', 'navBarParams', $params );
-	}
-
-	/**
 	 * Loads the textdomain for the module. This applies only to PHP strings.
 	 *
 	 * @return boolean
@@ -218,6 +190,13 @@ class ECommerce {
 	}
 
 	/**
+	 * Fetch the can onboarding restart option
+	 */
+	public static function get_can_onboarding_restart() {
+		return get_option( 'nfd_module_onboarding_can_restart', false );
+	}
+
+	/**
 	 * Add values to the runtime object.
 	 *
 	 * @param array $sdk The runtime object.
@@ -226,11 +205,12 @@ class ECommerce {
 	 */
 	public function add_to_runtime( $sdk ) {
 		$values = array(
-			'brand_settings' => Brands::get_config( $this->container ),
-			'nonces'         => array(
+			'brand_settings'         => Brands::get_config( $this->container ),
+			'nonces'                 => array(
 				'gateway_toggle' => \wp_create_nonce( 'woocommerce-toggle-payment-gateway-enabled' ),
 			),
-			'install_token'  => PluginInstaller::rest_get_plugin_install_hash(),
+			'install_token'          => PluginInstaller::rest_get_plugin_install_hash(),
+			'can_restart_onboarding' => self::get_can_onboarding_restart(),
 		);
 		return array_merge( $sdk, array( 'ecommerce' => $values ) );
 	}
@@ -242,7 +222,7 @@ class ECommerce {
 		$show_dash = get_option( 'nfd_show_dash_after_woo_activation', false );
 		if ( $show_dash && ! wp_doing_ajax() ) {
 			update_option( 'nfd_show_dash_after_woo_activation', false );
-			wp_safe_redirect( admin_url( 'admin.php?page=' . $this->container->plugin()->id . '#/home' ) );
+			wp_safe_redirect( apply_filters( 'nfd_build_url', admin_url( 'admin.php?page=' . $this->container->plugin()->id . '#/home' ) ) );
 		}
 	}
 
@@ -350,65 +330,90 @@ class ECommerce {
 		foreach ( $payments as $payment ) {
 			\register_setting( 'general', $payment, $schema_for_offline_payments );
 		}
-	}
 
-	/**
-	 * Load the textdomains for the module.
-	 */
-	public function register_textdomains() {
-		$MODULE_LANG_DIR = $this->container->plugin()->dir . 'vendor/newfold-labs/wp-module-ecommerce/languages';
-		\load_script_textdomain( 'nfd-ecommerce-dependency', 'wp-module-ecommerce', $MODULE_LANG_DIR );
-		$current_language = get_locale();
-		\load_textdomain( 'wp-module-ecommerce', $MODULE_LANG_DIR . '/wp-module-ecommerce-' . $current_language . '.mo' );
+		register_setting(
+			'general',
+			'is_fse_theme',
+			array(
+				'type'         => 'boolean',
+				'show_in_rest' => true,
+				'default'      => wp_is_block_theme(), // Set default value based on current theme
+			)
+		);
 	}
 
 	/**
 	 * Load WP dependencies into the page.
 	 */
 	public function register_assets() {
-		$asset_file = NFD_ECOMMERCE_BUILD_DIR . 'index.asset.php';
+		$asset_file = NFD_ECOMMERCE_BUILD_DIR . 'panel/index.asset.php';
 		if ( file_exists( $asset_file ) ) {
 			$asset = require $asset_file;
-			\wp_register_script(
-				'nfd-ecommerce-dependency',
-				NFD_ECOMMERCE_PLUGIN_URL . 'vendor/newfold-labs/wp-module-ecommerce/build/index.js',
-				array_merge( $asset['dependencies'], array() ),
+
+			// We load ecommerce module script and components directly
+			// as an npmjs package in each brand plugin app.
+			// Therefore, we don't need to load the `build/index.js` file.
+			// The file is not built for browsers to read anyway.
+			// Though, we do need to load a script to set translations.
+			// Translations are detected in the brand plugin app where the js package is consumed.
+			wp_register_script(
+				self::$handle_i18n,
+				NFD_ECOMMERCE_PLUGIN_URL . 'vendor/newfold-labs/wp-module-ecommerce/assets/i18n-handle.js',
+				array(),
 				$asset['version']
 			);
-			I18nService::load_js_translations(
+			wp_enqueue_script( self::$handle_i18n );
+
+			wp_set_script_translations(
+				self::$handle_i18n,
 				'wp-module-ecommerce',
-				'nfd-ecommerce-dependency',
 				NFD_ECOMMERCE_DIR . '/languages'
 			);
-			\wp_enqueue_script( 'nfd-ecommerce-dependency' );
 		}
 	}
 
 	/**
-	 * Remove Add coupon field on cart page
+	 * Filters the file path for the JS translation JSON.
 	 *
-	 * @param boolean $enabled The enabled status of the coupon field.
+	 * If the script handle matches the module's handle, builds a custom path using
+	 * the languages directory, current locale, text domain, and a hash of the script.
+	 *
+	 * @param string $file   Default translation file path.
+	 * @param string $handle_i18n Script handle.
+	 * @param string $domain Text domain.
+	 * @return string Modified file path for the translation JSON.
 	 */
-	public function disable_coupon_field_on_cart( $enabled ) {
-		if ( is_cart() ) {
-			$enabled = false;
+	public function load_script_translation_file( $file, $handle_i18n, $domain ) {
+
+		if ( $handle_i18n === self::$handle_i18n ) {
+			$path   = NFD_ECOMMERCE_DIR . '/languages/';
+			$locale = determine_locale();
+
+			$file_base = 'default' === $domain
+				? $locale
+				: $domain . '-' . $locale;
+			$file      = $path . $file_base . '-' . md5( 'build/index.js' ) . '.json';
+
 		}
-		return $enabled;
+		return $file;
 	}
 
 	/**
-	 * Remove notice banner on cart page
+	 * Load the textdomains for the module.
 	 */
-	public function hide_banner_notice_on_cart() {
-		if ( is_cart() ) {
-			?>
-		<style>
-		.wc-block-components-notice-banner, .ywgc_enter_code {
-			display: none;
-		}
-		</style>
-			<?php
-		}
+	public function register_textdomains() {
+		$MODULE_LANG_DIR  = $this->container->plugin()->dir . 'vendor/newfold-labs/wp-module-ecommerce/languages';
+		$current_language = get_locale();
+		\load_textdomain(
+			'wp-module-ecommerce',
+			$MODULE_LANG_DIR
+		);
+		// load textdomain for scripts
+		\load_script_textdomain(
+			self::$handle_i18n,
+			'wp-module-ecommerce',
+			$MODULE_LANG_DIR
+		);
 	}
 
 	/**
@@ -433,7 +438,7 @@ class ECommerce {
 	public function custom_add_promotion_menu_item() {
 		add_submenu_page(
 			'woocommerce-marketing',
-			'Promotion product Page',
+			__( 'Promotion product Page', 'wp-module-ecommerce' ),
 			__( 'Promotions', 'wp-module-ecommerce' ),
 			'manage_options',
 			$this->container->plugin()->id . '#/store/sales_discounts',
@@ -441,13 +446,12 @@ class ECommerce {
 		);
 	}
 
-
 	/**
 	 * Add a Promotion button under Add New product tab
 	 */
 	public function custom_product_general_options() {
 		global $post;
-		$redirect_url = admin_url( 'admin.php?page=' . $this->container->plugin()->id . '#/store/sales_discounts' );
+		$redirect_url = apply_filters( 'nfd_build_url', admin_url( 'admin.php?page=' . $this->container->plugin()->id . '#/store/sales_discounts' ) );
 		wp_enqueue_style( 'Create_a_Promotion', NFD_ECOMMERCE_PLUGIN_URL . 'vendor/newfold-labs/wp-module-ecommerce/includes/Promotions.css', array(), '1.0', 'all' );
 		echo '<div class="options_group">
             <p class="form-field custom-button-field">
@@ -475,7 +479,7 @@ class ECommerce {
 	 * Content on click of a Custom tab (Promotions tab) button added below Advance tab
 	 */
 	public function promotion_product_data() {
-		$redirect_url = 'admin.php?page=' . $this->container->plugin()->id . '#/store/sales_discounts';
+		$redirect_url = apply_filters( 'nfd_build_url', 'admin.php?page=' . $this->container->plugin()->id . '#/store/sales_discounts' );
 		global $post;
 		echo '<div id="promotion_product_data" class="panel woocommerce_options_panel hidden"></div>';
 		\wp_enqueue_script( 'nfd_promotion_product_data', NFD_ECOMMERCE_PLUGIN_URL . 'vendor/newfold-labs/wp-module-ecommerce/includes/Promotions.js', array( 'jquery' ), '1.0', true );
@@ -704,6 +708,24 @@ class ECommerce {
 	}
 
 	/**
+	 * Verifies if the url is matching with the regex
+	 *
+	 * @param string $brand_name id of the brand
+	 *
+	 * @param string $site_url siteurl
+	 */
+	public function check_url_match( $brand_name, $site_url ) {
+		switch ( $brand_name ) {
+			case 'bluehost':
+				return ! preg_match( '/\b\w+(\.\w+)*\.mybluehost\.me\b/', $site_url );
+			case 'hostgator':
+				return ! preg_match( '/\b\w+(\.\w+)*\.temporary\.site\b/', $site_url );
+			default:
+				return true;
+		}
+	}
+
+	/**
 	 * On login, it checks whether to show the migration steps, post migration to user
 	 */
 	public function show_store_setup() {
@@ -712,24 +734,7 @@ class ECommerce {
 
 		$brand = $this->container->plugin()->id;
 
-		/**
-		 * Verifies if the url is matching with the regex
-		 *
-		 * @param string $brand_name id of the brand
-		 *
-		 * @param string $site_url siteurl
-		 */
-		function check_url_match( $brand_name, $site_url ) {
-			switch ( $brand_name ) {
-				case 'bluehost':
-					return ! preg_match( '/\b\w+(\.\w+)*\.mybluehost\.me\b/', $site_url );
-				case 'hostgator':
-					return ! preg_match( '/\b\w+(\.\w+)*\.temporary\.site\b/', $site_url );
-				default:
-					return true;
-			}
-		}
-		if ( check_url_match( $brand, $site_url ) ) {
+		if ( $this->check_url_match( $brand, $site_url ) ) {
 			update_option( 'nfd_show_migration_steps', false );
 		}
 	}
@@ -743,5 +748,19 @@ class ECommerce {
 		echo '<style>
 			.wp-pointer { display: none !important; }
 		</style>';
+	}
+
+	/**
+	 * Force WooCommerce to use the old Payments settings page.
+	 *
+	 * WooCommerce 9.7+ introduces a new Payments settings page.
+	 * This function disables it and keeps the classic version.
+	 *
+	 * @param array $features Existing WooCommerce feature configurations.
+	 * @return array Modified feature configuration with modern Payments settings disabled.
+	 */
+	public function disable_modern_payments_settings( $features ) {
+		$features['reactify-classic-payments-settings'] = false;
+		return $features;
 	}
 }

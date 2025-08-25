@@ -25,4 +25,7 @@
             <p>Website design by <a class='sparkle' href='https://thisjones.com' target='_blank'>MJ</a></p>
         </div>
     </div>
+
+		<?php echo file_get_contents(get_template_directory_uri() . '/components/modal.php'); ?>
 </footer>
+<?php wp_footer(); ?>

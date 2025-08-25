@@ -16,6 +16,13 @@ class Staging {
 	 */
 	protected $container;
 
+	/**
+	 * Slug used for the Staging module's admin page.
+	 *
+	 * @var string
+	 */
+	const PAGE_SLUG = 'nfd-staging';
+
 
 	/**
 	 * Constructor.
@@ -34,6 +41,9 @@ class Staging {
 			}
 		);
 		add_action( 'wp_loaded', array( StagingMenu::class, 'init' ), 100 );
+
+		// Mark Safe Mode as confirmed so the banner never re-appears
+		add_action( 'init', array( $this, 'confirm_jetpack_safe_mode' ), 20 );
 
 		// add isStaging as computed value to container
 		$this->container->set(
@@ -60,6 +70,84 @@ class Staging {
 					)
 				);
 			}
+		);
+
+		add_action( 'init', array( __CLASS__, 'loadTextDomain' ), 100 );
+		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'initialize_staging_app' ) );
+
+		new Constants( $container );
+	}
+
+	/**
+	 * Confirms Jetpack Safe Mode programmatically to suppress the banner.
+	 *
+	 * When a staging site is detected, this method sets the internal Jetpack option
+	 * `safe_mode_confirmed` to `true`, which tells Jetpack that the user has already
+	 * acknowledged Safe Mode. This prevents repeated prompts or blocked rendering on admin pages.
+	 *
+	 * @return void
+	 */
+	public function confirm_jetpack_safe_mode() {
+		if ( $this->isStaging() && class_exists( 'Jetpack_Options' ) ) {
+			\Jetpack_Options::update_option( 'safe_mode_confirmed', true );
+		}
+	}
+
+	/**
+	 * Initializes the Staging module by registering and enqueuing its assets.
+	 *
+	 * @return void
+	 */
+	public static function initialize_staging_app() {
+		self::register_staging_assets();
+	}
+
+	/**
+	 * Registers and enqueues the JavaScript and CSS assets for the Staging module.
+	 *
+	 * @return void
+	 */
+	public static function register_staging_assets() {
+		$build_dir  = NFD_STAGING_BUILD_DIR;
+		$build_url  = NFD_STAGING_BUILD_URL;
+		$asset_file = $build_dir . '/staging/staging.min.asset.php';
+
+		if ( is_readable( $asset_file ) ) {
+			$asset = include_once $asset_file;
+
+			wp_register_script(
+				self::PAGE_SLUG,
+				$build_url . '/staging/staging.min.js',
+				$asset['dependencies'],
+				$asset['version'],
+				true
+			);
+
+			wp_register_style(
+				self::PAGE_SLUG,
+				$build_url . '/staging/staging.min.css',
+				array(),
+				$asset['version']
+			);
+		}
+
+		$screen = \get_current_screen();
+		if ( isset( $screen->id ) && false !== strpos( $screen->id, self::PAGE_SLUG ) ) {
+			wp_enqueue_script( self::PAGE_SLUG );
+			wp_enqueue_style( self::PAGE_SLUG );
+		}
+	}
+
+	/**
+	 * Load text domain for Module
+	 *
+	 * @return void
+	 */
+	public static function loadTextDomain() {
+		\load_plugin_textdomain(
+			'wp-module-staging',
+			false,
+			dirname( plugin_basename( NFD_STAGING_DIR ) ) . '/' . basename( NFD_STAGING_DIR ) . '/languages'
 		);
 	}
 
@@ -100,14 +188,14 @@ class Staging {
 	 *  - creation_date
 	 *
 	 * @param string $key     Configuration name.
-	 * @param string $default Return value if key doesn't exist.
+	 * @param string $std Return default value if key doesn't exist.
 	 *
 	 * @return string
 	 */
-	public function getConfigValue( $key, $default = '' ) {
+	public function getConfigValue( $key, $std = '' ) {
 		$config = $this->getConfig();
 
-		return isset( $config[ $key ] ) ? $config[ $key ] : $default;
+		return isset( $config[ $key ] ) ? $config[ $key ] : $std;
 	}
 
 	/**
@@ -167,24 +255,18 @@ class Staging {
 	/**
 	 * Get production screenshot URL.
 	 *
-	 * @param int $width  Screenshot width.
-	 * @param int $height Screenshot height.
-	 *
 	 * @return string
 	 */
-	public function getProductionScreenshotUrl( $width = 122, $height = 92 ) {
+	public function getProductionScreenshotUrl() {
 		return '';
 	}
 
 	/**
 	 * Get staging screenshot URL.
 	 *
-	 * @param int $width  Screenshot width.
-	 * @param int $height Screenshot height.
-	 *
 	 * @return string
 	 */
-	public function getStagingScreenshotUrl( $width = 122, $height = 92 ) {
+	public function getStagingScreenshotUrl() {
 		return '';
 	}
 
@@ -224,7 +306,6 @@ class Staging {
 	 */
 	public function stagingExists() {
 		$stagingDir = $this->getStagingDir();
-
 		return ! empty( $stagingDir ) && file_exists( $stagingDir );
 	}
 
@@ -237,7 +318,7 @@ class Staging {
 		if ( ! $this->isProduction() ) {
 			return new \WP_Error(
 				'invalid_environment',
-				__( 'Cloning can only be done from the production environment.', 'newfold-staging-module' )
+				__( 'Cloning can only be done from the production environment.', 'wp-module-staging' )
 			);
 		}
 
@@ -262,7 +343,7 @@ class Staging {
 		if ( $this->stagingExists() ) {
 			return new \WP_Error(
 				'environment_exists',
-				__( 'Staging environment already exists!', 'newfold-staging-module' )
+				__( 'Staging environment already exists!', 'wp-module-staging' )
 			);
 		}
 
@@ -296,7 +377,7 @@ class Staging {
 		if ( ! $this->isProduction() ) {
 			return new \WP_Error(
 				'invalid_environment',
-				__( 'You must switch to the production environment before destroying staging.', 'newfold-staging-module' )
+				__( 'You must switch to the production environment before destroying staging.', 'wp-module-staging' )
 			);
 		}
 
@@ -318,7 +399,7 @@ class Staging {
 		if ( $this->isEnvironment( $env ) ) {
 			return new \WP_Error(
 				'invalid_environment',
-				__( 'Switch to an environment you are already in, you cannot.', 'newfold-staging-module' )
+				__( 'Switch to an environment you are already in, you cannot.', 'wp-module-staging' )
 			);
 		}
 
@@ -355,7 +436,7 @@ class Staging {
 		if ( ! array_key_exists( $command, $allowedCommands ) ) {
 			return new \WP_Error(
 				'invalid_command',
-				__( 'Invalid staging CLI command.', 'newfold-staging-module' )
+				__( 'Invalid staging CLI command.', 'wp-module-staging' )
 			);
 		}
 
@@ -405,7 +486,7 @@ class Staging {
 				return new \WP_Error(
 					'invalid_character',
 					// translators: Invalid character that was entered
-					sprintf( __( 'Invalid character (%s) in command.', 'newfold-staging-module' ), $char )
+					sprintf( __( 'Invalid character (%s) in command.', 'wp-module-staging' ), $char )
 				);
 			}
 		}
@@ -414,15 +495,31 @@ class Staging {
 
 		$disabled_functions = explode( ',', ini_get( 'disable_functions' ) );
 		if ( is_array( $disabled_functions ) && in_array( 'exec', array_map( 'trim', $disabled_functions ), true ) ) {
-			return new \WP_Error( 'error_response', __( 'Unable to execute script (disabled_function).', 'newfold-staging-module' ) );
+			return new \WP_Error( 'error_response', __( 'Unable to execute script (disabled_function).', 'wp-module-staging' ) );
 		}
 
-		// Verify staging script file permissions
-		if ( ! is_executable( $script ) ) {
-			if ( is_writable( $script ) ) {
-				chmod( $script, 0755 );
+		// Verify staging script file permissions using WP_Filesystem API
+		global $wp_filesystem;
+
+		if ( ! function_exists( 'request_filesystem_credentials' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+		}
+
+		$creds = request_filesystem_credentials( '', '', false, false, null );
+
+		if ( false === $creds ) {
+			return new \WP_Error( 'error_response', __( 'Filesystem credentials required.', 'wp-module-staging' ) );
+		}
+
+		if ( ! WP_Filesystem( $creds ) ) {
+			return new \WP_Error( 'error_response', __( 'Unable to initialize WP Filesystem.', 'wp-module-staging' ) );
+		}
+
+		if ( $wp_filesystem->exists( $script ) ) {
+			if ( $wp_filesystem->is_writable( $script ) ) {
+				$wp_filesystem->chmod( $script, 0755 );
 			} else {
-				return new \WP_Error( 'error_response', __( 'Unable to execute script (permission error).', 'newfold-staging-module' ) );
+				return new \WP_Error( 'error_response', __( 'Unable to execute script (permission error).', 'wp-module-staging' ) );
 			}
 		}
 
@@ -434,8 +531,9 @@ class Staging {
 
 		// Check if we can properly decode the JSON
 		$response = json_decode( $json, true );
+
 		if ( ! $response ) {
-			return new \WP_Error( 'json_decode', __( 'Unable to parse JSON', 'newfold-staging-module' ) );
+			return new \WP_Error( 'json_decode', __( 'Unable to parse JSON', 'wp-module-staging' ) );
 		}
 
 		// Check if response is an error response.

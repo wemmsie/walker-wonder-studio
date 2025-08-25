@@ -1,0 +1,225 @@
+{
+    "translation-revision-date": "2025-05-07 12:12+0100",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/hosting\/hosting.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "pt_BR",
+                "plural-forms": "nplurals=2; plural=(n > 1);"
+            },
+            "Hosting": [
+                "Hospedagem"
+            ],
+            "Action executed successfully": [
+                "A\u00e7\u00e3o executada com sucesso"
+            ],
+            "Object Caching": [
+                "Cache de Objetos"
+            ],
+            "Object Caching is enabled": [
+                "Cache de objetos est\u00e1 habilitado"
+            ],
+            "Object Caching is NOT enabled": [
+                "Cache de objetos N\u00c3O est\u00e1 habilitado"
+            ],
+            "Object Caching is NOT setup": [
+                "Cache de objetos N\u00c3O est\u00e1 configurado"
+            ],
+            "Your site's data is being cached for better performance.": [
+                "Os dados do seu site est\u00e3o sendo armazenados em cache para melhor desempenho."
+            ],
+            "Your site's data is not being cached, which may slow things down.": [
+                "Os dados do seu site n\u00e3o est\u00e3o sendo armazenados em cache, o que pode deixar o desempenho mais lento."
+            ],
+            "Object Caching is not set up on your site. Learn more about enabling it.": [
+                "O cache de objetos n\u00e3o est\u00e1 configurado em seu site. Saiba mais sobre como habilit\u00e1-lo."
+            ],
+            "Clear Object Cache": [
+                "Limpar Cache de Objetos"
+            ],
+            "Enable Object Caching": [
+                "Habilitar Cache de Objetos"
+            ],
+            "Disable Object Cache": [
+                "Desabilitar Cache de Objetos"
+            ],
+            "Learn more": [
+                "Saiba mais"
+            ],
+            "Object Caching Update Failed": [
+                "Falha ao atualizar o Cache de Objetos"
+            ],
+            "There was an error updating the object caching settings. Please try again.": [
+                "Ocorreu um erro ao atualizar as configura\u00e7\u00f5es de cache de objetos. Tente novamente."
+            ],
+            "Object Cache Cleared": [
+                "Cache de Objetos Limpo"
+            ],
+            "The object cache was successfully cleared.": [
+                "O cache de objetos foi limpo com sucesso."
+            ],
+            "Copied!": [
+                "Copiado!"
+            ],
+            "PHP Version": [
+                "Vers\u00e3o do PHP"
+            ],
+            "Could not determine the PHP version": [
+                "N\u00e3o foi poss\u00edvel determinar a vers\u00e3o do PHP"
+            ],
+            "%1$s (%2$s Recommended)": [
+                "%1$s (%2$s recomendado)"
+            ],
+            "Update": [
+                "Atualizar"
+            ],
+            "Manage": [
+                "Gerenciar"
+            ],
+            "Malware Check": [
+                "Verifica\u00e7\u00e3o de Malware"
+            ],
+            "Partial Scan Completed": [
+                "Verifica\u00e7\u00e3o parcial conclu\u00edda"
+            ],
+            "Scan Status Unknown": [
+                "Status da verifica\u00e7\u00e3o desconhecido"
+            ],
+            "Your site's safe from malware!": [
+                "Seu site est\u00e1 seguro contra malware!"
+            ],
+            "Possible malware detected. Contact support for help resolving potential issues.": [
+                "Poss\u00edvel malware detectado. Entre em contato com o suporte para ajudar a resolver os problemas potenciais."
+            ],
+            "The current malware scan status could not be determined.": [
+                "N\u00e3o foi poss\u00edvel determinar o status atual da verifica\u00e7\u00e3o de malware."
+            ],
+            "Run a Full Scan": [
+                "Executar uma verifica\u00e7\u00e3o completa"
+            ],
+            "see details": [
+                "ver detalhes"
+            ],
+            "Scanning for malware\u2026": [
+                "Escaneando por malware\u2026"
+            ],
+            "Contact Support": [
+                "Entrar em contato com o Suporte"
+            ],
+            "Could not determine scan status. Please try again.": [
+                "N\u00e3o foi poss\u00edvel determinar o status da verifica\u00e7\u00e3o. Tente novamente."
+            ],
+            "Scan status API failed": [
+                "Falha na API do status da verifica\u00e7\u00e3o"
+            ],
+            "Nameservers": [
+                "Servidores de Nomes"
+            ],
+            "No name servers found": [
+                "Nenhum servidor de nomes encontrado"
+            ],
+            "COPY": [
+                "COPIAR"
+            ],
+            "Name servers work as a directory that translates domain names into IP addresses. Helps you to connect your website to different services.": [
+                "Os servidores de nomes funcionam como um diret\u00f3rio que traduz nomes de dom\u00ednio em endere\u00e7os IP. Isso ajuda a conectar seu site a diferentes servi\u00e7os."
+            ],
+            "SSH Login Info": [
+                "Informa\u00e7\u00f5es de Login SSH"
+            ],
+            "SSH Keys": [
+                "Chaves SSH"
+            ],
+            "SSH provides a secure way to access the web server over CLI to run server commands through a terminal.": [
+                "O SSH fornece uma maneira segura de acessar o servidor web atrav\u00e9s de CLI para executar comandos no servidor por meio de um terminal."
+            ],
+            "Manage keys": [
+                "Gerenciar chaves"
+            ],
+            "SSH Login:": [
+                "Login SSH:"
+            ],
+            "SSH info unavailable": [
+                "Informa\u00e7\u00f5es do SSH n\u00e3o dispon\u00edveis"
+            ],
+            "Copy": [
+                "Copiar"
+            ],
+            "CDN": [
+                "CDN"
+            ],
+            "CDN is enabled": [
+                "CDN est\u00e1 habilitado"
+            ],
+            "CDN is NOT enabled": [
+                "CDN N\u00c3O est\u00e1 habilitado"
+            ],
+            "Your site's static content is being cached.": [
+                "O conte\u00fado est\u00e1tico do seu site est\u00e1 sendo armazenado em cache."
+            ],
+            "Your site's static content is NOT being cached.": [
+                "O conte\u00fado est\u00e1tico do seu site N\u00c3O est\u00e1 sendo armazenado em cache."
+            ],
+            "Clear Cache": [
+                "Limpar Cache"
+            ],
+            "Disable Cache": [
+                "Desabilitar Cache"
+            ],
+            "Enable CDN": [
+                "Habilitar CDN"
+            ],
+            "CDN Cache Cleared": [
+                "Cache do CDN Limpo"
+            ],
+            "Static content cache has been successfully cleared.": [
+                "O cache de conte\u00fado est\u00e1tico foi limpo com sucesso."
+            ],
+            "CDN Purge Failed": [
+                "Falha ao limpar o CDN"
+            ],
+            "We were unable to clear the CDN cache. Please try again.": [
+                "N\u00e3o conseguimos limpar o cache do CDN. Tente novamente."
+            ],
+            "just now": [
+                "agora mesmo"
+            ],
+            "%d minute(s) ago": [
+                "%d minuto(s) atr\u00e1s"
+            ],
+            "%d hour(s) ago": [
+                "%d hora(s) atr\u00e1s"
+            ],
+            "%d day(s) ago": [
+                "%d dia(s) atr\u00e1s"
+            ],
+            "Last updated: %s": [
+                "\u00daltima atualiza\u00e7\u00e3o: %s"
+            ],
+            "Refresh": [
+                "Atualizar"
+            ],
+            "Hang tight, we're gathering the latest info\u2026": [
+                "Aguarde, estamos reunindo as \u00faltimas informa\u00e7\u00f5es\u2026"
+            ],
+            "Error:": [
+                "Erro:"
+            ],
+            "A general overview of your %s hosting plan and your site's performance.": [
+                "Uma vis\u00e3o geral do seu plano de hospedagem %s e do desempenho do seu site."
+            ],
+            "A general overview of your hosting and your site's performance.": [
+                "Uma vis\u00e3o geral da sua hospedagem e do desempenho do seu site."
+            ],
+            "PLAN_NAME": [
+                "NOME_DO_PLANO"
+            ],
+            "Manage Hosting": [
+                "Gerenciar Hospedagem"
+            ]
+        }
+    }
+}

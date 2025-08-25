@@ -57,6 +57,16 @@ final class Options {
 		'filter_active_plugins'         => 'filter_active_plugins',
 		'sitegen_regenerated_homepages' => 'sitegen_regenerated_homepages',
 		'status'                        => 'status',
+		'wc_shop_page_id'               => 'woocommerce_shop_page_id',
+		'wc_queue_flush_rewrite_rules'  => 'woocommerce_queue_flush_rewrite_rules',
+		'bluehost_plugin_install_date'  => 'bluehost_plugin_install_date',
+		'can_restart'                   => 'can_restart',
+		'state_input'                   => 'state_input',
+		'state_sitegen'                 => 'state_sitegen',
+		'sitegen_previews'              => 'sitegen_previews',
+		'site_info'                     => 'site_info',
+		'start_time'                    => 'start_time',
+		'completed_time'                => 'completed_time',
 	);
 
 	/**
