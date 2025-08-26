@@ -2,7 +2,11 @@
   "name": "zorvek",
   "version": "1.0.0",
   "description": "zorvek packages",
+  "type": "module",
+  "engines": { "node": ">=18 <=22" },
   "scripts": {
+    "dev": "gulp watch",
+    "build": "NODE_ENV=production gulp build",
     "gulp": "gulp"
   },
   "dependencies": {

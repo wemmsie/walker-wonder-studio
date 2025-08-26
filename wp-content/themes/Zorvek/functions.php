@@ -18,9 +18,6 @@ add_action('wp_enqueue_scripts', function () {
 }, 99);
 
 
-
-
-
 // require_once get_template_directory() . '/assets/functions/acf_cms.php';
 
 // --- Enqueue theme styles and scripts ---
