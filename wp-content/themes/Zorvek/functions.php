@@ -1,4 +1,12 @@
 <?php
+if (!defined('ASSET_BASE')) {
+    define('ASSET_BASE', 'https://assets.walkerwonderstudio.com');
+}
+
+add_action('wp_enqueue_scripts', function () {
+    wp_enqueue_style('zorvek-main', ASSET_BASE . '/css/main.min.css', [], null);
+    wp_enqueue_script('zorvek-main', ASSET_BASE . '/script/main.min.js', [], null, true);
+});
 
 // --- Imports ---
 
