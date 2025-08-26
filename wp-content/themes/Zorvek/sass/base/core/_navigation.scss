@@ -3,14 +3,14 @@
 header {
   @apply w-full bg-background bg-opacity-80 fixed top-0 left-0 z-50 transition-all duration-300 backdrop-blur-md;
   .logo {
-    @apply opacity-0;
+    @apply opacity-0 pointer-events-none;
   }
   &.scrolled {
     @apply shadow-1;
   }
   &.scrolled, &.toggled {
     .logo {
-      @apply opacity-100
+      @apply opacity-100 pointer-events-auto;
     }
   }
 
@@ -37,9 +37,12 @@ header {
       }
     }
   }
+  .nav-parent {
+    @apply flex justify-center w-full;
+  }
 
   .nav-container {
-    @apply py-0 transition-all duration-200;
+    @apply py-0 transition-all duration-200 m-auto;
 
     /* Main Navigation */
     .main-nav {

@@ -10,6 +10,17 @@ require_once get_template_directory() . '/assets/functions/color_picker.php';
 require_once get_template_directory() . '/assets/functions/handle_contact_form.php';
 
 
+add_filter('relevanssi_live_search_add_result_div', '__return_true', 99);
+
+add_filter('relevanssi_live_search_base_styles', '__return_false');
+add_action('wp_enqueue_scripts', function () {
+    wp_dequeue_style('relevanssi-live-search');
+}, 99);
+
+
+
+
+
 // require_once get_template_directory() . '/assets/functions/acf_cms.php';
 
 // --- Enqueue theme styles and scripts ---

@@ -101,14 +101,14 @@ $loader-animation-duration:      1s !default;
 .relevanssi-live-search-result p,
 .relevanssi-live-search-result-status p {
 	font-size: 0.9em;
-	padding: 1em;
+	padding: 0.5em;
 	margin: 0;
 	border-bottom: 1px solid rgba(30, 30, 30, 0.1);
 }
 
 .relevanssi-live-search-result-status p {
 	font-size: 0.8em;
-	padding: 0 1em;
+	padding: 0 0.5em;
 }
 
 .relevanssi-live-search-result--focused {

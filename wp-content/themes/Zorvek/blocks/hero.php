@@ -5,16 +5,20 @@ $svg   = file_get_contents(get_template_directory() . '/components/squiggly.svg'
 ?>
 
 <div id='hero' class='block'>
-    <div class='container gutter'>
+
+    <div class="container gutter <?php if (have_rows('squiggly_feat')) : ?><?php while (have_rows('squiggly_feat')) : the_row(); ?>
+has-squig<?php endwhile; ?><?php endif; ?>">
+
         <?php $image_type = get_sub_field('image_type'); ?>
 
-        <div class='visuals'>
-            <?php if ($image_type === 'logo') : ?>
-                <?php $lg_logo = get_sub_field('lg_logo'); ?>
-                <?php if ($lg_logo) : ?>
-                    <img class='image logo' src="<?php echo esc_url($lg_logo['url']); ?>" alt="<?php echo esc_attr($lg_logo['alt']); ?>" />
+        <?php if ($image_type === 'logo') : ?>
+            <?php $lg_logo = get_sub_field('lg_logo'); ?>
+            <?php if ($lg_logo) : ?>
+                <div class='visuals logo'>
+                    <img class='image' src="<?php echo esc_url($lg_logo['url']); ?>" alt="<?php echo esc_attr($lg_logo['alt']); ?>" />
                 <?php endif; ?>
                 <?php if (have_rows('squiggly_feat')) : ?>
+
                     <?php while (have_rows('squiggly_feat')) : the_row(); ?>
                         <?php $color = get_sub_field('color_picker'); ?>
                         <?php $textColor = get_sub_field('color_picker_text'); ?>
@@ -84,43 +88,45 @@ $svg   = file_get_contents(get_template_directory() . '/components/squiggly.svg'
                         </a>
                     <?php endwhile; ?>
                 <?php endif; ?>
+                </div>
             <?php endif; ?>
 
             <?php if ($image_type === 'full') : ?>
                 <?php $bg_img = get_sub_field('bg_img'); ?>
                 <?php if ($bg_img) : ?>
-                    <img class='image full' src=" <?php echo esc_url($bg_img['url']); ?>" alt="<?php echo esc_attr($bg_img['alt']); ?>" />
+                    <div class='visuals full'>
+                        <img class='image' src=" <?php echo esc_url($bg_img['url']); ?>" alt="<?php echo esc_attr($bg_img['alt']); ?>" />
+                    </div>
                 <?php endif; ?>
             <?php endif; ?>
 
             <?php if ($image_type === 'multiple') : ?>
                 <?php $images_images = get_sub_field('images'); ?>
                 <?php if ($images_images) : ?>
-                    <?php foreach ($images_images as $images_image): ?>
-                        <img class='image multiple' src="<?php echo esc_url($images_image['sizes']['large']); ?>" alt="<?php echo esc_attr($images_image['alt']); ?>" />
-                    <?php endforeach; ?>
+                    <div class='visuals multiple'>
+                        <?php foreach ($images_images as $images_image): ?>
+                            <img class='image multiple' src="<?php echo esc_url($images_image['sizes']['large']); ?>" alt="<?php echo esc_attr($images_image['alt']); ?>" />
+                        <?php endforeach; ?>
+                    </div>
                 <?php endif; ?>
             <?php endif; ?>
-        </div>
 
-        <div class='copy'>
-            <?php
-            remove_filter('the_content', 'wpautop');
-            ?>
+            <div class='copy'>
+                <?php
+                remove_filter('the_content', 'wpautop');
+                ?>
 
-            <div class='typo-h1'>
-                <?php echo $headline ?>
+                <div class='typo-h1'>
+                    <?php echo $headline ?>
+                </div>
+                <p class='typo-h2'>
+                    <?php echo $subline ?>
+                </p>
+
+                <?php
+                add_filter('the_content', 'wpautop');
+                ?>
             </div>
-            <p class='typo-h2'>
-                <?php echo $subline ?>
-            </p>
-
-            <?php
-            add_filter('the_content', 'wpautop');
-            ?>
-        </div>
-
-
     </div>
     <div class='scroll-arrow'>
         <i class="fa-solid fa-chevron-down"></i>

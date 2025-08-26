@@ -13,7 +13,7 @@
 }
 
 .typo-h1, h1 {
-  @apply text-20 md:text-30 leading-[1.2] text-balance;
+  @apply text-15 sm:text-20 md:text-30 leading-[1.2] text-balance;
 }
 .typo-h2, h2 {
   @apply text-9 sm:text-10 md:text-14 leading-[1.5] text-balance font-medium;

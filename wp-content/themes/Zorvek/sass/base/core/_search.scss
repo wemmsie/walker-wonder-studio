@@ -1,25 +1,160 @@
-.search-results-preview {
-    background: #fff;
-    border: 1px solid #ddd;
-    max-height: 200px;
-    overflow-y: auto;
-    position: absolute;
-    width: 100%;
-    z-index: 999;
+.search-page {
+    .search {
+        @apply bg-background;
+    }
+    .results {
+        @apply mt-10;
+        .result {
+            @apply bg-background rounded-lg transition-all my-5 p-5;
+            h2 {
+                @apply transition-all;
+            }
+            p {
+                @apply text-8 text-black;
+            }
+            &:hover {
+                @apply bg-slate-50;
+                h2 {
+                    @apply text-primary;
+                }
+            }
+        }
+    }
+    .search-container {
+        @apply relative;
+    }
 }
 
-.search-results-preview ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
 
-.search-results-preview li {
-    padding: 10px;
-    border-bottom: 1px solid #eee;
-}
+// @mixin loader-rotate {
+// 	@keyframes loader-rotate {
+// 	  0% {
+// 		transform: rotate(0);
+// 	  }
 
-.search-results-preview li a {
-    text-decoration: none;
-    color: #333;
-}
+// 	  100% {
+// 		transform: rotate(360deg);
+// 	  }
+// 	}
+//   }
+
+//   @mixin loader-scale {
+// 	@keyframes loader-scale {
+// 	  0% {
+// 		transform: scale(0);
+// 		opacity: 0;
+// 	  }
+
+// 	  50% {
+// 		opacity: 1;
+// 	  }
+
+// 	  100% {
+// 		transform: scale(1);
+// 		opacity: 0;
+// 	  }
+// 	}
+//   }
+
+// $loader-color:              #000000 !default;
+// $loader-size:                  56px !default;
+// $loader-height:                20px !default;
+// $loader-border-size:            8px !default;
+// $loader-gap:                   12px !default;
+// $loader-animation-duration:      1s !default;
+
+//   @mixin loader01(
+// 	  $size: $loader-size,
+// 	  $color: $loader-color,
+// 	  $border-size: $loader-border-size,
+// 	  $duration: $loader-animation-duration,
+// 	  $align: null
+//   ) {
+// 	width: $size;
+// 	height: $size;
+// 	border: $border-size solid $color;
+// 	border-right-color: transparent;
+// 	border-radius: 50%;
+// 	position: relative;
+// 	animation: loader-rotate $duration linear infinite;
+// 	@if ($align == center) {
+// 	  margin: 0 auto;
+// 	}
+	
+// 	&::after {
+// 	  content: '';
+// 	  width: $border-size;
+// 	  height: $border-size;
+// 	  background: $color;
+// 	  border-radius: 50%;
+// 	  position: absolute;
+// 	  top: circle-position($size, $border-size, y);
+// 	  left: circle-position($size, $border-size, x);
+// 	}
+
+// 	@include loader-rotate;
+//   }
+
+// /* visual styles */
+// .relevanssi-live-search-results {
+// 	box-sizing: border-box;
+// 	-moz-box-sizing: border-box;
+// 	background: #fff;
+// 	-webkit-box-shadow: 0 0 2px 0 rgba(30, 30, 30, 0.4);
+// 	box-shadow: 0 0 2px 0 rgba(30, 30, 30, 0.4);
+// 	border-radius: 3px;
+// 	width: 315px;
+// 	min-height: 175px;
+// 	max-height: 300px;
+// }
+
+// .relevanssi-live-search-result p,
+// .relevanssi-live-search-result-status p {
+// 	font-size: 0.9em;
+// 	padding: 0.5em;
+// 	margin: 0;
+// 	border-bottom: 1px solid rgba(30, 30, 30, 0.1);
+// }
+
+// .relevanssi-live-search-result-status p {
+// 	font-size: 0.8em;
+// 	padding: 0 0.5em;
+// }
+
+// .relevanssi-live-search-result--focused {
+// 	background: #ddd;
+// }
+
+// .relevanssi-live-search-result--focused a {
+// 	color: #000;
+// }
+
+// .relevanssi-live-search-result:last-of-type p {
+// 	border-bottom: 0;
+// }
+
+// .relevanssi-live-search-result a {
+// 	display: block;
+// 	white-space: nowrap;
+// 	overflow: hidden;
+// 	text-overflow: ellipsis;
+// }
+
+// /* Bullet proof Screen Reader Only text */
+// .relevanssi-live-search-instructions {
+// 	border: 0 !important;
+// 	clip: rect(1px, 1px, 1px, 1px) !important;
+// 	-webkit-clip-path: inset(50%) !important;
+// 	clip-path: inset(50%) !important;
+// 	height: 1px !important;
+// 	overflow: hidden !important;
+// 	padding: 0 !important;
+// 	position: absolute !important;
+// 	width: 1px !important;
+// 	white-space: nowrap !important;
+// }
+
+// .rlv-has-spinner {
+// 	@include loader01;
+// 	margin: 1em;
+// }

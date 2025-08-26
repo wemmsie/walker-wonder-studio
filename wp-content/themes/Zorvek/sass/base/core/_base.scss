@@ -22,17 +22,22 @@ img {
 
 /* ---- GUTTER ---- */
 .gutter {
-  @apply max-w-screen m-auto
+  @apply max-w-screen
   py-16 md:py-32 px-10;
   > div {
     @apply z-10;
   }
 }
-// .site-content {
-//   .gutter:first-of-type {
-//     @apply py-32;
-//   }
-// }
+
+.site-content {
+  @apply flex flex-col items-center min-h-[100vh] justify-center gap-20;
+  main {
+    @apply flex-1;
+  }
+  footer {
+    @apply mt-auto;
+  }
+}
 
 /* ---- FLEXBOX ---- */
 .vertical {
@@ -43,7 +48,7 @@ img {
 }
 
 footer {
-  @apply bg-background mt-24;
+  @apply bg-background mt-24 w-full;
   .container {
     @apply flex flex-col gap-5 pb-3;
     .bulk {
