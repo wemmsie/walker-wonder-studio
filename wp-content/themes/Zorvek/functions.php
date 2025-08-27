@@ -116,7 +116,7 @@ function zorvek_enqueue_scripts()
     wp_enqueue_script('gsap-st', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js', false, true);
 
     // Enqueue main JavaScript file as a module, with jQuery as a dependency
-    wp_enqueue_script('zorvek-main-script', get_template_directory_uri() . '/src/script/main.min.js', array(), '1.0', false);
+    wp_enqueue_script('zorvek-main-script', get_template_directory_uri() . '/script/main.min.js', array(), '1.0', false);
 
     wp_script_add_data('zorvek-main-script', 'type', 'module');
 }
