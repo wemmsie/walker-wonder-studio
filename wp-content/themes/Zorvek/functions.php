@@ -12,7 +12,7 @@ add_action('wp_enqueue_scripts', function () {
     wp_enqueue_script('zorvek-main', ASSET_BASE . '/script/main.min.js', [], ASSET_VER, true);
 });
 
-// --- Imports ---
+// --- Imports --- test
 
 require_once get_template_directory() . '/assets/functions/post_types.php';
 require_once get_template_directory() . '/assets/functions/taxonomies.php';
