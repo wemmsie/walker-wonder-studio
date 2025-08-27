@@ -5,7 +5,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'wp-content/themes/Zorvek/**'
+      - '/'
 
 jobs:
   deploy:
