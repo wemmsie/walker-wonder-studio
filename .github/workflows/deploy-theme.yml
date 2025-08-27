@@ -1,48 +1,21 @@
-name: Deploy Zorvek theme to DreamHost
+# .github/workflows/deploy-theme.yml
+name: Deploy Zorvek theme (SCP + password)
 
 on:
   push:
     branches: [ main ]
     paths:
-      - 'wp-content/themes/Zorvek/**'   # only redeploy when theme changes
+      - 'wp-content/themes/Zorvek/**'
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      # OPTIONAL: validate the two files that make the theme "activatable"
-      - name: Sanity check theme files
-        run: |
-          test -f wp-content/themes/Zorvek/style.css
-          test -f wp-content/themes/Zorvek/index.php
-
-      # Deploy via SFTP (password-based). For SSH keys, I can swap this action.
-      - name: SFTP deploy theme
-        uses: wlixcc/SFTP-Deploy-Action@v1.2
+      - uses: actions/checkout@v4
+      - uses: appleboy/scp-action@v0.1.7
         with:
-          server: ${{ secrets.SFTP_HOST }}
-          username: ${{ secrets.SFTP_USER }}
-          password: ${{ secrets.SFTP_PASS }}
-          local_path: 'wp-content/themes/Zorvek/*'
-          remote_path: '/home/dh_ampjbk/walkerwonderstudio.com/wp-content/themes/Zorvek/'
-          exclude: |
-            **/.git*
-            **/.github/**
-            **/node_modules/**
-            # If ALL assets come from Cloudflare Pages, you can also exclude /src:
-            # **/src/**
-
-      # OPTIONAL: if WP-CLI is available on your DH box, auto-activate the theme after first deploy
-      # - name: Activate theme (WP-CLI)
-      #   uses: appleboy/ssh-action@v1.0.3
-      #   with:
-      #     host: ${{ secrets.SFTP_HOST }}
-      #     username: ${{ secrets.SFTP_USER }}
-      #     password: ${{ secrets.SFTP_PASS }}
-      #     script: |
-      #       cd /home/dh_ampjbk/walkerwonderstudio.com
-      #       wp theme activate zorvek || true
-      #       wp cache flush || true
+          host: ${{ secrets.SFTP_HOST }}          # iad1-shared-b7-02.dreamhost.com
+          username: ${{ secrets.SFTP_USER }}      # dh_ampjbk
+          password: ${{ secrets.SFTP_PASS }}      # add in repo secrets
+          source: "wp-content/themes/Zorvek/*"
+          target: "/home/dh_ampjbk/walkerwonderstudio.com/wp-content/themes/Zorvek/"
