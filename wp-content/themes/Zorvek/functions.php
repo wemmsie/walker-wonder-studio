@@ -2,10 +2,14 @@
 if (!defined('ASSET_BASE')) {
     define('ASSET_BASE', 'https://assets.walkerwonderstudio.com');
 }
+if (!defined('ASSET_VER')) {
+    define('ASSET_VER', '2025-08-27-1'); // bump on deploy
+}
 
 add_action('wp_enqueue_scripts', function () {
-    wp_enqueue_style('zorvek-main', ASSET_BASE . '/css/main.css', [], null);
-    wp_enqueue_script('zorvek-main', ASSET_BASE . '/script/main.min.js', [], null, true);
+    wp_enqueue_style('zorvek-style', get_stylesheet_uri(), [], null);
+    wp_enqueue_style('zorvek-main',  ASSET_BASE . '/css/main.css', [], ASSET_VER);
+    wp_enqueue_script('zorvek-main', ASSET_BASE . '/script/main.min.js', [], ASSET_VER, true);
 });
 
 // --- Imports ---
