@@ -5,17 +5,35 @@ on:
   push:
     branches: [ main ]
     paths:
-      - '/'
+      - 'wp-content/themes/Zorvek/**'   # trigger only when the theme changes
+
+concurrency:
+  group: deploy-theme
+  cancel-in-progress: true
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: appleboy/scp-action@v0.1.7
+
+      # Ensure the target exists, and clean up the accidental nested path from earlier deploys
+      - name: Prepare target directory
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SFTP_HOST }}            # iad1-shared-b7-02.dreamhost.com
+          username: ${{ secrets.SFTP_USER }}        # dh_ampjbk
+          password: ${{ secrets.SFTP_PASS }}
+          script: |
+            mkdir -p /home/dh_ampjbk/walkerwonderstudio.com/wp-content/themes/Zorvek
+            rm -rf /home/dh_ampjbk/walkerwonderstudio.com/wp-content/themes/Zorvek/wp-content || true
+
+      # Upload the *contents* of the theme folder to the target folder (note the trailing slash)
+      - name: Upload Zorvek theme
+        uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SFTP_HOST }}
           username: ${{ secrets.SFTP_USER }}
           password: ${{ secrets.SFTP_PASS }}
-          source: "wp-content/themes/Zorvek/*"
+          source: "wp-content/themes/Zorvek/*"      # contents, not the folder
           target: "/home/dh_ampjbk/walkerwonderstudio.com/wp-content/themes/Zorvek/"
