@@ -14,8 +14,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: appleboy/scp-action@v0.1.7
         with:
-          host: ${{ secrets.SFTP_HOST }}          # iad1-shared-b7-02.dreamhost.com
-          username: ${{ secrets.SFTP_USER }}      # dh_ampjbk
-          password: ${{ secrets.SFTP_PASS }}      # add in repo secrets
+          host: ${{ secrets.SFTP_HOST }}
+          username: ${{ secrets.SFTP_USER }}
+          password: ${{ secrets.SFTP_PASS }}
           source: "wp-content/themes/Zorvek/*"
           target: "/home/dh_ampjbk/walkerwonderstudio.com/wp-content/themes/Zorvek/"
