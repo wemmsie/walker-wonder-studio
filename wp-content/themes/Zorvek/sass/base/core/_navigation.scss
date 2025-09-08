@@ -109,7 +109,7 @@ header {
     }
 
     .sub-menu-item {
-      @apply text-grey text-8 mb-1 transition-all font-poppins font-normal lowercase;
+      @apply text-grey text-8 mb-1 transition-all font-poppins font-normal;
 
       a:hover {
         @apply text-primary;
