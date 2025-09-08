@@ -83,8 +83,10 @@ function zorvek_render_booking_modals()
                 </button>
                 <div class="modal-body">
                     <div class="modal-content">
-                        <?php echo $code; // raw echo so Calendly loads 
-                        ?>
+                        <div class="calendly-inline-widget" data-resize="true" data-url="<?php echo $code; ?>?hide_gdpr_banner=1" style="min-width:320px;height:650px;"></div>
+                        <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+
+                        <?php echo $code; ?>
                     </div>
                 </div>
             </div>
