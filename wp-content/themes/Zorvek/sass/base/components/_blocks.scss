@@ -54,7 +54,9 @@ $maxicon: '80px';
         .text {
           @apply top-[17%] left-0 absolute w-full h-[70%] text-40 uppercase text-tertiary;
           .curved {
-            @apply font-futura font-bold fill-tertiary opacity-60;
+            @apply font-black fill-tertiary opacity-60;
+            font-family: 'Verdana', sans-serif;
+
             .up {
               @apply tracking-normal;
             }

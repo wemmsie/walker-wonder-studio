@@ -36063,9 +36063,9 @@ header .menu-toggle.open .burger:nth-child(3){
 }
 #hero .container .visuals .squiggly .text .curved{
   fill: #3e5aa3;
-  font-family: futura, sans-serif;
-  font-weight: 700;
+  font-weight: 900;
   opacity: 0.6;
+  font-family: "Verdana", sans-serif;
 }
 #hero .container .visuals .squiggly .text .curved .up{
   letter-spacing: 0em;
