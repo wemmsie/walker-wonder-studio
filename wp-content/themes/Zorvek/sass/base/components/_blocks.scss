@@ -20,7 +20,12 @@
 /* ---- HERO ---- */
 $icon: '6vw';
 $maxicon: '80px';
-
+  nav .logo {
+    @apply max-h-[50px];
+  }
+  // .nav-parent.toggled {
+  //   @apply max-h-[400px];
+  // }
 
 #hero {
   @apply bg-background max-h-[90vh] flex items-center -mx-60 px-60 relative;
@@ -34,6 +39,7 @@ $maxicon: '80px';
     .copy {
       @apply order-1 flex flex-col justify-center flex-wrap sm:w-1/2 w-full;
     }
+
     .visuals {
       @apply relative;
 
@@ -44,6 +50,9 @@ $maxicon: '80px';
         sm:top-1/3 sm:left-auto sm:right-0 sm:w-1/4 sm:translate-x-0;
         svg path {
           fill: var(--squiggly-color);
+        }
+        svg {
+          @apply max-h-[200px];
         }
         &:hover {
           @apply scale-105;
@@ -158,11 +167,11 @@ $maxicon: '80px';
     
     /* Featurettes Half */
     .linked_featurettes {
-      @apply flex flex-col gap-10;
+      @apply flex flex-col gap-10 order-2;
       .featurette {
-        @apply flex w-full gap-5 md:gap-10 md:even:pl-1/10;
+        @apply flex w-full gap-5 md:gap-10 md:even:pl-1/10 flex-wrap sm:flex-nowrap;
         .icon {
-          @apply bg-opacity-50 rounded-xxl max-h-16 max-w-16 md:max-w-100 md:max-h-100;
+          @apply bg-opacity-50 rounded-xxl max-h-16 max-w-16 md:max-w-100 md:max-h-100 w-full h-full;
           img {
             @apply translate-x-1/10 -translate-y-1/10;
           }

@@ -37,9 +37,7 @@ header {
       }
     }
   }
-  .nav-parent {
-    @apply flex justify-center w-full;
-  }
+
 
   .nav-container {
     @apply py-0 transition-all duration-200 m-auto;
@@ -174,6 +172,7 @@ header {
       }
     }
     .nav-container {
+      @apply w-full max-w-[100vw] max-h-[500px];
       .main-nav {
         @apply z-50 flex justify-between items-center w-full flex-row;
 

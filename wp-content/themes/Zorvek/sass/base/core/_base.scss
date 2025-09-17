@@ -30,7 +30,7 @@ img {
 }
 
 .site-content {
-  @apply flex flex-col items-center min-h-[100vh] justify-center gap-20;
+  @apply flex flex-col items-center min-h-[100vh] justify-center gap-20 pt-20;
   main {
     @apply flex-1;
   }
